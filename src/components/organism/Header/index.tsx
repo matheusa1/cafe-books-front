@@ -1,35 +1,29 @@
 'use client'
 
 import HeaderItem from '@/components/molecules/HeaderItem'
+import useScrollPosition from '@/utils/hooks/useScrollPosition'
 import { ShoppingCart, User } from '@phosphor-icons/react'
 import React, { ReactElement, useEffect, useState } from 'react'
 
 const Header: React.FC = (): ReactElement => {
   const isUserSignedIn = false
+  const scroll = useScrollPosition()
 
-  const [scrollPosition, setScrollPosition] = useState(0)
-  const handleScroll = () => {
-    const position = window.pageYOffset
-    setScrollPosition(position)
-  }
+  const [windowHeight, setWindowHeight] = useState(0)
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+    setWindowHeight(window.innerHeight)
   }, [])
 
   return (
     <header
       className={`fixed left-0 top-0 w-screen transition-all ${
-        window.innerHeight <= scrollPosition ? 'p-0' : 'p-2 md:px-10 md:py-5'
+        scroll > windowHeight ? 'p-0' : 'p-2 md:px-10 md:py-5'
       }`}
     >
       <div
         className={`flex w-full justify-between bg-brownCard p-2 transition-all ${
-          window.innerHeight <= scrollPosition ? 'rounded-none' : 'rounded-2xl'
+          scroll > windowHeight ? 'rounded-none' : 'rounded-2xl'
         }`}
       >
         <h1 className="hidden md:flex">Logo Topera</h1>
