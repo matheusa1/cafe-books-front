@@ -15,7 +15,7 @@ const BottomBar: React.FC = (): ReactElement => {
 
   useEffect(() => {
     console.log(width)
-  })
+  }, [width])
 
   return width && width < 768 ? (
     <div
