@@ -13,11 +13,11 @@ const BottomBar: React.FC = (): ReactElement => {
   const pathname = usePathname()
   const { width } = useWindowSize()
 
-  return (
+  return width < 768 ? (
     <div
-      className={`fixed bottom-0 left-0 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5 ${
-        width > 768 ? 'hidden' : ''
-      }`}
+      className={
+        'fixed bottom-0 left-0 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5'
+      }
     >
       {Routes.map((route, index) => (
         <Link href={route.path} key={index}>
@@ -29,6 +29,8 @@ const BottomBar: React.FC = (): ReactElement => {
         </Link>
       ))}
     </div>
+  ) : (
+    <div />
   )
 }
 
