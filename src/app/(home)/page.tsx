@@ -1,9 +1,10 @@
+import StartCarousel from '@/components/initialPageSections/StartCarousel'
 import React, { ReactElement } from 'react'
 
 const Home: React.FC = (): ReactElement => {
   return (
     <div className={''}>
-      <div className="h-screen bg-slate-300" />
+      <StartCarousel />
       <div className="h-screen bg-slate-400" />
       <div className="h-screen bg-slate-500" />
     </div>

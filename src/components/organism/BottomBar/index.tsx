@@ -16,7 +16,7 @@ const BottomBar: React.FC = (): ReactElement => {
   return width && width < 768 ? (
     <div
       className={
-        'fixed bottom-0 left-0 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5'
+        'fixed bottom-0 left-0 z-30 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5'
       }
     >
       {Routes.map((route, index) => (
