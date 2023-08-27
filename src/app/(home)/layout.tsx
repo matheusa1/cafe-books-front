@@ -1,4 +1,5 @@
-import './globals.css'
+import BottomBar from '@/components/organism/BottomBar'
+import Header from '@/components/organism/Header'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,7 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main>{children}</main>
+        <BottomBar />
+      </body>
     </html>
   )
 }
