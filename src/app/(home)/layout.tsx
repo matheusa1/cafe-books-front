@@ -1,4 +1,8 @@
+'use client'
+
+import BottomBar from '@/components/organism/BottomBar'
 import Header from '@/components/organism/Header'
+import useWindowSize from '@/utils/hooks/useWindowSize'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -11,11 +15,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const { width } = useWindowSize()
+
   return (
     <html lang="en">
       <body>
         <Header />
         <main>{children}</main>
+        {width < 768 && <BottomBar />}
       </body>
     </html>
   )

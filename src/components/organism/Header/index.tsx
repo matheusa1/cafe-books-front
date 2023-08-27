@@ -3,8 +3,9 @@
 import InputHeaderSearch from '@/components/atoms/InputHeaderSearch'
 import HeaderItem from '@/components/molecules/HeaderItem'
 import useScrollPosition from '@/utils/hooks/useScrollPosition'
+import useWindowSize from '@/utils/hooks/useWindowSize'
 import { ShoppingCart, User } from '@phosphor-icons/react'
-import React, { ReactElement, useEffect, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { tv } from 'tailwind-variants'
 
 const headerWrapper = tv({
@@ -36,16 +37,13 @@ const headerContainer = tv({
 const Header: React.FC = (): ReactElement => {
   const isUserSignedIn = false
   const scroll = useScrollPosition()
+  const { height, width } = useWindowSize()
 
-  const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
-  })
   const [isInputOpen, setIsInputOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
 
   const onHandleSearch = () => {
-    if (!isInputOpen && windowSize.width >= 768) {
+    if (!isInputOpen && width >= 768) {
       setIsInputOpen(true)
       return
     }
@@ -53,40 +51,9 @@ const Header: React.FC = (): ReactElement => {
     console.log(inputValue)
   }
 
-  useEffect(() => {
-    setWindowSize((prevState) => ({ ...prevState, height: window.innerHeight }))
-    setWindowSize((prevState) => ({ ...prevState, width: window.innerWidth }))
-
-    window.addEventListener('resize', () => {
-      setWindowSize((prevState) => ({
-        ...prevState,
-        height: window.innerHeight,
-      }))
-      setWindowSize((prevState) => ({
-        ...prevState,
-        width: window.innerWidth,
-      }))
-    })
-
-    console.log('update')
-
-    return () => {
-      window.removeEventListener('resize', () => {
-        setWindowSize((prevState) => ({
-          ...prevState,
-          height: window.innerHeight,
-        }))
-        setWindowSize((prevState) => ({
-          ...prevState,
-          width: window.innerWidth,
-        }))
-      })
-    }
-  }, [])
-
   return (
-    <header className={headerWrapper({ top: scroll > windowSize.height })}>
-      <div className={headerContainer({ top: scroll > windowSize.height })}>
+    <header className={headerWrapper({ top: scroll > height })}>
+      <div className={headerContainer({ top: scroll > height })}>
         <div className="w-full">
           <InputHeaderSearch
             onChange={(e) => setInputValue(e.target.value)}
