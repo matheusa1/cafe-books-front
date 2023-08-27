@@ -5,15 +5,17 @@ import React, { ReactElement } from 'react'
 import { Routes } from './routes'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import useWindowSize from '@/utils/hooks/useWindowSize'
 
 const BottomBar: React.FC = (): ReactElement => {
   const pathname = usePathname()
+  const { width } = useWindowSize()
 
   return (
     <div
-      className={
-        'fixed bottom-0 left-0 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5'
-      }
+      className={`fixed bottom-0 left-0 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5 ${
+        width > 768 ? 'hidden' : ''
+      }`}
     >
       {Routes.map((route, index) => (
         <Link href={route.path} key={index}>
