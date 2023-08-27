@@ -2,7 +2,7 @@
 
 import HeaderItem from '@/components/molecules/HeaderItem'
 
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 
 import { Routes } from './routes'
 import Link from 'next/link'
@@ -13,7 +13,11 @@ const BottomBar: React.FC = (): ReactElement => {
   const pathname = usePathname()
   const { width } = useWindowSize()
 
-  return width < 768 ? (
+  useEffect(() => {
+    console.log(width)
+  })
+
+  return width && width < 768 ? (
     <div
       className={
         'fixed bottom-0 left-0 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5'
