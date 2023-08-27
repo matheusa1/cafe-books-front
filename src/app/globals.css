@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .brownButton {
-  @apply bg-brownPrimary transition-all;
+  @apply bg-brownPrimary transition-all hover:bg-brownPrimary/50;
 }
