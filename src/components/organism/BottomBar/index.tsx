@@ -1,3 +1,5 @@
+'use client'
+
 import HeaderItem from '@/components/molecules/HeaderItem'
 
 import React, { ReactElement } from 'react'
