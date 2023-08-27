@@ -1,10 +1,9 @@
 import React from 'react'
 
 export default function useWindowSize() {
-  const isSSR = typeof window !== 'undefined'
   const [windowSize, setWindowSize] = React.useState({
-    width: isSSR ? 1200 : window.innerWidth,
-    height: isSSR ? 800 : window.innerHeight,
+    width: 0,
+    height: 0,
   })
 
   function changeWindowSize() {
@@ -12,6 +11,8 @@ export default function useWindowSize() {
   }
 
   React.useEffect(() => {
+    changeWindowSize()
+
     window.addEventListener('resize', changeWindowSize)
 
     return () => {
