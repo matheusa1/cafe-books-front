@@ -2,7 +2,7 @@
 
 import HeaderItem from '@/components/molecules/HeaderItem'
 
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement } from 'react'
 
 import { Routes } from './routes'
 import Link from 'next/link'
@@ -12,10 +12,6 @@ import useWindowSize from '@/utils/hooks/useWindowSize'
 const BottomBar: React.FC = (): ReactElement => {
   const pathname = usePathname()
   const { width } = useWindowSize()
-
-  useEffect(() => {
-    console.log(width)
-  }, [width])
 
   return width && width < 768 ? (
     <div
