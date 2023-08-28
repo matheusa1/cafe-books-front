@@ -13,7 +13,7 @@ export const startCarouselData = [
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
-      bookImage: '/images/harryPotterBook.png',
+      bookImage: '/mock/images/harryPotterBook.png',
     },
   },
   {
@@ -30,7 +30,7 @@ export const startCarouselData = [
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
-      bookImage: '/images/harryPotterBook.png',
+      bookImage: '/mock/images/harryPotterBook.png',
     },
   },
   {
@@ -47,7 +47,7 @@ export const startCarouselData = [
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
-      bookImage: '/images/harryPotterBook.png',
+      bookImage: '/mock/images/harryPotterBook.png',
     },
   },
   {
@@ -64,7 +64,7 @@ export const startCarouselData = [
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
-      bookImage: '/images/harryPotterBook.png',
+      bookImage: '/mock/images/harryPotterBook.png',
     },
   },
   {
@@ -81,7 +81,11 @@ export const startCarouselData = [
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
-      bookImage: '/images/harryPotterBook.png',
+      bookImage: '/mock/images/harryPotterBook.png',
     },
   },
 ]
+
+export type IStartCarouselData = typeof startCarouselData
+
+export type IStartCarouselBookData = (typeof startCarouselData)[0]['book']

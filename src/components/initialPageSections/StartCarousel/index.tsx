@@ -1,18 +1,17 @@
+import CarouselItem from '@/components/organism/CarouselItem'
 import { startCarouselData } from '@/mock/startCarouselData'
-import Image from 'next/image'
 import React, { ReactElement } from 'react'
 
 const StartCarousel: React.FC = (): ReactElement => {
   return (
     <div className={'h-screen'}>
-      <Image
-        src={startCarouselData[0].banner}
-        alt="Image"
-        width={1920}
-        height={1080}
-        className="h-screen object-cover brightness-50"
+      <CarouselItem
+        id={startCarouselData[0].id}
+        banner={startCarouselData[0].banner}
+        punchline={startCarouselData[0].punchline}
+        infoText={startCarouselData[0].infoText}
+        book={startCarouselData[0].book}
       />
-      <h1>{startCarouselData[0].banner}</h1>
     </div>
   )
 }
