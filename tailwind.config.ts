@@ -8,9 +8,13 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ['Plus Jakarta Sans', 'Poppins', 'sans-serif'],
+      sans: ['Plus Jakarta Sans', 'Comic Sans', 'Poppins', 'sans-serif'],
     },
     extend: {
+      screens: {
+        xs: '420px',
+        '2xs': '360px',
+      },
       keyframes: {
         float: {
           '0%': { transform: 'translateY(0px)' },

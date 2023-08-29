@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 
 const StartCarousel: React.FC = (): ReactElement => {
   return (
-    <div className={'h-screen'}>
+    <div className={'h-screen max-h-[920px]'}>
       <CarouselItem
         id={startCarouselData[0].id}
         banner={startCarouselData[0].banner}
