@@ -14,7 +14,7 @@ const CarouselItemBookSide: React.FC<ICarouselItemBookSide> = ({
 }): ReactElement => {
   return (
     <div className="relative flex h-fit max-h-[550px] w-full max-w-lg flex-col justify-end rounded-t-full bg-[#222E52] px-7 pb-24 pt-28 xs:pt-36 md:px-14 md:pb-12 lg:h-4/6 xl:h-5/6">
-      <div className="absolute left-1/2 top-5 w-36 -translate-x-1/2 -translate-y-1/2 rotate-12 md:w-40 lg:w-64 xl:w-80">
+      <div className="absolute left-1/2 top-5 w-24 -translate-x-1/2 -translate-y-1/2 rotate-12 md:w-28 lg:w-36 xl:w-52">
         <Image
           src={bookImage}
           alt="book image"
@@ -27,7 +27,7 @@ const CarouselItemBookSide: React.FC<ICarouselItemBookSide> = ({
         <h1 className="text-sm font-extrabold text-white lg:text-xl">
           {title}
         </h1>
-        <p className="max-h-20 overflow-hidden text-xs text-white lg:text-sm xl:max-h-none">
+        <p className="max-h-20 overflow-hidden text-xs text-white lg:text-sm xl:max-h-40">
           {description}
         </p>
         <div className="flex items-center justify-center gap-4">
