@@ -7,7 +7,24 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      sans: ['Plus Jakarta Sans', 'Comic Sans', 'Poppins', 'sans-serif'],
+    },
     extend: {
+      screens: {
+        xs: '420px',
+        '2xs': '360px',
+      },
+      keyframes: {
+        float: {
+          '0%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0px)' },
+        },
+      },
+      animation: {
+        float: 'float 3s ease-in-out infinite',
+      },
       colors: {
         brownPrimary: '#915B44',
         brownCard: '#3C2C26',

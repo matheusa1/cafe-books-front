@@ -9,7 +9,7 @@ import React, { ReactElement, useState } from 'react'
 import { tv } from 'tailwind-variants'
 
 const headerWrapper = tv({
-  base: 'fixed left-0 top-0 w-screen transition-all',
+  base: 'fixed left-0 top-0 z-30 w-screen transition-all',
   variants: {
     top: {
       true: 'p-0',
