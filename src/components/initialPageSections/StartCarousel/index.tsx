@@ -12,7 +12,7 @@ import 'swiper/css/pagination'
 
 const StartCarousel: React.FC = (): ReactElement => {
   return (
-    <div className={'h-screen max-h-[920px]'}>
+    <div className={'h-screen'}>
       <Swiper
         navigation={true}
         autoplay={{
