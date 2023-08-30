@@ -68,7 +68,7 @@ const Header: React.FC = (): ReactElement => {
             setIsOpen={setIsInputOpen}
           />
         </div>
-        <Link href="/" className="w-20">
+        <Link href="/" className="hidden w-20 md:flex">
           <Image src={Logo} alt="Logo" />
         </Link>
         <div className="flex justify-end gap-5 md:w-full">
