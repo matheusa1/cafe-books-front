@@ -3,4 +3,5 @@ export type IInputHeaderSearch = {
   onHandleSearch: () => void
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setIsOpen: (value: boolean) => void
 }

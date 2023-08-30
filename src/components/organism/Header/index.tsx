@@ -4,9 +4,13 @@ import InputHeaderSearch from '@/components/atoms/InputHeaderSearch'
 import HeaderItem from '@/components/molecules/HeaderItem'
 import useScrollPosition from '@/utils/hooks/useScrollPosition'
 import useWindowSize from '@/utils/hooks/useWindowSize'
-import { ShoppingCart, User } from '@phosphor-icons/react'
+import { ShoppingCart, SquaresFour, User } from '@phosphor-icons/react'
+import Image from 'next/image'
 import React, { ReactElement, useState } from 'react'
 import { tv } from 'tailwind-variants'
+
+import Logo from '@/assets/svgs/LogoTextCol.svg'
+import Link from 'next/link'
 
 const headerWrapper = tv({
   base: 'fixed left-0 top-0 z-30 w-screen transition-all',
@@ -61,13 +65,18 @@ const Header: React.FC = (): ReactElement => {
             open={isInputOpen}
             onHandleSearch={onHandleSearch}
             placeholder="Digite um livro"
+            setIsOpen={setIsInputOpen}
           />
         </div>
-        <h1 className="hidden whitespace-nowrap text-white lg:flex">
-          Logo Topera
-        </h1>
+        <Link href="/" className="hidden w-20 md:flex">
+          <Image src={Logo} alt="Logo" />
+        </Link>
         <div className="flex justify-end gap-5 md:w-full">
-          <div className="hidden md:flex">
+          <div className="hidden gap-5 md:flex">
+            <HeaderItem
+              title={'Categorias'}
+              icon={<SquaresFour size={24} color="white" />}
+            />
             <HeaderItem
               title={isUserSignedIn ? 'Perfil' : 'Entrar'}
               icon={

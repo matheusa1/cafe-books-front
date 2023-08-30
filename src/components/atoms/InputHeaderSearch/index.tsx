@@ -39,16 +39,28 @@ const InputHeaderSearch: React.FC<
   placeholder,
   value,
   onChange,
+  setIsOpen,
 }): ReactElement => {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+
   return (
     <div className={inputWrapper({ open })}>
       <input
         className={inputContainer({ open })}
         value={value}
         onChange={onChange}
+        ref={inputRef}
       />
       <div
-        onClick={onHandleSearch}
+        onClick={() => {
+          if (!open) {
+            inputRef.current?.focus()
+            inputRef.current?.addEventListener('blur', () => {
+              setIsOpen(false)
+            })
+          }
+          onHandleSearch()
+        }}
         placeholder={placeholder}
         className="brownButton flex h-10 w-12 items-center justify-center"
       >
