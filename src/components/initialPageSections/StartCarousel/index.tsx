@@ -4,7 +4,7 @@ import CarouselItem from '@/components/organism/CarouselItem'
 import { startCarouselData } from '@/mock/startCarouselData'
 import React, { ReactElement } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Autoplay, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import './carouselStyle.css'
@@ -14,15 +14,12 @@ const StartCarousel: React.FC = (): ReactElement => {
   return (
     <div className={'h-screen max-h-[920px]'}>
       <Swiper
-        pagination={{
-          type: 'progressbar',
-        }}
         navigation={true}
         autoplay={{
           delay: 5000,
           disableOnInteraction: true,
         }}
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Navigation, Autoplay]}
         loop
       >
         {startCarouselData.map((item) => (
