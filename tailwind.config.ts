@@ -30,6 +30,7 @@ const config: Config = {
         brownCard: '#3C2C26',
         brownPressed: '#52392E',
         white: '#FFF4F1',
+        backgroundLight: '#F0E6E3',
       },
     },
   },

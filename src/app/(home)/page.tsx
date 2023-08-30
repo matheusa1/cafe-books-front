@@ -1,4 +1,4 @@
-import Title from '@/components/atoms/Title'
+import Categories from '@/components/initialPageSections/Categories'
 import StartCarousel from '@/components/initialPageSections/StartCarousel'
 import React, { ReactElement } from 'react'
 
@@ -6,7 +6,7 @@ const Home: React.FC = (): ReactElement => {
   return (
     <div className={''}>
       <StartCarousel />
-      <Title boldText="Nossa estante" text="de livros" topText="CATEGORIAS" />
+      <Categories />
       <div className="h-screen bg-slate-400" />
       <div className="h-screen bg-slate-500" />
     </div>
