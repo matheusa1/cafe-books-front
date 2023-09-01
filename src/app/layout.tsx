@@ -7,7 +7,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="max-w-[100vw] overflow-x-hidden">{children}</body>
+      <body className="max-w-[100vw] overflow-x-hidden bg-backgroundLight">
+        {children}
+      </body>
     </html>
   )
 }

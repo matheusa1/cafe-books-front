@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      sans: ['Plus Jakarta Sans', 'Comic Sans', 'Poppins', 'sans-serif'],
+      sans: ['Plus Jakarta Sans', 'Poppins', 'sans-serif'],
     },
     extend: {
       screens: {
@@ -30,6 +30,7 @@ const config: Config = {
         brownCard: '#3C2C26',
         brownPressed: '#52392E',
         white: '#FFF4F1',
+        backgroundLight: '#F0E6E3',
       },
     },
   },
