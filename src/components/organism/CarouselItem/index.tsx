@@ -6,6 +6,7 @@ import Image from 'next/image'
 import CarouselItemBookSide from '@/components/molecules/CarouselItemBookSide'
 import Button from '@/components/atoms/Button'
 import { ShoppingCart } from '@phosphor-icons/react'
+import useWindowSize from '@/utils/hooks/useWindowSize'
 
 const CarouselItem: React.FC<ICarouselItem> = ({
   banner,
@@ -13,6 +14,8 @@ const CarouselItem: React.FC<ICarouselItem> = ({
   infoText,
   punchline,
 }): ReactElement => {
+  const { height } = useWindowSize()
+
   return (
     <div className={'h-screen w-screen overflow-hidden'}>
       <Image
@@ -28,7 +31,11 @@ const CarouselItem: React.FC<ICarouselItem> = ({
             <h1 className="text-xl font-extrabold text-white xs:text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl">
               {punchline}
             </h1>
-            <p className="hidden max-h-20 overflow-hidden text-xs text-white md:flex md:text-sm">
+            <p
+              className={`overflow-hidden text-xs text-white md:flex md:text-sm ${
+                height < 720 && 'hidden'
+              }`}
+            >
               {infoText}
             </p>
             <div className="mt-14 hidden items-center gap-4 lg:flex">
