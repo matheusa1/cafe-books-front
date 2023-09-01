@@ -1,13 +1,19 @@
 import React, { ReactElement } from 'react'
 import { ICategoriesItem } from './types'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const CategoriesItem: React.FC<ICategoriesItem> = ({
   image,
   title,
 }): ReactElement => {
   return (
-    <div className={'flex w-32 flex-col gap-2 p-4 text-center'}>
+    <Link
+      href={'#'}
+      className={
+        'flex w-32 shrink-0 flex-col gap-2 rounded-lg p-4 text-center transition-all hover:bg-white'
+      }
+    >
       <Image
         src={image}
         alt="bookImage"
@@ -16,7 +22,7 @@ const CategoriesItem: React.FC<ICategoriesItem> = ({
         className="h-24 w-24"
       />
       <p>{title}</p>
-    </div>
+    </Link>
   )
 }
 
