@@ -11,6 +11,9 @@ const config: Config = {
       sans: ['Plus Jakarta Sans', 'Poppins', 'sans-serif'],
     },
     extend: {
+      fontSize: {
+        '2xs': '0.625rem',
+      },
       screens: {
         xs: '420px',
         '2xs': '360px',

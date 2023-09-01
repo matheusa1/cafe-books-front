@@ -27,7 +27,7 @@ const CarouselItemBookSide: React.FC<ICarouselItemBookSide> = ({
         <h1 className="text-sm font-extrabold text-white lg:text-xl">
           {title}
         </h1>
-        <p className="max-h-20 overflow-hidden text-xs text-white lg:text-sm xl:max-h-40">
+        <p className="overflow-hidden text-2xs text-white lg:text-sm xl:max-h-40">
           {description}
         </p>
         <div className="flex items-center justify-center gap-4">
