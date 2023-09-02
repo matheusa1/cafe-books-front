@@ -9,7 +9,7 @@ export const startCarouselData = [
       id: 1,
       title: 'Harry Potter e o Prisioneiro De Azkaban',
       description:
-        'Neste terceiro livro da saga, Harry descobre que um perigoso assassino, Sirius Black, escapou da prisão de Azkaban e está procurando por ele. Com a ajuda de seus amigos Ron e Hermione e o professor Lupin, Harry enfrenta desafios e revela verdades surpreendentes sobre seu passado e seu destino.',
+        'Neste terceiro livro da saga, Harry descobre que um perigoso assassino, Sirius Black, escapou da prisão de Azkaban e está procurando por ele.',
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
@@ -29,7 +29,7 @@ export const startCarouselData = [
       id: 1,
       title: 'A cabana',
       description:
-        'Durante uma viagem de fim de semana, a filha mais nova de Mack Allen Phillips é raptada e evidências de que ela foi brutalmente assassinada são encontradas numa velha cabana. Após quatro anos vivendo numa tristeza profunda causada pela culpa e pela saudade da menina, Mack recebe um estranho bilhete, aparentemente escrito por Deus, convidando-o a voltar à cabana onde acontecera a tragédia. Apesar de desconfiado, ele vai ao local numa tarde de inverno e adentra passo a passo o cenário de seu mais terrível pesadelo. Mas o que ele encontra lá muda o seu destino para se Em um mundo cruel e injusto, A cabana levanta um questionamento atemporal: se Deus é tão poderoso, por que não faz nada para amenizar nosso sofrim As respostas que Mack encontra vão surpreender você e podem transformar sua vida de maneira tão profunda quanto transformaram a dele. Você vai querer partilhar esse livro com todas as pessoas que ',
+        'Durante uma viagem de fim de semana, a filha mais nova de Mack Allen Phillips é raptada e evidências de que ela foi brutalmente assassinada são encontradas numa velha cabana.',
       originalPrice: 54.9,
       discountPrice: 34.99,
       rate: 4,
@@ -47,7 +47,7 @@ export const startCarouselData = [
       id: 1,
       title: 'Harry Potter e o Prisioneiro De Azkaban',
       description:
-        'Neste terceiro livro da saga, Harry descobre que um perigoso assassino, Sirius Black, escapou da prisão de Azkaban e está procurando por ele. Com a ajuda de seus amigos Ron e Hermione e o professor Lupin, Harry enfrenta desafios e revela verdades surpreendentes sobre seu passado e seu destino.',
+        'Neste terceiro livro da saga, Harry descobre que um perigoso assassino, Sirius Black, escapou da prisão de Azkaban e está procurando por ele.',
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
@@ -67,7 +67,7 @@ export const startCarouselData = [
       id: 1,
       title: 'A cabana',
       description:
-        'Durante uma viagem de fim de semana, a filha mais nova de Mack Allen Phillips é raptada e evidências de que ela foi brutalmente assassinada são encontradas numa velha cabana. Após quatro anos vivendo numa tristeza profunda causada pela culpa e pela saudade da menina, Mack recebe um estranho bilhete, aparentemente escrito por Deus, convidando-o a voltar à cabana onde acontecera a tragédia. Apesar de desconfiado, ele vai ao local numa tarde de inverno e adentra passo a passo o cenário de seu mais terrível pesadelo. Mas o que ele encontra lá muda o seu destino para se Em um mundo cruel e injusto, A cabana levanta um questionamento atemporal: se Deus é tão poderoso, por que não faz nada para amenizar nosso sofrim As respostas que Mack encontra vão surpreender você e podem transformar sua vida de maneira tão profunda quanto transformaram a dele. Você vai querer partilhar esse livro com todas as pessoas que ',
+        'Durante uma viagem de fim de semana, a filha mais nova de Mack Allen Phillips é raptada e evidências de que ela foi brutalmente assassinada são encontradas numa velha cabana.',
       originalPrice: 54.9,
       discountPrice: 34.99,
       rate: 4,
@@ -85,7 +85,7 @@ export const startCarouselData = [
       id: 1,
       title: 'Harry Potter e o Prisioneiro De Azkaban',
       description:
-        'Neste terceiro livro da saga, Harry descobre que um perigoso assassino, Sirius Black, escapou da prisão de Azkaban e está procurando por ele. Com a ajuda de seus amigos Ron e Hermione e o professor Lupin, Harry enfrenta desafios e revela verdades surpreendentes sobre seu passado e seu destino.',
+        'Neste terceiro livro da saga, Harry descobre que um perigoso assassino, Sirius Black, escapou da prisão de Azkaban e está procurando por ele.',
       originalPrice: 36.6,
       discountPrice: 22.5,
       rate: 4,
@@ -105,7 +105,7 @@ export const startCarouselData = [
       id: 1,
       title: 'A cabana',
       description:
-        'Durante uma viagem de fim de semana, a filha mais nova de Mack Allen Phillips é raptada e evidências de que ela foi brutalmente assassinada são encontradas numa velha cabana. Após quatro anos vivendo numa tristeza profunda causada pela culpa e pela saudade da menina, Mack recebe um estranho bilhete, aparentemente escrito por Deus, convidando-o a voltar à cabana onde acontecera a tragédia. Apesar de desconfiado, ele vai ao local numa tarde de inverno e adentra passo a passo o cenário de seu mais terrível pesadelo. Mas o que ele encontra lá muda o seu destino para se Em um mundo cruel e injusto, A cabana levanta um questionamento atemporal: se Deus é tão poderoso, por que não faz nada para amenizar nosso sofrim As respostas que Mack encontra vão surpreender você e podem transformar sua vida de maneira tão profunda quanto transformaram a dele. Você vai querer partilhar esse livro com todas as pessoas que ',
+        'Durante uma viagem de fim de semana, a filha mais nova de Mack Allen Phillips é raptada e evidências de que ela foi brutalmente assassinada são encontradas numa velha cabana.',
       originalPrice: 54.9,
       discountPrice: 34.99,
       rate: 4,
