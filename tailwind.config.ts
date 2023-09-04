@@ -34,6 +34,8 @@ const config: Config = {
         brownPressed: '#52392E',
         white: '#FFF4F1',
         backgroundLight: '#F0E6E3',
+        'white1/2': '#C7BCBA',
+        dark: '#1D1212',
       },
     },
   },

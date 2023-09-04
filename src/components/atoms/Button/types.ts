@@ -1,6 +1,3 @@
-import { ReactNode } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 
-export type IButton = {
-  children: string | ReactNode
-  onClick?: () => void
-}
+export type IButton = ButtonHTMLAttributes<HTMLButtonElement>
