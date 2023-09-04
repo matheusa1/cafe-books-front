@@ -1,4 +1,5 @@
 import BottomBar from '@/components/organism/BottomBar'
+import Footer from '@/components/organism/Footer'
 import Header from '@/components/organism/Header'
 import type { Metadata } from 'next'
 
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <BottomBar />
+        <Footer />
       </body>
     </html>
   )

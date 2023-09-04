@@ -7,8 +7,6 @@ const Home: React.FC = (): ReactElement => {
     <div className={''}>
       <StartCarousel />
       <Categories />
-      <div className="h-screen bg-slate-400" />
-      <div className="h-screen bg-slate-500" />
     </div>
   )
 }
