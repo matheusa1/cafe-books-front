@@ -3,9 +3,9 @@
 import React, { ReactElement } from 'react'
 import { IInput } from './types'
 import { Eye, EyeClosed } from '@phosphor-icons/react'
-import { tv, VariantProps } from 'tailwind-variants'
+import { tv } from 'tailwind-variants'
 
-const LabelProps = tv({
+export const LabelProps = tv({
   base: 'text-lg font-bold',
   variants: {
     labelDark: {
@@ -18,7 +18,7 @@ const LabelProps = tv({
   },
 })
 
-const InputProps = tv({
+export const InputProps = tv({
   base: 'w-full rounded-lg border-2 border-dark bg-backgroundLight py-3  text-dark outline-none transition-all focus:border-brownPrimary',
   variants: {
     password: {
@@ -31,10 +31,11 @@ const InputProps = tv({
   },
 })
 
-const Input: React.FC<IInput & VariantProps<typeof LabelProps>> = ({
+const Input: React.FC<IInput> = ({
   label,
   password = false,
   labelDark = false,
+  errorMessage,
   ...rest
 }): ReactElement => {
   const [showPassword, setShowPassword] = React.useState(password)
@@ -66,6 +67,9 @@ const Input: React.FC<IInput & VariantProps<typeof LabelProps>> = ({
           </div>
         )}
       </div>
+      {errorMessage && (
+        <span className="text-sm text-red-500">{errorMessage}</span>
+      )}
     </div>
   )
 }
