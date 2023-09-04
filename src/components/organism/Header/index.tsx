@@ -1,7 +1,7 @@
 'use client'
 
 import InputHeaderSearch from '@/components/atoms/InputHeaderSearch'
-import HeaderItem from '@/components/molecules/HeaderItem'
+import { HeaderItem, HeaderItemToggle } from '@/components/molecules/HeaderItem'
 import useScrollPosition from '@/utils/hooks/useScrollPosition'
 import useWindowSize from '@/utils/hooks/useWindowSize'
 import { ShoppingCart, SquaresFour, User } from '@phosphor-icons/react'
@@ -75,10 +75,12 @@ const Header: React.FC = (): ReactElement => {
           <div className="hidden gap-5 md:flex">
             <HeaderItem
               title={'Categorias'}
+              path="/explore"
               icon={<SquaresFour size={24} color="white" />}
             />
             <HeaderItem
               title={isUserSignedIn ? 'Perfil' : 'Entrar'}
+              path={isUserSignedIn ? '/profile' : '/auth/sign-in'}
               icon={
                 isUserSignedIn ? (
                   <ShoppingCart size={24} color="white" />
@@ -88,7 +90,7 @@ const Header: React.FC = (): ReactElement => {
               }
             />
           </div>
-          <HeaderItem
+          <HeaderItemToggle
             title="Carrinho"
             icon={<ShoppingCart size={24} color="white" />}
           />

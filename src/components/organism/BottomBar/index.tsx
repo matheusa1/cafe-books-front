@@ -1,6 +1,6 @@
 'use client'
 
-import HeaderItem from '@/components/molecules/HeaderItem'
+import { HeaderItem } from '@/components/molecules/HeaderItem'
 
 import React, { ReactElement } from 'react'
 
@@ -22,6 +22,7 @@ const BottomBar: React.FC = (): ReactElement => {
       {Routes.map((route, index) => (
         <Link href={route.path} key={index}>
           <HeaderItem
+            path={route.path}
             title=""
             icon={route.icon()}
             active={pathname === route.path}
