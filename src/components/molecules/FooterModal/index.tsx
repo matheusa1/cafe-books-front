@@ -21,9 +21,14 @@ const FooterModal: React.FC<IFooterModal> = ({
           <header className="flex items-center justify-between">
             <div />
             <p>{title}</p>
-            <X onClick={() => setIsOpen(false)} size={24} color="black" />
+            <X
+              onClick={() => setIsOpen(false)}
+              size={24}
+              color="black"
+              className="cursor-pointer"
+            />
           </header>
-          <main className="h-[324px] w-full overflow-auto bg-white1/2 p-4 rounded-lg">
+          <main className="h-[324px] w-full overflow-auto rounded-lg bg-white1/2 p-4">
             <p>{content}</p>
             <p>{content}</p>
             <p>{content}</p>
