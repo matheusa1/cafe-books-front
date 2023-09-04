@@ -7,14 +7,22 @@ import Logo from '@/assets/svgs/LogoTextCol.svg'
 import { FooterData } from './data'
 import FooterItem from '@/components/molecules/FooterItem'
 import { useRouter } from 'next/navigation'
+import FooterModal from '@/components/molecules/FooterModal'
 
 const Footer: React.FC = (): ReactElement => {
   const router = useRouter()
+  const [isOpen, setIsOpen] = React.useState<boolean>(false)
+  const [title, setTitle] = React.useState<string>('')
+  const [content, setContent] = React.useState<string>('')
 
-  const onHandleClick = (data: string) => {
+  const onHandleClick = (data: string, title: string) => {
     if (data[0] === '/') {
       router.push(data)
     }
+
+    setTitle(title)
+    setContent(data)
+    setIsOpen(true)
   }
 
   return (
@@ -35,6 +43,12 @@ const Footer: React.FC = (): ReactElement => {
           />
         ))}
       </div>
+      <FooterModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title={title}
+        content={content}
+      />
     </footer>
   )
 }

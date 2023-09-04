@@ -7,5 +7,5 @@ export type IFooterItem = {
     data: string
   }[]
   icon: ReactNode
-  onHandleClick: (data: string) => void
+  onHandleClick: (data: string, title: string) => void
 }
