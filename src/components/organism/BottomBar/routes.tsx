@@ -1,5 +1,6 @@
 import {
   Bookmarks,
+  Gauge,
   HouseSimple,
   SquaresFour,
   User,
@@ -21,5 +22,10 @@ export const Routes = [
   {
     path: '/profile',
     icon: () => <User size={24} color={'white'} />,
+  },
+  {
+    path: '/admin/books',
+    icon: () => <Gauge size={24} color={'white'} />,
+    permission: 'admin',
   },
 ]

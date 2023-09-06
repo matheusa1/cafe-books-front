@@ -20,7 +20,11 @@ const BottomBar: React.FC = (): ReactElement => {
       }
     >
       {Routes.map((route, index) => (
-        <Link href={route.path} key={index}>
+        <Link
+          href={route.path}
+          key={index}
+          // className={route.permission === 'admin' ? 'hidden' : ''}
+        >
           <HeaderItem
             path={route.path}
             title=""

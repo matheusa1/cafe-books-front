@@ -36,6 +36,8 @@ const config: Config = {
         backgroundLight: '#F0E6E3',
         'white1/2': '#C7BCBA',
         dark: '#1D1212',
+        subText: '#9FA2B4',
+        pureWhite: '#F1f1f1',
       },
     },
   },
