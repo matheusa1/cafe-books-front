@@ -6,6 +6,8 @@ import { Paths } from '@/utils/adminRoutes'
 import AdminSidebarItem from '@/components/molecules/AdminSidebarItem'
 import { usePathname } from 'next/navigation'
 import { X } from '@phosphor-icons/react'
+import Image from 'next/image'
+import Logo from '@/assets/svgs/Logo.svg'
 
 const Sidebar: React.FC = (): ReactElement => {
   const { isSidebarOpen, toggleSidebar } = useSidebar()
@@ -13,16 +15,13 @@ const Sidebar: React.FC = (): ReactElement => {
 
   return (
     <div
-      className={`fixed top-0 z-50 flex h-full flex-col items-start gap-4 bg-black px-4 pt-10 lg:static lg:pl-4 lg:pr-0 ${
+      className={`fixed top-0 z-50 flex h-full flex-col items-start gap-4 bg-dark px-4 pt-10 lg:static lg:pl-4 lg:pr-0 ${
         isSidebarOpen ? 'left-0 w-full xs:w-60' : '-left-96 w-20'
       }  overflow-hidden transition-all duration-500`}
     >
-      <p
-        className={
-          'font-mont text-subText ml-3 whitespace-nowrap text-xs font-bold'
-        }
-      >
-        {isSidebarOpen ? 'MAIN MENU' : 'MENU'}
+      <Image src={Logo} alt="Logo image" className="w-12 self-center" />
+      <p className={'ml-3 whitespace-nowrap text-xs font-bold text-subText'}>
+        {isSidebarOpen ? 'MENU PRINCIPAL' : 'MENU'}
       </p>
       {Paths.map((path, index) => (
         <>
@@ -41,7 +40,7 @@ const Sidebar: React.FC = (): ReactElement => {
         }`}
         onClick={toggleSidebar}
       >
-        <X className="text-white " size={24} />
+        <X className="text-pureWhite" size={24} />
       </div>
     </div>
   )

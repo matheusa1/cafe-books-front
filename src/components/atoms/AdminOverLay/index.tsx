@@ -1,11 +1,19 @@
+'use client'
+
+import { useSidebar } from '@/context/AuthSidebarContext'
 import React, { ReactElement } from 'react'
 
-const AdminOverLay: React.FC = (): ReactElement => {
+const AdminOverlay: React.FC = (): ReactElement => {
+  const { isSidebarOpen, toggleSidebar } = useSidebar()
+
   return (
-    <div className={''}>
-      <h1>AdminOverLay</h1>
-    </div>
+    <div
+      className={`fixed inset-0 z-40 bg-black/50 lg:hidden ${
+        isSidebarOpen ? '' : 'hidden'
+      }`}
+      onClick={toggleSidebar}
+    />
   )
 }
 
-export default AdminOverLay
+export default AdminOverlay

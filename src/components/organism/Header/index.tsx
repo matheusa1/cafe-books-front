@@ -4,7 +4,7 @@ import InputHeaderSearch from '@/components/atoms/InputHeaderSearch'
 import { HeaderItem, HeaderItemToggle } from '@/components/molecules/HeaderItem'
 import useScrollPosition from '@/utils/hooks/useScrollPosition'
 import useWindowSize from '@/utils/hooks/useWindowSize'
-import { ShoppingCart, SquaresFour, User } from '@phosphor-icons/react'
+import { Gauge, ShoppingCart, SquaresFour, User } from '@phosphor-icons/react'
 import Image from 'next/image'
 import React, { ReactElement, useState } from 'react'
 import { tv } from 'tailwind-variants'
@@ -73,6 +73,11 @@ const Header: React.FC = (): ReactElement => {
         </Link>
         <div className="flex justify-end gap-5 md:w-full">
           <div className="hidden gap-5 md:flex">
+            <HeaderItem
+              title={'Admin'}
+              path="/admin/books"
+              icon={<Gauge size={24} color="white" />}
+            />
             <HeaderItem
               title={'Categorias'}
               path="/explore"
