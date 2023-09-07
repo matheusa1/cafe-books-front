@@ -17,7 +17,10 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
   const [isOnCart, setIsOnCart] = React.useState(false)
 
   return (
-    <div className={'flex flex-col gap-4 rounded-lg bg-pureWhite p-5'}>
+    <div
+      id="purchase"
+      className={'flex flex-col gap-4 rounded-lg bg-pureWhite p-5'}
+    >
       <header className="flex items-center border-b-2 border-dark pb-2">
         <span className="text-xl font-bold">{title}</span>
         <div className="shrink-0 p-2">
@@ -50,7 +53,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
         >
           {isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}
         </Button>
-        <Button content="wFull">Comprar</Button>
+        <Button content="wFull">Comprar agora</Button>
       </div>
     </div>
   )
