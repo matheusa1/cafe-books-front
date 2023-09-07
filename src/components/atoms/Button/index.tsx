@@ -3,14 +3,16 @@ import { IButton } from './types'
 import { tv, VariantProps } from 'tailwind-variants'
 
 const buttonWrapper = tv({
-  base: 'flex h-11 items-center justify-center rounded-full text-white transition-all',
+  base: 'flex h-11 items-center justify-center rounded-lg text-white transition-all',
   variants: {
     content: {
       icon: 'w-11',
       text: 'px-10 py-4',
+      wFull: 'w-full',
     },
     styleType: {
       filled: 'brownButton',
+      danger: 'dangerButton',
       outlinedWhite:
         'border-2 border-white hover:border-brownPrimary hover:bg-brownPrimary hover:text-white',
       outlinedBrown:
