@@ -8,9 +8,11 @@ const buttonWrapper = tv({
     content: {
       icon: 'w-11',
       text: 'px-10 py-4',
+      wFull: 'w-full',
     },
     styleType: {
       filled: 'brownButton',
+      danger: 'dangerButton',
       outlinedWhite:
         'border-2 border-white hover:border-brownPrimary hover:bg-brownPrimary hover:text-white',
       outlinedBrown:

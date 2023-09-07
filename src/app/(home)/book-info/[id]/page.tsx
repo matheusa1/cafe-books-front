@@ -11,7 +11,7 @@ const BookInfo: React.FC = (): ReactElement => {
   const router = useRouter()
 
   return (
-    <div className={'mt-20 flex flex-col items-center px-5'}>
+    <div className={'mt-20 flex flex-col items-center px-5 md:mt-28'}>
       <div className="flex w-full max-w-7xl flex-col gap-5">
         <div className="flex items-center gap-4 self-start">
           <Button id="backButton" content="icon" onClick={() => router.back()}>

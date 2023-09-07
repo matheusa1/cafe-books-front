@@ -38,6 +38,7 @@ const config: Config = {
         dark: '#1D1212',
         subText: '#9FA2B4',
         pureWhite: '#F1f1f1',
+        danger: '#DC3545',
       },
     },
   },

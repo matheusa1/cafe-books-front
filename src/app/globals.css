@@ -5,3 +5,7 @@
 .brownButton {
   @apply bg-brownPrimary transition-all hover:bg-brownPrimary/50;
 }
+
+.dangerButton {
+  @apply bg-danger transition-all hover:bg-red-500/50;
+}

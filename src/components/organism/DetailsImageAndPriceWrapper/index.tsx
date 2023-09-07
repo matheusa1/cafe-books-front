@@ -10,8 +10,12 @@ const DetailsImageAndPriceWrapper: React.FC<IDetailsImageAndPriceWrapper> = ({
   title,
 }): ReactElement => {
   return (
-    <div className={'flex w-full flex-col items-center'}>
-      <div className="flex h-80 w-80 items-center justify-center rounded-full bg-purple-900">
+    <div
+      className={
+        'flex w-full flex-col items-center justify-center gap-5 lg:flex-row lg:gap-20'
+      }
+    >
+      <div className="flex h-72 w-72 items-center justify-center rounded-full bg-purple-900 lg:h-96 lg:w-96">
         <Image
           src={image}
           className="w-2/3 animate-float"
