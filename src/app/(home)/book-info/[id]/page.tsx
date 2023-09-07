@@ -7,12 +7,13 @@ import { useRouter } from 'next/navigation'
 import React, { ReactElement } from 'react'
 import { DetailsData } from '@/mock/DetailsData'
 import DetailsDescription from '@/components/organism/DetailsDescription'
+import DetailsSpecs from '@/components/organism/DetailsSpecs'
 
 const BookInfo: React.FC = (): ReactElement => {
   const router = useRouter()
 
   return (
-    <div className={'mt-20 flex flex-col items-center px-5 md:mt-28'}>
+    <div className={'my-20 flex flex-col items-center px-5 md:my-28 md:px-10'}>
       <div className="flex w-full max-w-7xl flex-col items-center gap-5">
         <div className="flex items-center gap-4 self-start">
           <Button id="backButton" content="icon" onClick={() => router.back()}>
@@ -29,6 +30,13 @@ const BookInfo: React.FC = (): ReactElement => {
           title={DetailsData.title}
         />
         <DetailsDescription description={DetailsData.description} />
+        <DetailsSpecs
+          author={DetailsData.author}
+          editor={DetailsData.editor}
+          language={DetailsData.language}
+          pages={DetailsData.pages}
+          release={DetailsData.releaseDate}
+        />
       </div>
     </div>
   )

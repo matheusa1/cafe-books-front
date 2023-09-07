@@ -19,7 +19,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
   return (
     <div
       id="purchase"
-      className={'flex flex-col gap-4 rounded-lg bg-pureWhite p-5'}
+      className={'flex flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'}
     >
       <header className="flex items-center border-b-2 border-dark pb-2">
         <span className="text-xl font-bold">{title}</span>
