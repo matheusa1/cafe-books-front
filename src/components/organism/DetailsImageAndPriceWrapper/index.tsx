@@ -1,0 +1,32 @@
+import Image from 'next/image'
+import React, { ReactElement } from 'react'
+import { IDetailsImageAndPriceWrapper } from './types'
+import DetailsPriceCard from '@/components/molecules/DetailsPriceCard'
+
+const DetailsImageAndPriceWrapper: React.FC<IDetailsImageAndPriceWrapper> = ({
+  image,
+  originalPrice,
+  price,
+  title,
+}): ReactElement => {
+  return (
+    <div className={'flex w-full flex-col items-center'}>
+      <div className="flex h-80 w-80 items-center justify-center rounded-full bg-purple-900">
+        <Image
+          src={image}
+          className="w-2/3 animate-float"
+          alt="BookImage"
+          width={1920}
+          height={1080}
+        />
+      </div>
+      <DetailsPriceCard
+        price={price}
+        title={title}
+        originalPrice={originalPrice}
+      />
+    </div>
+  )
+}
+
+export default DetailsImageAndPriceWrapper

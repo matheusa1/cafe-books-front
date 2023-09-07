@@ -3,7 +3,7 @@ import { IButton } from './types'
 import { tv, VariantProps } from 'tailwind-variants'
 
 const buttonWrapper = tv({
-  base: 'flex h-11 items-center justify-center rounded-full text-white transition-all',
+  base: 'flex h-11 items-center justify-center rounded-lg text-white transition-all',
   variants: {
     content: {
       icon: 'w-11',
