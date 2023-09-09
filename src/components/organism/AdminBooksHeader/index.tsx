@@ -9,8 +9,8 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
   setSearch,
 }): ReactElement => {
   return (
-    <div className="flex flex-col gap-4">
-      <div className={'flex gap-5'}>
+    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className={'flex w-full max-w-sm gap-5'}>
         <Input
           value={search}
           search
@@ -20,7 +20,9 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
           <Funnel size={20} />
         </Button>
       </div>
-      <Button content="wFull">Criar novo livro</Button>
+      <div className="w-full max-w-[150px]">
+        <Button content="wFull">Criar novo livro</Button>
+      </div>
     </div>
   )
 }
