@@ -8,4 +8,5 @@ export type IInput = InputHTMLAttributes<HTMLInputElement> &
     label?: string
     password?: boolean
     errorMessage?: string
+    onHandleSearch?: () => void
   }

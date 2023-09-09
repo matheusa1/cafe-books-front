@@ -6,7 +6,7 @@ const buttonWrapper = tv({
   base: 'flex h-11 items-center justify-center rounded-lg text-white transition-all',
   variants: {
     content: {
-      icon: 'w-11',
+      icon: 'h-full p-4',
       text: 'px-10 py-4',
       wFull: 'w-full',
     },
