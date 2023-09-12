@@ -2,7 +2,7 @@
 
 import AdminBooksHeader from '@/components/organism/AdminBooksHeader'
 import React, { ReactElement, useState } from 'react'
-import { data } from '@/mock/booksInfoData.json'
+import { data } from '@/mock/booksInfoData'
 import 'rsuite-table/dist/css/rsuite-table.css'
 import AdminBooksContent from '@/components/organism/AdminBooksContent'
 import Pagination from '@/components/atoms/Pagination'
@@ -19,8 +19,6 @@ const Book: React.FC = (): ReactElement => {
     } else if (book.title.toLowerCase().includes(search.toLowerCase())) {
       tempData = book
     }
-
-    //pagination
 
     if (
       index >= (currentPage - 1) * itemsPerPage &&

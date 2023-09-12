@@ -43,6 +43,7 @@ const Input: React.FC<IInput> = ({
   labelDark = false,
   errorMessage,
   onHandleSearch,
+  type,
   ...rest
 }): ReactElement => {
   const [showPassword, setShowPassword] = React.useState(password)
@@ -57,7 +58,7 @@ const Input: React.FC<IInput> = ({
       <div className="relative">
         <input
           className={InputProps({ password, search })}
-          type={password ? (showPassword ? 'password' : 'text') : 'text'}
+          type={password ? (showPassword ? 'password' : 'text') : type}
           id="input_id"
           {...rest}
         />

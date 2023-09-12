@@ -1,12 +1,27 @@
 import React, { ReactElement } from 'react'
 import { IAdminBooksContent } from './types'
-import { Cell, Column, HeaderCell, Table } from 'rsuite-table'
+import { Cell, Column, HeaderCell, RowDataType, Table } from 'rsuite-table'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import TableActions from '@/components/atoms/TableActions'
+import { SingleDataType } from '@/mock/booksInfoData'
 
 const AdminBooksContent: React.FC<IAdminBooksContent> = ({
   books,
 }): ReactElement => {
+  const ActionCell = ({
+    rowData,
+  }: {
+    rowData: SingleDataType | RowDataType<never>
+  }) => {
+    return (
+      <TableActions
+        rowData={rowData}
+        onHandleDelete={() => alert(`delete: ${rowData.id}`)}
+        onHandleEdit={() => alert(` edit: ${rowData.id}`)}
+      />
+    )
+  }
+
   return (
     <div className="flex-1">
       <Table
@@ -43,7 +58,7 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
           <HeaderCell>Preço</HeaderCell>
           <Cell dataKey="price">
             {(rowData) => {
-              return <CurrencyText value={rowData.price} />
+              return <CurrencyText value={Number(rowData.price)} />
             }}
           </Cell>
         </Column>
@@ -55,16 +70,25 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
             }}
           </Cell>
         </Column>
-        <Column align={'center'} flexGrow={1} minWidth={100}>
+        {/* <Column align={'center'} flexGrow={1} minWidth={100}>
           <HeaderCell>Ação</HeaderCell>
           <Cell dataKey="id">
             {(rowData) => {
               return (
                 <TableActions
+                  rowData={rowData}
                   onHandleDelete={() => alert(`delete: ${rowData.id}`)}
                   onHandleEdit={() => alert(` edit: ${rowData.id}`)}
                 />
               )
+            }}
+          </Cell>
+        </Column> */}
+        <Column align={'center'} flexGrow={1} minWidth={100}>
+          <HeaderCell>Ação</HeaderCell>
+          <Cell>
+            {(rowData) => {
+              return <ActionCell rowData={rowData} />
             }}
           </Cell>
         </Column>
