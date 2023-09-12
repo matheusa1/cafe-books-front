@@ -41,7 +41,7 @@ const AdminSidebarItem: React.FC<IAdminSidebarItem> = ({
       }}
       className={containerStyles({ active, sidebarState: isSidebarOpen })}
     >
-      {active && (
+      {active && width >= 1024 && (
         <>
           <div className="absolute -top-4 right-0 h-4 w-4 bg-pureWhite before:absolute before:right-0 before:top-0 before:h-4 before:w-4 before:rounded-br-full before:bg-dark before:content-['']" />
           <div className="absolute -bottom-4 right-0 h-4 w-4 bg-pureWhite before:absolute before:right-0 before:top-0 before:h-4 before:w-4 before:rounded-tr-full before:bg-dark before:content-['']" />
