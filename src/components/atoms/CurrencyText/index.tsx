@@ -10,7 +10,7 @@ const CurrencyText: React.FC<ICurrencyText> = ({
     <NumericFormat
       displayType={'text'}
       thousandSeparator={true}
-      prefix={'R$'}
+      prefix={'R$ '}
       value={value.toFixed(2)}
       renderText={(value) => <span className={className}>{value}</span>}
     />

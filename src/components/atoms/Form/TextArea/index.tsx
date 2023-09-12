@@ -1,9 +1,12 @@
 import React, { ReactElement } from 'react'
-import Input from '../../Input'
 import { Controller, useFormContext } from 'react-hook-form'
-import { IInputForm } from './types'
+import TextArea from '../../TextArea'
+import { ITextAreaForm } from './types'
 
-const InputForm: React.FC<IInputForm> = ({ name, ...rest }): ReactElement => {
+const TextAreaForm: React.FC<ITextAreaForm> = ({
+  name,
+  ...rest
+}): ReactElement => {
   const { control } = useFormContext()
 
   return (
@@ -11,10 +14,10 @@ const InputForm: React.FC<IInputForm> = ({ name, ...rest }): ReactElement => {
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <Input onChange={onChange} value={value} {...rest} />
+        <TextArea onChange={onChange} value={value} {...rest} />
       )}
     />
   )
 }
 
-export default InputForm
+export default TextAreaForm

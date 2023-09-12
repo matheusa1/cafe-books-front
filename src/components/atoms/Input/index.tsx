@@ -2,7 +2,7 @@
 
 import React, { ReactElement } from 'react'
 import { IInput } from './types'
-import { Eye, EyeClosed } from '@phosphor-icons/react'
+import { Eye, EyeClosed, MagnifyingGlass } from '@phosphor-icons/react'
 import { tv } from 'tailwind-variants'
 
 export const LabelProps = tv({
@@ -23,19 +23,27 @@ export const InputProps = tv({
   variants: {
     password: {
       true: 'px-4 pr-12',
-      false: 'px-4 ',
+      false: 'px-4',
+    },
+    search: {
+      true: 'px-4 pr-12',
+      false: 'px-4',
     },
   },
   defaultVariants: {
     password: false,
+    search: false,
   },
 })
 
 const Input: React.FC<IInput> = ({
   label,
   password = false,
+  search = false,
   labelDark = false,
   errorMessage,
+  onHandleSearch,
+  type,
   ...rest
 }): ReactElement => {
   const [showPassword, setShowPassword] = React.useState(password)
@@ -49,8 +57,8 @@ const Input: React.FC<IInput> = ({
       )}
       <div className="relative">
         <input
-          className={InputProps({ password })}
-          type={password ? (showPassword ? 'password' : 'text') : 'text'}
+          className={InputProps({ password, search })}
+          type={password ? (showPassword ? 'password' : 'text') : type}
           id="input_id"
           {...rest}
         />
@@ -64,6 +72,14 @@ const Input: React.FC<IInput> = ({
             ) : (
               <EyeClosed size={24} color="black" />
             )}
+          </div>
+        )}
+        {search && (
+          <div
+            onClick={onHandleSearch}
+            className="absolute inset-y-0 right-0 flex items-center justify-center px-4"
+          >
+            <MagnifyingGlass size={24} color="black" />
           </div>
         )}
       </div>

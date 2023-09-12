@@ -9,3 +9,7 @@
 .dangerButton {
   @apply bg-danger transition-all hover:bg-red-500/50;
 }
+
+.brownDisabledButton {
+  @apply bg-brownPrimary/50 cursor-not-allowed;
+}
