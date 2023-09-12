@@ -55,7 +55,7 @@ const SignUp: React.FC = (): ReactElement => {
             errorMessage={formMethods.formState.errors.password?.message}
           />
           <Form.Input
-            label="Confirmar Senha"
+            label="Confirmar Senhas"
             name="confirmPassword"
             placeholder="Confirmar Senha"
             password
