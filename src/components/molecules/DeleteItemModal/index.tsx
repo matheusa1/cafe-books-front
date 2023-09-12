@@ -11,10 +11,10 @@ const DeleteItemModal: React.FC<IDeleteItemModal> = ({
   }
 
   return (
-    <div className={'flex max-h-screen w-screen p-5'}>
+    <div className={'flex max-h-screen p-5'}>
       <div className="flex w-full flex-col gap-4 rounded-lg bg-pureWhite p-5">
         <header className="flex items-center justify-between">
-          <span>Apagar Item</span>
+          <span className="text-xl font-bold">Apagar Item</span>
           <div
             onClick={() => setIsOpen(false)}
             className="rounded-lg p-2 hover:bg-gray-200"

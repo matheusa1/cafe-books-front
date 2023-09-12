@@ -131,16 +131,18 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   }, [data, FormMethods])
 
   return (
-    <div className="flex max-h-screen w-screen p-5">
+    <div className="flex max-h-screen p-5">
       <FormProvider {...FormMethods}>
         <form
           onSubmit={FormMethods.handleSubmit(onHandleSubmit)}
           className={
-            'flex max-h-full w-full flex-col gap-5 overflow-auto rounded-lg bg-pureWhite p-5'
+            'flex max-h-full w-full max-w-3xl flex-col gap-5 overflow-auto rounded-lg bg-pureWhite p-5'
           }
         >
           <header className="flex items-center justify-between">
-            <span>{data ? 'Editar Livro' : 'Criar Livro'}</span>
+            <span className="text-xl font-bold">
+              {data ? 'Editar Livro' : 'Criar Livro'}
+            </span>
             <div
               onClick={() => setModalOpen(false)}
               className="rounded-lg p-2 hover:bg-gray-200"
@@ -148,7 +150,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               <X size={20} />
             </div>
           </header>
-          <div className="grid grid-cols-1 gap-2">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-10">
             {inputsData.map((input, index) => (
               <div key={index}>
                 {input.type === 'textarea' ? (
@@ -177,7 +179,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               </div>
             ))}
           </div>
-          <footer className="flex flex-col gap-2">
+          <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
             <Button content="wFull" type="submit">
               Criar
             </Button>

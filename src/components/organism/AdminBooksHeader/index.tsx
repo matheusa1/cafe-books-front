@@ -42,7 +42,7 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
             className="fixed inset-0 z-10 bg-black/50"
             onClick={() => setIsModalOpen(false)}
           />
-          <Dialog.Content className="fixed left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 ">
+          <Dialog.Content className="fixed left-1/2 top-1/2 z-20 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2">
             <AdminBooksCreateUpdateBooks setModalOpen={setIsModalOpen} />
           </Dialog.Content>
         </Dialog.Portal>
