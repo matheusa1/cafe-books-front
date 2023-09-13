@@ -14,7 +14,7 @@ export default function RootLayout({
             <Image
               src={AuthImage}
               alt="auth image"
-              className="absolute left-0 top-0 z-0 h-screen w-screen scale-125 object-cover brightness-50 lg:static lg:max-h-[70vh] lg:w-1/2 lg:max-w-lg lg:rounded-3xl"
+              className="absolute left-0 top-0 z-0 h-screen w-screen scale-125 object-cover brightness-50 lg:static lg:max-h-[70vh] lg:w-1/3 lg:max-w-lg lg:rounded-3xl"
             />
             <main className="z-10 p-10">{children}</main>
           </div>
