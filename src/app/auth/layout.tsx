@@ -8,9 +8,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <div className="flex h-screen w-screen items-center justify-center bg-backgroundLight">
-          <div className="flex h-screen w-full max-w-7xl items-center justify-center lg:justify-evenly">
+      <body className="w-screen max-w-[100vw] overflow-x-hidden">
+        <div className="flex min-h-screen w-screen items-center justify-center bg-backgroundLight">
+          <div className="flex min-h-screen w-full max-w-7xl items-center justify-center lg:justify-evenly">
             <Image
               src={AuthImage}
               alt="auth image"
