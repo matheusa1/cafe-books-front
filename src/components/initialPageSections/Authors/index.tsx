@@ -1,4 +1,5 @@
 import Title from '@/components/atoms/Title'
+import Authorsbar from '@/components/organism/AuthorsBar'
 import { ReactElement } from 'react'
 
 const Authors: React.FC = (): ReactElement => {
@@ -9,6 +10,7 @@ const Authors: React.FC = (): ReactElement => {
         boldText={'Autores'}
         text={'fantásticos'}
       />
+      <Authorsbar />
     </div>
   )
 }

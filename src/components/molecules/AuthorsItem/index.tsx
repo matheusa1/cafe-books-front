@@ -19,7 +19,7 @@ const AuthorsItem: React.FC<IAuthorsItem> = ({
         alt="authorImage"
         width={1920}
         height={1080}
-        className="h-24 w-24"
+        className="h-24 w-24 rounded-full object-cover object-top"
       />
       <p>{title}</p>
     </Link>
