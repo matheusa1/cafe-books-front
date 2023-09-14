@@ -16,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="w-screen overflow-x-hidden">
         <Header />
-        <main>{children}</main>
+        <main className="w-screen">{children}</main>
         <BottomBar />
         <Footer />
       </body>
