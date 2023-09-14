@@ -39,6 +39,8 @@ const config: Config = {
         subText: '#9FA2B4',
         pureWhite: '#F1f1f1',
         danger: '#DC3545',
+        smokyGray: '#0B0C10',
+        smokyGrayText: '#777C89',
       },
     },
   },
