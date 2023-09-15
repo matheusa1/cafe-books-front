@@ -31,3 +31,6 @@ export const headboardItemsData = [
     image: '/mock/images/OHobbit.png',
   },
 ]
+
+export type IHeadboardItemsData = typeof headboardItemsData
+export type IHeadboardItemData = (typeof headboardItemsData)[0]
