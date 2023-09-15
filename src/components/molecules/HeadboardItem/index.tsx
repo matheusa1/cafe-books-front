@@ -31,11 +31,11 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
           weight={isBookmarked ? 'fill' : 'regular'}
         />
       </header>
-      <main className="flex justify-center">
+      <main className="flex h-full w-full justify-center">
         <Image
           src={image}
           alt="Book image"
-          className="w-2/3"
+          className="h-full w-2/3 object-cover"
           width={720}
           height={400}
         />
