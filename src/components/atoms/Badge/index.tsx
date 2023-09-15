@@ -3,7 +3,7 @@ import { IBadge } from './types'
 import { tv } from 'tailwind-variants'
 
 export const BadgeVariants = tv({
-  base: 'w-fit rounded px-1',
+  base: 'w-fit rounded px-1 text-sm',
   variants: {
     color: {
       success: 'bg-green-200/75 text-green-500',

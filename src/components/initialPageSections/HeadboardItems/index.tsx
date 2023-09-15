@@ -12,8 +12,9 @@ const HeadboardItems: React.FC = (): ReactElement => {
         boldText="Seu próximo"
         text="livro de cabeceira"
       />
-      <div className="w-full max-w-[250px] bg-pureWhite">
+      <div className="grid w-full grid-cols-2 gap-2 p-2">
         <HeadboardItem cardInfo={headboardItemsData[2]} />
+        <HeadboardItem cardInfo={headboardItemsData[0]} />
       </div>
     </div>
   )
