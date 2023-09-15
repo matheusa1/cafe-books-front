@@ -18,6 +18,7 @@ const Footer: React.FC = (): ReactElement => {
   const onHandleClick = (data: string, title: string) => {
     if (data[0] === '/') {
       router.push(data)
+      return
     }
 
     setTitle(title)

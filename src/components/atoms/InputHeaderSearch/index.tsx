@@ -20,7 +20,7 @@ const inputContainer = tv({
   base: 'w-full transition-all duration-500',
   variants: {
     open: {
-      true: 'md:w-full',
+      true: 'px-3 md:w-full',
       false: 'md:w-0',
     },
   },
