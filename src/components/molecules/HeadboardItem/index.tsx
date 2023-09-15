@@ -7,13 +7,20 @@ import { IHeadboardItem } from './types'
 import Image from 'next/image'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import Button from '@/components/atoms/Button'
+import { useRouter } from 'next/navigation'
 
 const HeadboardItem: React.FC<IHeadboardItem> = ({
   cardInfo,
 }): ReactElement => {
+  const onHandleAddToCart = () => {
+    console.log('add to cart')
+  }
+
+  const router = useRouter()
+
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
 
-  const { price, discountPrice, image, title } = cardInfo
+  const { price, discountPrice, image, title, id } = cardInfo
 
   return (
     <div className={'flex w-full flex-col gap-3 rounded-lg bg-pureWhite p-2'}>
@@ -61,8 +68,13 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
             )}
           </div>
           <div className="flex w-full flex-col gap-2">
-            <Button content="wFull">Comprar</Button>
-            <Button content="wFull">
+            <Button
+              content="wFull"
+              onClick={() => router.push(`/book-info/${id}`)}
+            >
+              Comprar
+            </Button>
+            <Button content="wFull" onClick={onHandleAddToCart}>
               {/* <Basket size={24} /> */}
               <span className="text-sm">Adicionar à sacola</span>
             </Button>

@@ -12,6 +12,7 @@ const buttonWrapper = tv({
     },
     styleType: {
       filled: 'brownButton',
+      filledWhite: 'whiteButton',
       danger: 'dangerButton',
       brownDisabled: 'brownDisabledButton',
       outlinedWhite:
