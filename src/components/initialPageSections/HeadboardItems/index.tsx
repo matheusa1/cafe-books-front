@@ -15,7 +15,7 @@ const HeadboardItems: React.FC = (): ReactElement => {
   const router = useRouter()
 
   return (
-    <div className={'flex flex-col'}>
+    <div className={'mt-10 flex flex-col gap-10'}>
       <Title
         topText="VOCÊ TAMBÉM PODE GOSTAR"
         boldText="Seu próximo"
