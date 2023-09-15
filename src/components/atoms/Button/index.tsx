@@ -6,12 +6,13 @@ const buttonWrapper = tv({
   base: 'flex h-11 items-center justify-center rounded-lg text-white transition-all',
   variants: {
     content: {
-      icon: 'h-full p-4',
+      icon: 'h-11 w-11',
       text: 'px-10 py-4',
       wFull: 'w-full',
     },
     styleType: {
       filled: 'brownButton',
+      filledWhite: 'whiteButton',
       danger: 'dangerButton',
       brownDisabled: 'brownDisabledButton',
       outlinedWhite:
