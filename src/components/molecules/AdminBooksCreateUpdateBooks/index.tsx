@@ -127,7 +127,22 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
   useEffect(() => {
     if (data) {
-      FormMethods?.reset(data)
+      FormMethods?.reset({
+        isbn: data.isbn,
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        author: data.author,
+        publisher: data.publisher,
+        language: data.language,
+        country: data.country,
+        image: data.image,
+        year: data.year,
+        pages: data.pages,
+        price: data.price,
+        promotional_price: data.promotional_price,
+        stock: data.stock,
+      })
       console.log(data)
     }
   }, [data, FormMethods])

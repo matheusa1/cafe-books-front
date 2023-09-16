@@ -1,10 +1,10 @@
-import { SingleDataType } from '@/mock/booksInfoData'
+import { BookType } from '@/types/booktype'
 import { RowDataType } from 'rsuite-table'
 import { z } from 'zod'
 
 export type IAdminBooksCreateUpdateBooks = {
   setModalOpen: (value: boolean) => void
-  data?: SingleDataType | RowDataType<never>
+  data?: BookType | RowDataType<never>
 }
 
 const Response = {

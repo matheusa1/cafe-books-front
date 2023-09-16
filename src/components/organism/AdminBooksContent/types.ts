@@ -1,5 +1,5 @@
-import { DataType } from '@/mock/booksInfoData'
+import { booksType } from '@/types/booktype'
 
 export type IAdminBooksContent = {
-  books: DataType
+  books: booksType
 }
