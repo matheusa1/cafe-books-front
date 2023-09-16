@@ -40,6 +40,18 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       colspan: 2,
     },
     {
+      label: 'Categorias',
+      placeholder: 'Categorias',
+      name: 'category',
+      error: FormMethods?.formState?.errors?.category?.message,
+      type: 'select',
+      isMulti: true,
+      options: [
+        { value: 'terror', label: 'Terror' },
+        { value: 'Ficção Científica', label: 'Ficção Científica' },
+      ],
+    },
+    {
       label: 'Autor',
       placeholder: 'Stan Lee, Machado de Assis, ...',
       name: 'author',
@@ -107,18 +119,6 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       error: FormMethods?.formState?.errors?.stock?.message,
       type: 'number',
     },
-    {
-      label: 'Estoque',
-      placeholder: 'Categorias',
-      name: 'category',
-      error: FormMethods?.formState?.errors?.category?.message,
-      type: 'select',
-      isMulti: true,
-      options: [
-        { value: 'terror', label: 'Terror' },
-        { value: 'Ficção Científica', label: 'Ficção Científica' },
-      ],
-    },
   ]
 
   const onHandleSubmit = (formData: AdminCreateOutput) => {
@@ -127,7 +127,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
   useEffect(() => {
     if (data) {
-      FormMethods?.reset()
+      FormMethods?.reset(data)
       console.log(data)
     }
   }, [data, FormMethods])
