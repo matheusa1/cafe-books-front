@@ -12,39 +12,45 @@ const Response = {
 }
 
 export const AdminCreateSchema = z.object({
-  title: z.string().nonempty(Response.string).min(1).max(50),
-  description: z.string().nonempty(Response.string).min(1).max(500),
-  author: z.string().nonempty(Response.string).min(1).max(50),
-  publisher: z.string().nonempty(Response.string).min(1).max(50),
-  edition: z.string().nonempty(Response.string).min(1).max(50),
-  illustration: z.string().nonempty(Response.string).min(1).max(50),
-  translator: z.string().nonempty(Response.string).min(1).max(50),
-  originalLanguage: z.string().nonempty(Response.string).min(1).max(50),
-  originalTitle: z.string().nonempty(Response.string).min(1).max(50),
+  isbn: z.string().nonempty(Response.string),
+  title: z.string().nonempty(Response.string),
+  author: z.string().nonempty(Response.string),
+  publisher: z.string().nonempty(Response.string),
+  country: z.string().nonempty(Response.string),
+  language: z.string().nonempty(Response.string),
+  image: z.string().nonempty(Response.string),
+  description: z.string().nonempty(Response.string),
+  year: z
+    .string()
+    .nonempty(Response.string)
+    .transform((val) => Number(val)),
   pages: z
     .string()
-    .min(1)
-    .max(10000)
-    .refine((value) => {
-      return !isNaN(Number(value))
-    }, 'Campo deve ser um numero'),
-  finish: z.string().nonempty(Response.string).min(1).max(50),
-  releaseDate: z
-    .string()
-    .min(1)
-    .max(2021)
-    .refine((value) => {
-      return !isNaN(Number(value))
-    }, 'Campo deve ser um numero'),
-  coverImage: z.string().nonempty(Response.string).min(1).max(50),
+    .nonempty(Response.string)
+    .transform((val) => Number(val)),
   price: z
     .string()
-    .min(1)
-    .max(10000)
-    .refine((value) => {
-      return !isNaN(Number(value))
-    }, 'Campo deve ser um numero'),
-  discountPrice: z.string().nullish(),
+    .nonempty(Response.string)
+    .transform((val) => Number(val)),
+  promotional_price: z
+    .string()
+    .nullish()
+    .transform((val) => Number(val)),
+  stock: z
+    .string()
+    .nonempty(Response.string)
+    .transform((val) => Number(val)),
+  category: z
+    .array(
+      z.object({
+        label: z.string().nonempty(Response.string),
+        value: z.string().nonempty(Response.string),
+      }),
+    )
+    .min(1, 'Deve conter ao menos uma categoria')
+    .transform((val) => val.map((item) => item.value)),
 })
 
 export type AdminCreateType = z.infer<typeof AdminCreateSchema>
+export type AdminCreateInput = z.input<typeof AdminCreateSchema>
+export type AdminCreateOutput = z.output<typeof AdminCreateSchema>
