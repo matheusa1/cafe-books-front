@@ -12,7 +12,7 @@ const Book: React.FC = (): ReactElement => {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
-  const [books, setBooks] = useState(data)
+  const [books] = useState(data)
 
   const filteredBooks = books.filter((book, index) => {
     let tempData
