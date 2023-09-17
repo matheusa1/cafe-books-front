@@ -1,5 +1,9 @@
-import { booksType } from '@/types/booktype'
+import { ResponseBooksType } from '@/types/booktype'
+import { TratedCategoriesType } from '@/types/categoriesType'
 
 export type IAdminBooksContent = {
-  books: booksType
+  books: ResponseBooksType
+  categoriesList: TratedCategoriesType
+  isLoading: boolean
+  refetch: () => void
 }

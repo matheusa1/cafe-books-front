@@ -11,6 +11,8 @@ import * as Dialog from '@radix-ui/react-dialog'
 const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
   search,
   setSearch,
+  categoriesList,
+  refetch,
 }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -43,7 +45,11 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
             onClick={() => setIsModalOpen(false)}
           />
           <Dialog.Content className="fixed left-1/2 top-1/2 z-20 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2">
-            <AdminBooksCreateUpdateBooks setModalOpen={setIsModalOpen} />
+            <AdminBooksCreateUpdateBooks
+              refetch={refetch}
+              categoriesList={categoriesList}
+              setModalOpen={setIsModalOpen}
+            />
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

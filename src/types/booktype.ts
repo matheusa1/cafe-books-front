@@ -1,4 +1,4 @@
-export type BookType = {
+export type ResponseBookType = {
   isbn: string
   title: string
   author: string
@@ -15,4 +15,4 @@ export type BookType = {
   category: string[]
 }
 
-export type booksType = BookType[]
+export type ResponseBooksType = ResponseBookType[]

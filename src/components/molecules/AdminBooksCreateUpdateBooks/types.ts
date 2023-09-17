@@ -1,10 +1,13 @@
-import { BookType } from '@/types/booktype'
+import { ResponseBookType } from '@/types/booktype'
+import { TratedCategoriesType } from '@/types/categoriesType'
 import { RowDataType } from 'rsuite-table'
 import { z } from 'zod'
 
 export type IAdminBooksCreateUpdateBooks = {
   setModalOpen: (value: boolean) => void
-  data?: BookType | RowDataType<never>
+  data?: ResponseBookType | RowDataType<never>
+  categoriesList: TratedCategoriesType
+  refetch: () => void
 }
 
 const Response = {

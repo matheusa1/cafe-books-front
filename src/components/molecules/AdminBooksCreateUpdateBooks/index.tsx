@@ -9,10 +9,13 @@ import Button from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { createBook } from '@/services/api'
 
 const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   setModalOpen,
   data,
+  categoriesList,
+  refetch,
 }): ReactElement => {
   const FormMethods = useForm<AdminCreateOutput>({
     resolver: zodResolver(AdminCreateSchema),
@@ -46,10 +49,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       error: FormMethods?.formState?.errors?.category?.message,
       type: 'select',
       isMulti: true,
-      options: [
-        { value: 'terror', label: 'Terror' },
-        { value: 'Ficção Científica', label: 'Ficção Científica' },
-      ],
+      options: categoriesList,
     },
     {
       label: 'Autor',
@@ -121,8 +121,13 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
     },
   ]
 
-  const onHandleSubmit = (formData: AdminCreateOutput) => {
-    console.log(formData)
+  const onHandleSubmit = async (formData: AdminCreateOutput) => {
+    const res = await createBook(formData)
+
+    console.log({ res })
+
+    refetch()
+    setModalOpen(false)
   }
 
   useEffect(() => {

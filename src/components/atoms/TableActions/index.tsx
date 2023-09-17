@@ -7,7 +7,11 @@ import * as Dialog from '@radix-ui/react-dialog'
 import AdminBooksCreateUpdateBooks from '@/components/molecules/AdminBooksCreateUpdateBooks'
 import DeleteItemModal from '@/components/molecules/DeleteItemModal'
 
-const TableActions: React.FC<ITableActions> = ({ rowData }): ReactElement => {
+const TableActions: React.FC<ITableActions> = ({
+  rowData,
+  categoriesList,
+  refetch,
+}): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [ModalType, setModalType] = useState<'update' | 'delete'>('update')
 
@@ -40,6 +44,8 @@ const TableActions: React.FC<ITableActions> = ({ rowData }): ReactElement => {
               <DeleteItemModal setIsOpen={setIsModalOpen} />
             ) : (
               <AdminBooksCreateUpdateBooks
+                refetch={refetch}
+                categoriesList={categoriesList}
                 data={rowData}
                 setModalOpen={setIsModalOpen}
               />

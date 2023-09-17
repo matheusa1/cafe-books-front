@@ -1,20 +1,39 @@
 'use client'
 
-import React, { ReactElement, useCallback, useEffect, useState } from 'react'
-import { data } from '@/mock/booksInfoData'
+import React, { ReactElement, useState } from 'react'
 import 'rsuite-table/dist/css/rsuite-table.css'
-import { getCategories } from '@/services/api'
+import { getBooks, getCategories } from '@/services/api'
 import Pagination from '@/components/atoms/Pagination'
 import AdminBooksHeader from '@/components/organism/AdminBooksHeader'
 import AdminBooksContent from '@/components/organism/AdminBooksContent'
+import { toTitleCase } from '@/utils/toTitleCase'
+import { useQuery } from '@tanstack/react-query'
 
 const Book: React.FC = (): ReactElement => {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
-  const [books] = useState(data)
 
-  const filteredBooks = books.filter((book, index) => {
+  const { data: categories } = useQuery(['categories', Infinity], async () => {
+    const categories = await getCategories()
+
+    const categoriesList = categories.map((category) => {
+      return {
+        label: toTitleCase(category.name),
+        value: category.name,
+      }
+    })
+
+    return categoriesList
+  })
+
+  const {
+    data: booksData,
+    isLoading,
+    refetch,
+  } = useQuery(['books', Infinity], getBooks)
+
+  const filteredBooks = booksData?.filter((book, index) => {
     let tempData
 
     if (search === '') {
@@ -34,36 +53,27 @@ const Book: React.FC = (): ReactElement => {
     }
   })
 
-  const getCategoriesData = useCallback(async () => {
-    const categories = await getCategories()
-
-    console.log(categories)
-    console.log('teste')
-  }, [])
-
-  const getBooksData = useCallback(async () => {
-    const books = await getCategories()
-
-    console.log(books)
-    console.log('teste')
-  }, [])
-
-  useEffect(() => {
-    getCategoriesData()
-    getBooksData()
-  }, [getCategoriesData, getBooksData])
-
   return (
     <div className={'flex h-full w-full flex-col gap-5'}>
-      <AdminBooksHeader search={search} setSearch={setSearch} />
+      <AdminBooksHeader
+        categoriesList={categories}
+        search={search}
+        setSearch={setSearch}
+        refetch={refetch}
+      />
       <div className="flex flex-1">
-        <AdminBooksContent books={filteredBooks} />
+        <AdminBooksContent
+          refetch={refetch}
+          isLoading={isLoading}
+          categoriesList={categories}
+          books={filteredBooks || []}
+        />
       </div>
       <Pagination
         currentPage={currentPage}
         handlePageChange={setCurrentPage}
         itemsPerPage={itemsPerPage}
-        totalItems={filteredBooks.length}
+        totalItems={filteredBooks?.length || 0}
         setItemsPerPage={setItemsPerPage}
       />
     </div>
