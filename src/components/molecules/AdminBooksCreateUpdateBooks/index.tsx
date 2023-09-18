@@ -133,7 +133,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       if (data) {
         await updateBook({
           ...formData,
-          promotional_price: Number(formData.promotional_price),
+          promotional_price: Number(formData?.promotional_price),
           price: Number(formData.price),
           stock: Number(formData.stock),
           pages: Number(formData.pages),
@@ -149,7 +149,10 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
       await createBook({
         ...formData,
-        promotional_price: Number(formData.promotional_price),
+        promotional_price:
+          formData?.promotional_price === null
+            ? null
+            : Number(formData.promotional_price),
         price: Number(formData.price),
         stock: Number(formData.stock),
         pages: Number(formData.pages),
