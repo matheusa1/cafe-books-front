@@ -49,14 +49,17 @@ const Input: React.FC<IInput> = ({
   onHandleSearch,
   type,
   disabled,
+  id,
   ...rest
 }): ReactElement => {
   const [showPassword, setShowPassword] = useState(password)
 
+  if (label && !id) throw new Error('Input: id is required')
+
   return (
     <div className="flex w-full flex-col gap-2">
       {label && (
-        <label className={LabelProps({ labelDark })} htmlFor="input_id">
+        <label className={LabelProps({ labelDark })} htmlFor={id}>
           {label}
         </label>
       )}
@@ -67,7 +70,7 @@ const Input: React.FC<IInput> = ({
             ` ${!!errorMessage && 'animate-shake border-red-500'}`
           }
           type={password ? (showPassword ? 'password' : 'text') : type}
-          id="input_id"
+          id={id}
           disabled={disabled}
           {...rest}
         />

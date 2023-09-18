@@ -215,18 +215,16 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
           </header>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-10">
             {inputsData.map((input, index) => (
-              <>
+              <div key={index}>
                 {!input.hidden && (
-                  <div
-                    key={index}
-                    className={input.colspan ? 'md:col-span-2' : ''}
-                  >
+                  <div className={input.colspan ? 'md:col-span-2' : ''}>
                     {input.type === 'textarea' ? (
                       <Form.TextArea
                         name={input.name}
                         label={input.label}
                         placeholder={input.placeholder}
                         labelDark
+                        id={input.name}
                         errorMessage={input.error}
                       />
                     ) : input.type === 'select' ? (
@@ -236,6 +234,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                         options={input.options}
                         isMulti={input.isMulti}
                         label={input.label}
+                        id={input.name}
                         labelDark
                         errorMessage={input.error}
                       />
@@ -249,12 +248,13 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                           errorMessage={input.error}
                           type={input?.type}
                           disabled={input?.disabled}
+                          id={input.name}
                         />
                       </>
                     )}
                   </div>
                 )}
-              </>
+              </div>
             ))}
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
