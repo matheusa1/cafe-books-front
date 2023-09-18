@@ -147,7 +147,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         return
       }
 
-      const res = await createBook({
+      await createBook({
         ...formData,
         promotional_price: Number(formData.promotional_price),
         price: Number(formData.price),
@@ -155,7 +155,6 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         pages: Number(formData.pages),
         year: Number(formData.year),
       })
-      console.log(res)
       refetch()
       setModalOpen(false)
 
@@ -191,7 +190,6 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         promotional_price: String(data.promotional_price),
         stock: String(data.stock),
       })
-      console.log(data)
     }
   }, [data, FormMethods])
 
