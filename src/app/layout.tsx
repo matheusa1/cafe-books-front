@@ -6,11 +6,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body className="max-w-[100vw] overflow-x-hidden bg-backgroundLight">
-        {children}
-      </body>
-    </html>
-  )
+  return children
 }

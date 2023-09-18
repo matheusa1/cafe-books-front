@@ -19,12 +19,15 @@ const TextArea: React.FC<ITextArea> = ({
   label,
   labelDark,
   errorMessage,
+  id,
   ...rest
 }): ReactElement => {
+  if (label && !id) throw new Error('You must provide an id for the textarea')
+
   return (
     <div className={'flex w-full flex-col gap-2'}>
       {label && (
-        <label className={LabelProps({ labelDark })} htmlFor="text-area-id">
+        <label className={LabelProps({ labelDark })} htmlFor={id}>
           {label}
         </label>
       )}
@@ -32,7 +35,7 @@ const TextArea: React.FC<ITextArea> = ({
         className={
           'h-32 w-full rounded-lg border-2 border-dark bg-backgroundLight p-3  text-dark outline-none transition-all focus:border-brownPrimary'
         }
-        id="text-area-id"
+        id={id}
         {...rest}
       />
       {errorMessage && (

@@ -35,6 +35,7 @@ const SignUp: React.FC = (): ReactElement => {
           <Form.Input
             label="Nome"
             name="username"
+            id="username"
             placeholder="Nome"
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.username?.message}
@@ -42,6 +43,7 @@ const SignUp: React.FC = (): ReactElement => {
           <Form.Input
             label="E-mail"
             name="email"
+            id="email"
             placeholder="E-mail"
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.email?.message}
@@ -49,6 +51,7 @@ const SignUp: React.FC = (): ReactElement => {
           <Form.Input
             label="Senha"
             name="password"
+            id="password"
             placeholder="Senha"
             password
             labelDark={width >= 1024}
@@ -57,6 +60,7 @@ const SignUp: React.FC = (): ReactElement => {
           <Form.Input
             label="Confirmar Senha"
             name="confirmPassword"
+            id="confirmPassword"
             placeholder="Confirmar Senha"
             password
             labelDark={width >= 1024}

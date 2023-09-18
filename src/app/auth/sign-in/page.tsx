@@ -36,6 +36,7 @@ const SignIn: React.FC = (): ReactElement => {
           <Form.Input
             label="E-mail"
             name="email"
+            id="email"
             placeholder="E-mail"
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.email?.message}
@@ -44,6 +45,7 @@ const SignIn: React.FC = (): ReactElement => {
             label="Senha"
             name="password"
             placeholder="Senha"
+            id="password"
             password
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.password?.message}

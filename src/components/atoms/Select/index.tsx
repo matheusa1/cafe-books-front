@@ -22,17 +22,21 @@ const Select: React.FC<ISelect> = ({
   label,
   errorMessage,
   labelDark,
+  id,
   ...rest
 }): ReactElement => {
+  if (label && !id) throw new Error('You must provide an id for the select')
+
   return (
     <div className={'flex w-full flex-col gap-2'}>
       {label && (
-        <label className={LabelProps({ labelDark })} htmlFor="text-area-id">
+        <label className={LabelProps({ labelDark })} htmlFor={id}>
           {label}
         </label>
       )}
       <Selecta
         {...rest}
+        id={id}
         styles={{
           control: (base) => ({
             ...base,

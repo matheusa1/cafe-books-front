@@ -9,14 +9,14 @@ export const metadata: Metadata = {
     'Compre o seu livro físico favorito, com o melhor preço e qualidade.',
 }
 
-export default function RootLayout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="w-screen overflow-x-hidden">
+    <html suppressHydrationWarning={true} lang="en">
+      <body className="w-screen max-w-[100vw] overflow-x-hidden bg-backgroundLight">
         <Header />
         <main className="w-screen">{children}</main>
         <BottomBar />
