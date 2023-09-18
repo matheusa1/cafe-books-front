@@ -9,7 +9,7 @@ import Button from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createBook } from '@/services/api'
+import { createBook, updateBook } from '@/services/api'
 
 const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   setModalOpen,
@@ -122,12 +122,35 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   ]
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
-    const res = await createBook(formData)
+    try {
+      if (data) {
+        await updateBook({
+          ...formData,
+          promotional_price: Number(formData.promotional_price),
+          price: Number(formData.price),
+          stock: Number(formData.stock),
+          pages: Number(formData.pages),
+          year: Number(formData.year),
+        })
+        refetch()
+        setModalOpen(false)
+        return
+      }
 
-    console.log({ res })
-
-    refetch()
-    setModalOpen(false)
+      const res = await createBook({
+        ...formData,
+        promotional_price: Number(formData.promotional_price),
+        price: Number(formData.price),
+        stock: Number(formData.stock),
+        pages: Number(formData.pages),
+        year: Number(formData.year),
+      })
+      console.log(res)
+      refetch()
+      setModalOpen(false)
+    } catch (error: any) {
+      console.log(error.response.data)
+    }
   }
 
   useEffect(() => {
@@ -142,11 +165,11 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         language: data.language,
         country: data.country,
         image: data.image,
-        year: data.year,
-        pages: data.pages,
-        price: data.price,
-        promotional_price: data.promotional_price,
-        stock: data.stock,
+        year: String(data.year),
+        pages: String(data.pages),
+        price: String(data.price),
+        promotional_price: String(data.promotional_price),
+        stock: String(data.stock),
       })
       console.log(data)
     }

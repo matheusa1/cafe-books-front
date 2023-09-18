@@ -1,11 +1,11 @@
-import { ResponseBookType } from '@/types/booktype'
+import { TratedCategoriesBookType } from '@/types/booktype'
 import { TratedCategoriesType } from '@/types/categoriesType'
 import { RowDataType } from 'rsuite-table'
 import { z } from 'zod'
 
 export type IAdminBooksCreateUpdateBooks = {
   setModalOpen: (value: boolean) => void
-  data?: ResponseBookType | RowDataType<never>
+  data?: TratedCategoriesBookType | RowDataType<never>
   categoriesList: TratedCategoriesType
   refetch: () => void
 }
@@ -23,26 +23,11 @@ export const AdminCreateSchema = z.object({
   language: z.string().nonempty(Response.string),
   image: z.string().nonempty(Response.string),
   description: z.string().nonempty(Response.string),
-  year: z
-    .string()
-    .nonempty(Response.string)
-    .transform((val) => Number(val)),
-  pages: z
-    .string()
-    .nonempty(Response.string)
-    .transform((val) => Number(val)),
-  price: z
-    .string()
-    .nonempty(Response.string)
-    .transform((val) => Number(val)),
-  promotional_price: z
-    .string()
-    .nullish()
-    .transform((val) => Number(val)),
-  stock: z
-    .string()
-    .nonempty(Response.string)
-    .transform((val) => Number(val)),
+  year: z.string().nonempty(Response.string),
+  pages: z.string().nonempty(Response.string),
+  price: z.string().nonempty(Response.string),
+  promotional_price: z.string().nullish(),
+  stock: z.string().nonempty(Response.string),
   category: z
     .array(
       z.object({

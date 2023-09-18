@@ -3,7 +3,7 @@ import { IAdminBooksContent } from './types'
 import { Cell, Column, HeaderCell, RowDataType, Table } from 'rsuite-table'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import TableActions from '@/components/atoms/TableActions'
-import { ResponseBookType } from '@/types/booktype'
+import { TratedCategoriesBookType } from '@/types/booktype'
 
 import EmptyImage from '@/assets/images/empty-box.png'
 import Image from 'next/image'
@@ -17,7 +17,7 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
   const ActionCell = ({
     rowData,
   }: {
-    rowData: ResponseBookType | RowDataType<never>
+    rowData: TratedCategoriesBookType | RowDataType<never>
   }) => {
     return (
       <TableActions
@@ -43,7 +43,7 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
           <span>Ops! Nenhum dado encontrado. 😥</span>
         </div>
       ) : (
-        <Table data={books} fillHeight>
+        <Table data={books} fillHeight wordWrap="keep-all">
           <Column fullText minWidth={20} fixed>
             <HeaderCell>ISBN</HeaderCell>
             <Cell dataKey="isbn" />
@@ -58,9 +58,17 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
               {(rowData) => {
                 return (
                   <div>
-                    {rowData.category.map((item: string, index: number) => (
-                      <div key={index}>{item}</div>
-                    ))}
+                    {rowData.category.map(
+                      (
+                        item: {
+                          label: string
+                          value: string
+                        },
+                        index: number,
+                      ) => (
+                        <div key={index}>{item.label}</div>
+                      ),
+                    )}
                   </div>
                 )
               }}
@@ -70,7 +78,12 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
             <HeaderCell>Preço</HeaderCell>
             <Cell dataKey="price">
               {(rowData) => {
-                return <CurrencyText value={Number(rowData.price)} />
+                return (
+                  <CurrencyText
+                    className="whitespace-nowrap"
+                    value={Number(rowData.price)}
+                  />
+                )
               }}
             </Cell>
           </Column>

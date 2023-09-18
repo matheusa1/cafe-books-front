@@ -2,12 +2,23 @@ import { Trash, X } from '@phosphor-icons/react'
 import React, { ReactElement } from 'react'
 import { IDeleteItemModal } from './types'
 import Button from '@/components/atoms/Button'
+import { deleteBook } from '@/services/api'
 
 const DeleteItemModal: React.FC<IDeleteItemModal> = ({
   setIsOpen,
+  isbn,
+  refetch,
 }): ReactElement => {
-  const onHandleDelete = () => {
-    alert('delete')
+  const onHandleDelete = async () => {
+    try {
+      const res = await deleteBook(isbn)
+      console.log(res)
+
+      refetch()
+      setIsOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

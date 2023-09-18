@@ -31,7 +31,23 @@ const Book: React.FC = (): ReactElement => {
     data: booksData,
     isLoading,
     refetch,
-  } = useQuery(['books', Infinity], getBooks)
+  } = useQuery(['books', Infinity], async () => {
+    const books = await getBooks()
+
+    const booksList = books.map((book) => {
+      return {
+        ...book,
+        category: book.category.map((category) => {
+          return {
+            label: toTitleCase(category),
+            value: category,
+          }
+        }),
+      }
+    })
+
+    return booksList
+  })
 
   const filteredBooks = booksData?.filter((book, index) => {
     let tempData

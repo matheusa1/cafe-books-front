@@ -20,3 +20,15 @@ export const createBook = async (data: ResponseBookType) => {
   const response = await api.post('api/book/', data)
   return response.data
 }
+
+export const updateBook = async (data: ResponseBookType) => {
+  const response = await api.put('api/book/', data)
+  return response.data
+}
+
+export const deleteBook = async (isbn: string) => {
+  const response = await api.delete('api/book/', {
+    data: { isbn: isbn },
+  })
+  return response.data
+}
