@@ -85,13 +85,15 @@ const Book: React.FC = (): ReactElement => {
           books={filteredBooks || []}
         />
       </div>
-      <Pagination
-        currentPage={currentPage}
-        handlePageChange={setCurrentPage}
-        itemsPerPage={itemsPerPage}
-        totalItems={filteredBooks?.length || 0}
-        setItemsPerPage={setItemsPerPage}
-      />
+      {filteredBooks && filteredBooks.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          handlePageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredBooks.length || 0}
+          setItemsPerPage={setItemsPerPage}
+        />
+      )}
     </div>
   )
 }

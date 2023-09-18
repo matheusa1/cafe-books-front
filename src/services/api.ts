@@ -1,5 +1,6 @@
+import { ResponseCategoriesType } from './../types/categoriesType'
 import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
-import { ResponseCategoriesType } from '@/types/categoriesType'
+
 import axios from 'axios'
 
 const api = axios.create({

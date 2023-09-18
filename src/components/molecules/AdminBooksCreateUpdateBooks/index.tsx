@@ -148,8 +148,9 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       console.log(res)
       refetch()
       setModalOpen(false)
+      // eslint-disable-next-line
     } catch (error: any) {
-      console.log(error.response.data)
+      console.log(error?.response?.data)
     }
   }
 
