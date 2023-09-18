@@ -1,5 +1,5 @@
 import { X } from '@phosphor-icons/react'
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import {
   AdminCreateOutput,
   AdminCreateSchema,
@@ -10,6 +10,7 @@ import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createBook, updateBook } from '@/services/api'
+import { toast } from 'react-toastify'
 
 const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   setModalOpen,
@@ -21,12 +22,16 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
     resolver: zodResolver(AdminCreateSchema),
   })
 
+  const [IsbnMessage, setIsbnMessage] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const inputsData = [
     {
       label: 'ISBN',
       placeholder: '000-0-00-000000-0',
       name: 'isbn',
-      error: FormMethods?.formState?.errors?.isbn?.message,
+      error: FormMethods?.formState?.errors?.isbn?.message || IsbnMessage,
+      disabled: data ? true : false,
     },
     {
       label: 'Titulo',
@@ -122,6 +127,8 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   ]
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
+    setIsLoading(true)
+
     try {
       if (data) {
         await updateBook({
@@ -134,6 +141,9 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         })
         refetch()
         setModalOpen(false)
+        toast.success('Livro atualizado com sucesso!')
+        setIsLoading(false)
+
         return
       }
 
@@ -148,9 +158,18 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       console.log(res)
       refetch()
       setModalOpen(false)
+
+      setIsLoading(false)
+
+      toast.success('Livro criado com sucesso!')
       // eslint-disable-next-line
     } catch (error: any) {
-      console.log(error?.response?.data)
+      if (error?.response?.data?.message === 'Este ISBN já está cadastrado!') {
+        setIsbnMessage(error?.response?.data?.message)
+      } else {
+        toast.error('Erro ao criar livro')
+      }
+      setIsLoading(false)
     }
   }
 
@@ -231,6 +250,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                           labelDark
                           errorMessage={input.error}
                           type={input?.type}
+                          disabled={input?.disabled}
                         />
                       </>
                     )}
@@ -240,13 +260,14 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
             ))}
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
-            <Button content="wFull" type="submit">
+            <Button content="wFull" type="submit" isLoading={isLoading}>
               Criar
             </Button>
             <Button
               content="wFull"
               styleType="outlinedBrown"
               type="button"
+              isLoading={isLoading}
               onClick={() => setModalOpen(false)}
             >
               Cancelar

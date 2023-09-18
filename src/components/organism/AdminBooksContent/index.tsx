@@ -24,8 +24,6 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
         refetch={refetch}
         rowData={rowData}
         categoriesList={categoriesList}
-        onHandleDelete={() => alert(`delete: ${rowData.isbn}`)}
-        onHandleEdit={() => alert(` edit: ${rowData.isbn}`)}
       />
     )
   }

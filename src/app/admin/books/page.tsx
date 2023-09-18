@@ -8,6 +8,7 @@ import AdminBooksHeader from '@/components/organism/AdminBooksHeader'
 import AdminBooksContent from '@/components/organism/AdminBooksContent'
 import { toTitleCase } from '@/utils/toTitleCase'
 import { useQuery } from '@tanstack/react-query'
+import { ToastContainer } from 'react-toastify'
 
 const Book: React.FC = (): ReactElement => {
   const [search, setSearch] = useState('')
@@ -71,6 +72,18 @@ const Book: React.FC = (): ReactElement => {
 
   return (
     <div className={'flex h-full w-full flex-col gap-5'}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <AdminBooksHeader
         categoriesList={categories}
         search={search}
@@ -90,7 +103,7 @@ const Book: React.FC = (): ReactElement => {
           currentPage={currentPage}
           handlePageChange={setCurrentPage}
           itemsPerPage={itemsPerPage}
-          totalItems={filteredBooks.length || 0}
+          totalItems={booksData?.length || 0}
           setItemsPerPage={setItemsPerPage}
         />
       )}
