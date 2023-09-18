@@ -32,15 +32,20 @@ const Button: React.FC<IButton & VariantProps<typeof buttonWrapper>> = ({
   onClick,
   content,
   styleType,
+  isLoading,
   ...rest
 }): ReactElement => {
   return (
     <button
-      onClick={onClick}
+      onClick={isLoading ? () => {} : onClick}
       className={buttonWrapper({ content, styleType })}
       {...rest}
     >
-      {children}
+      {isLoading ? (
+        <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-white"></div>
+      ) : (
+        children
+      )}
     </button>
   )
 }

@@ -1,13 +1,29 @@
 import { Trash, X } from '@phosphor-icons/react'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { IDeleteItemModal } from './types'
 import Button from '@/components/atoms/Button'
+import { deleteBook } from '@/services/api'
+import { toast } from 'react-toastify'
 
 const DeleteItemModal: React.FC<IDeleteItemModal> = ({
   setIsOpen,
+  isbn,
+  refetch,
 }): ReactElement => {
-  const onHandleDelete = () => {
-    alert('delete')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const onHandleDelete = async () => {
+    setIsLoading(true)
+    try {
+      const res = await deleteBook(isbn)
+      toast.success(res.message)
+
+      refetch()
+      setIsOpen(false)
+    } catch (error) {
+      toast.error('Erro ao apagar item')
+    }
+    setIsLoading(false)
   }
 
   return (
@@ -37,6 +53,7 @@ const DeleteItemModal: React.FC<IDeleteItemModal> = ({
             styleType="danger"
             type="button"
             onClick={onHandleDelete}
+            isLoading={isLoading}
           >
             Apagar
           </Button>
@@ -45,6 +62,7 @@ const DeleteItemModal: React.FC<IDeleteItemModal> = ({
             styleType="outlinedBrown"
             type="button"
             onClick={() => setIsOpen(false)}
+            isLoading={isLoading}
           >
             Cancelar
           </Button>
