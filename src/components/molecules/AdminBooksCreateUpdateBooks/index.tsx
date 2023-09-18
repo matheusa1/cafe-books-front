@@ -164,7 +164,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       toast.success('Livro criado com sucesso!')
       // eslint-disable-next-line
     } catch (error: any) {
-      if (error?.response?.data?.message === 'Este ISBN já está cadastrado!') {
+      if (error?.response?.data?.type === 'isbn') {
         setIsbnMessage(error?.response?.data?.message)
       } else {
         toast.error('Erro ao criar livro')
