@@ -8,7 +8,6 @@ const buttonWrapper = tv({
     content: {
       icon: 'aspect-square p-2',
       'icon-sm': 'aspect-square p-1 text-lg',
-      icon: 'h-11 w-11',
       text: 'px-10 py-4',
       'text-sm': 'px-4 py-2 text-sm',
       wFull: 'w-full',
