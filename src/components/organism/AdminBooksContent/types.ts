@@ -1,5 +1,9 @@
-import { DataType } from '@/mock/booksInfoData'
+import { TratedCategoriesBooksType } from '@/types/booktype'
+import { TratedCategoriesType } from '@/types/categoriesType'
 
 export type IAdminBooksContent = {
-  books: DataType
+  books: TratedCategoriesBooksType
+  categoriesList: TratedCategoriesType
+  isLoading: boolean
+  refetch: () => void
 }

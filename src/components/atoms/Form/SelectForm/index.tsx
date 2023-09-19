@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react'
+import { ISelectForm } from './types'
 import { Controller, useFormContext } from 'react-hook-form'
-import { ITextAreaForm } from './types'
 import { tv } from 'tailwind-variants'
+import Selecta from 'react-select'
 
 export const LabelProps = tv({
   base: 'text-lg font-bold',
@@ -16,16 +17,17 @@ export const LabelProps = tv({
   },
 })
 
-const TextAreaForm: React.FC<ITextAreaForm> = ({
+const SelectForm: React.FC<ISelectForm> = ({
   name,
   label,
-  labelDark,
   errorMessage,
+  labelDark,
   id,
   ...rest
 }): ReactElement => {
   const { control } = useFormContext()
-  if (label && !id) throw new Error('You must provide an id for the textarea')
+
+  if (label && !id) throw new Error('You must provide an id for the select')
 
   return (
     <Controller
@@ -38,15 +40,32 @@ const TextAreaForm: React.FC<ITextAreaForm> = ({
               {label}
             </label>
           )}
-          <textarea
-            className={
-              'h-32 w-full rounded-lg border-2 border-dark bg-backgroundLight p-3  text-dark outline-none transition-all focus:border-brownPrimary'
-            }
-            id={id}
+          <Selecta
+            {...rest}
             onChange={onChange}
             value={value}
-            {...rest}
+            id={id}
+            styles={{
+              control: (base) => ({
+                ...base,
+                backgroundColor: 'rgb(240 230 227)',
+                padding: '0.4rem',
+                borderRadius: '0.5rem',
+                border: '2px solid rgb(29 18 18)',
+              }),
+              menu: (base) => ({
+                ...base,
+                borderRadius: '0.5rem',
+                border: '2px solid rgb(29 18 18)',
+                backgroundColor: 'rgb(240 230 227)',
+              }),
+              option: (base, state) => ({
+                ...base,
+                backgroundColor: state.isFocused ? 'rgb(200 190 187)' : 'none',
+              }),
+            }}
           />
+
           {errorMessage && (
             <span className="text-sm text-red-500">{errorMessage}</span>
           )}
@@ -56,4 +75,4 @@ const TextAreaForm: React.FC<ITextAreaForm> = ({
   )
 }
 
-export default TextAreaForm
+export default SelectForm

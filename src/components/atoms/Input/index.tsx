@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { IInput } from './types'
 import { Eye, EyeClosed, MagnifyingGlass } from '@phosphor-icons/react'
 import { tv } from 'tailwind-variants'
@@ -29,6 +29,10 @@ export const InputProps = tv({
       true: 'px-4 pr-12',
       false: 'px-4',
     },
+    disabled: {
+      true: 'cursor-not-allowed bg-gray-300 px-4',
+      false: 'px-4',
+    },
   },
   defaultVariants: {
     password: false,
@@ -44,22 +48,30 @@ const Input: React.FC<IInput> = ({
   errorMessage,
   onHandleSearch,
   type,
+  disabled,
+  id,
   ...rest
 }): ReactElement => {
-  const [showPassword, setShowPassword] = React.useState(password)
+  const [showPassword, setShowPassword] = useState(password)
+
+  if (label && !id) throw new Error('Input: id is required')
 
   return (
     <div className="flex w-full flex-col gap-2">
       {label && (
-        <label className={LabelProps({ labelDark })} htmlFor="input_id">
+        <label className={LabelProps({ labelDark })} htmlFor={id}>
           {label}
         </label>
       )}
       <div className="relative">
         <input
-          className={InputProps({ password, search })}
+          className={
+            InputProps({ password, search, disabled }) +
+            ` ${!!errorMessage && 'animate-shake border-red-500'}`
+          }
           type={password ? (showPassword ? 'password' : 'text') : type}
-          id="input_id"
+          id={id}
+          disabled={disabled}
           {...rest}
         />
         {password && (

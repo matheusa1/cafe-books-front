@@ -1,132 +1,198 @@
 import { X } from '@phosphor-icons/react'
-import React, { ReactElement, useEffect } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import {
+  AdminCreateOutput,
   AdminCreateSchema,
-  AdminCreateType,
   IAdminBooksCreateUpdateBooks,
 } from './types'
 import Button from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { createBook, updateBook } from '@/services/api'
+import { toast } from 'react-toastify'
 
 const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   setModalOpen,
   data,
+  categoriesList,
+  refetch,
 }): ReactElement => {
-  const FormMethods = useForm<AdminCreateType>({
+  const FormMethods = useForm<AdminCreateOutput>({
     resolver: zodResolver(AdminCreateSchema),
   })
 
+  const [IsbnMessage, setIsbnMessage] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const inputsData = [
     {
+      label: 'ISBN',
+      placeholder: '000-0-00-000000-0',
+      name: 'isbn',
+      error: FormMethods?.formState?.errors?.isbn?.message || IsbnMessage,
+      disabled: data ? true : false,
+    },
+    {
       label: 'Titulo',
-      placeholder: 'Titulo',
+      placeholder: 'O dia em ...',
       name: 'title',
       error: FormMethods?.formState?.errors?.title?.message,
     },
     {
       label: 'Descrição',
-      placeholder: 'Descrição',
+      placeholder: 'Tudo começou quando um relógio esquisito...',
       name: 'description',
       error: FormMethods?.formState?.errors?.description?.message,
       type: 'textarea',
+      colspan: 2,
+    },
+    {
+      label: 'Categorias',
+      placeholder: 'Categorias',
+      name: 'category',
+      error: FormMethods?.formState?.errors?.category?.message,
+      type: 'select',
+      isMulti: true,
+      options: categoriesList,
     },
     {
       label: 'Autor',
-      placeholder: 'Autor',
+      placeholder: 'Stan Lee, Machado de Assis, ...',
       name: 'author',
       error: FormMethods?.formState?.errors?.author?.message,
     },
     {
       label: 'Editora',
-      placeholder: 'Editora',
+      placeholder: 'Panini',
       name: 'publisher',
       error: FormMethods?.formState?.errors?.publisher?.message,
     },
     {
-      label: 'Edição',
-      placeholder: 'Edição',
-      name: 'edition',
-      error: FormMethods?.formState?.errors?.edition?.message,
-    },
-    {
-      label: 'Ilustração',
-      placeholder: 'Ilustração',
-      name: 'illustration',
-      error: FormMethods?.formState?.errors?.illustration?.message,
-    },
-    {
-      label: 'Tradutor(es)',
-      placeholder: 'Tradutor(es)',
-      name: 'translator',
-      error: FormMethods?.formState?.errors?.translator?.message,
+      label: 'Idioma',
+      placeholder: 'Português',
+      name: 'language',
+      error: FormMethods?.formState?.errors?.language?.message,
     },
     {
       label: 'Idioma Original',
-      placeholder: 'Idioma Original',
-      name: 'originalLanguage',
-      error: FormMethods?.formState?.errors?.originalLanguage?.message,
-    },
-    {
-      label: 'Titulo Original',
-      placeholder: 'Titulo Original',
-      name: 'originalTitle',
-      error: FormMethods?.formState?.errors?.originalTitle?.message,
-    },
-    {
-      label: 'Paginas',
-      placeholder: 'Paginas',
-      name: 'pages',
-      error: FormMethods?.formState?.errors?.pages?.message,
-      type: 'number',
-    },
-    {
-      label: 'Acabamento',
-      placeholder: 'Acabamento',
-      name: 'finish',
-      error: FormMethods?.formState?.errors?.finish?.message,
-    },
-    {
-      label: 'Ano de lançamento',
-      placeholder: 'Ano de lançamento',
-      name: 'releaseDate',
-      error: FormMethods?.formState?.errors?.releaseDate?.message,
+      placeholder: 'Inglês',
+      name: 'country',
+      error: FormMethods?.formState?.errors?.country?.message,
     },
     {
       label: 'Imagem da capa',
       placeholder: '.jpg ou .png',
-      name: 'coverImage',
-      error: FormMethods?.formState?.errors?.coverImage?.message,
+      name: 'image',
+      error: FormMethods?.formState?.errors?.image?.message,
+    },
+
+    {
+      label: 'Ano de lançamento',
+      placeholder: '1929',
+      name: 'year',
+      error: FormMethods?.formState?.errors?.year?.message,
+      type: 'number',
     },
     {
+      label: 'Paginas',
+      placeholder: '2',
+      name: 'pages',
+      error: FormMethods?.formState?.errors?.pages?.message,
+      type: 'number',
+    },
+
+    {
       label: 'Preço',
-      placeholder: 'Preço',
+      placeholder: '31.2',
       name: 'price',
       error: FormMethods?.formState?.errors?.price?.message,
-      pattern: '^(R$ )?(d{1,3}(.d{3})*,d{2})$',
+      type: 'number',
     },
     {
       label: 'Preço com desconto',
-      placeholder: 'Preço com desconto',
-      name: 'discountPrice',
-      error: FormMethods?.formState?.errors?.discountPrice?.message,
-
+      placeholder: '31.2',
+      name: 'promotional_price',
+      error: FormMethods?.formState?.errors?.promotional_price?.message,
+      type: 'number',
       hidden: data ? false : true,
+    },
+    {
+      label: 'Estoque',
+      placeholder: '5',
+      name: 'stock',
+      error: FormMethods?.formState?.errors?.stock?.message,
+      type: 'number',
     },
   ]
 
-  const onHandleSubmit = (formData: AdminCreateType) => {
-    console.log(formData)
+  const onHandleSubmit = async (formData: AdminCreateOutput) => {
+    setIsLoading(true)
+
+    try {
+      if (data) {
+        await updateBook({
+          ...formData,
+          promotional_price: Number(formData?.promotional_price),
+          price: Number(formData.price),
+          stock: Number(formData.stock),
+          pages: Number(formData.pages),
+          year: Number(formData.year),
+        })
+        refetch()
+        setModalOpen(false)
+        toast.success('Livro atualizado com sucesso!')
+        setIsLoading(false)
+
+        return
+      }
+
+      await createBook({
+        ...formData,
+        promotional_price:
+          formData?.promotional_price === null
+            ? null
+            : Number(formData.promotional_price),
+        price: Number(formData.price),
+        stock: Number(formData.stock),
+        pages: Number(formData.pages),
+        year: Number(formData.year),
+      })
+      refetch()
+      setModalOpen(false)
+
+      setIsLoading(false)
+
+      toast.success('Livro criado com sucesso!')
+      // eslint-disable-next-line
+    } catch (error: any) {
+      if (error?.response?.data?.type === 'isbn') {
+        setIsbnMessage(error?.response?.data?.message)
+      } else {
+        toast.error('Erro ao criar livro')
+      }
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
     if (data) {
       FormMethods?.reset({
-        ...data,
-        releaseDate: String(new Date(data.releaseDate).getFullYear()),
+        isbn: data.isbn,
+        title: data.title,
+        description: data.description,
+        category: data.category,
+        author: data.author,
+        publisher: data.publisher,
+        language: data.language,
+        country: data.country,
+        image: data.image,
+        year: String(data.year),
+        pages: String(data.pages),
+        price: String(data.price),
+        promotional_price: String(data.promotional_price),
+        stock: String(data.stock),
       })
-      console.log(data)
     }
   }, [data, FormMethods])
 
@@ -153,40 +219,56 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-10">
             {inputsData.map((input, index) => (
               <div key={index}>
-                {input.type === 'textarea' ? (
-                  <Form.TextArea
-                    name={input.name}
-                    label={input.label}
-                    placeholder={input.placeholder}
-                    labelDark
-                    errorMessage={input.error}
-                  />
-                ) : (
-                  <>
-                    {!input.hidden && (
-                      <Form.Input
+                {!input.hidden && (
+                  <div className={input.colspan ? 'md:col-span-2' : ''}>
+                    {input.type === 'textarea' ? (
+                      <Form.TextArea
                         name={input.name}
                         label={input.label}
                         placeholder={input.placeholder}
                         labelDark
+                        id={input.name}
                         errorMessage={input.error}
-                        type={input?.type}
-                        pattern={input?.pattern}
                       />
+                    ) : input.type === 'select' ? (
+                      <Form.Select
+                        name={input.name}
+                        placeholder={input.placeholder}
+                        options={input.options}
+                        isMulti={input.isMulti}
+                        label={input.label}
+                        id={input.name}
+                        labelDark
+                        errorMessage={input.error}
+                      />
+                    ) : (
+                      <>
+                        <Form.Input
+                          name={input.name}
+                          label={input.label}
+                          placeholder={input.placeholder}
+                          labelDark
+                          errorMessage={input.error}
+                          type={input?.type}
+                          disabled={input?.disabled}
+                          id={input.name}
+                        />
+                      </>
                     )}
-                  </>
+                  </div>
                 )}
               </div>
             ))}
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
-            <Button content="wFull" type="submit">
+            <Button content="wFull" type="submit" isLoading={isLoading}>
               Criar
             </Button>
             <Button
               content="wFull"
               styleType="outlinedBrown"
               type="button"
+              isLoading={isLoading}
               onClick={() => setModalOpen(false)}
             >
               Cancelar

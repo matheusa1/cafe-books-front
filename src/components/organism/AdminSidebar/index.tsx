@@ -24,15 +24,13 @@ const Sidebar: React.FC = (): ReactElement => {
         {isSidebarOpen ? 'MENU PRINCIPAL' : 'MENU'}
       </p>
       {Paths.map((path, index) => (
-        <>
-          <AdminSidebarItem
-            icon={path.icon}
-            path={path.path}
-            text={path.name}
-            key={index}
-            active={path.path === pathName}
-          />
-        </>
+        <AdminSidebarItem
+          key={index}
+          icon={path.icon}
+          path={path.path}
+          text={path.name}
+          active={path.path === pathName}
+        />
       ))}
       <div
         className={`flex h-14 w-14 cursor-pointer items-center justify-center lg:hidden ${

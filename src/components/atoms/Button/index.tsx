@@ -8,12 +8,14 @@ const buttonWrapper = tv({
     content: {
       icon: 'aspect-square p-2',
       'icon-sm': 'aspect-square p-1 text-lg',
+      icon: 'h-11 w-11',
       text: 'px-10 py-4',
       'text-sm': 'px-4 py-2 text-sm',
       wFull: 'w-full',
     },
     styleType: {
       filled: 'brownButton',
+      filledWhite: 'whiteButton',
       danger: 'dangerButton',
       brownDisabled: 'brownDisabledButton',
       secondary: 'bg-brownPrimary/60',
@@ -40,15 +42,22 @@ const Button: React.FC<IButton & VariantProps<typeof buttonWrapper>> = ({
   content,
   styleType,
   rounded,
+  isLoading,
   ...rest
 }): ReactElement => {
   return (
     <button
       onClick={onClick}
       className={buttonWrapper({ content, styleType, rounded })}
+      onClick={isLoading ? () => {} : onClick}
+      className={buttonWrapper({ content, styleType })}
       {...rest}
     >
-      {children}
+      {isLoading ? (
+        <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-white"></div>
+      ) : (
+        children
+      )}
     </button>
   )
 }
