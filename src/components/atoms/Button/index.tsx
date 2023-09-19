@@ -46,10 +46,8 @@ const Button: React.FC<IButton & VariantProps<typeof buttonWrapper>> = ({
 }): ReactElement => {
   return (
     <button
-      onClick={onClick}
       className={buttonWrapper({ content, styleType, rounded })}
       onClick={isLoading ? () => {} : onClick}
-      className={buttonWrapper({ content, styleType })}
       {...rest}
     >
       {isLoading ? (
