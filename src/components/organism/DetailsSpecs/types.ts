@@ -2,6 +2,7 @@ export type IDetailsSpecs = {
   author: string
   editor: string
   pages: number
-  release: string
+  release: number
   language: string
+  isbn: string
 }

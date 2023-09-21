@@ -33,3 +33,8 @@ export const deleteBook = async (isbn: string) => {
   })
   return response.data
 }
+
+export const getBook = async (isbn: string) => {
+  const response = await api.get<ResponseBookType>(`book/${isbn}`)
+  return response.data
+}

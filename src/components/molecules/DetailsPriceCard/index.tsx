@@ -10,7 +10,7 @@ import QuantitySelector from '@/components/atoms/QuantitySelector'
 const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
   price,
   title,
-  originalPrice,
+  discountPrice,
 }): ReactElement => {
   const [isLiked, setIsLiked] = React.useState(false)
   const [quantity, setQuantity] = React.useState(1)
@@ -19,9 +19,11 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
   return (
     <div
       id="purchase"
-      className={'flex flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'}
+      className={
+        'flex w-full max-w-md flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'
+      }
     >
-      <header className="flex items-center border-b-2 border-dark pb-2">
+      <header className="flex items-center justify-between border-b-2 border-dark pb-2">
         <span className="text-xl font-bold">{title}</span>
         <div className="shrink-0 p-2">
           <BookmarkSimple
@@ -33,13 +35,16 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
       </header>
       <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
         <div className="flex gap-2">
-          {originalPrice && (
+          {discountPrice && (
             <CurrencyText
-              value={originalPrice}
-              className="text-base line-through"
+              value={price}
+              className="text-base text-subText line-through"
             />
           )}
-          <CurrencyText value={price} className="text-2xl font-bold" />
+          <CurrencyText
+            value={discountPrice ? discountPrice : price}
+            className="text-2xl font-bold"
+          />
         </div>
         <div>
           <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
