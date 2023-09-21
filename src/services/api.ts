@@ -41,6 +41,9 @@ export const getBook = async (isbn: string) => {
 }
 
 export const signUp = async (data: ISignUpScheme) => {
-  const response = await api.post('auth/signup/', data)
+  const response = await api.post('api/user/', {
+    ...data,
+    confirmPassword: undefined,
+  })
   return response.data
 }

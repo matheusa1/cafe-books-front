@@ -33,10 +33,16 @@ export const InputProps = tv({
       true: 'cursor-not-allowed bg-gray-300 px-4',
       false: 'px-4',
     },
+    bgWhite: {
+      true: 'bg-white',
+      false: 'bg-pureWhite',
+    },
   },
   defaultVariants: {
     password: false,
     search: false,
+    disabled: false,
+    bgWhite: false,
   },
 })
 
@@ -50,6 +56,7 @@ const Input: React.FC<IInput> = ({
   type,
   disabled,
   id,
+  bgWhite,
   ...rest
 }): ReactElement => {
   const [showPassword, setShowPassword] = useState(password)
@@ -66,7 +73,7 @@ const Input: React.FC<IInput> = ({
       <div className="relative">
         <input
           className={
-            InputProps({ password, search, disabled }) +
+            InputProps({ password, search, disabled, bgWhite }) +
             ` ${!!errorMessage && 'animate-shake border-red-500'}`
           }
           type={password ? (showPassword ? 'password' : 'text') : type}

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import AuthImage from '@/assets/images/AuthImage.jpeg'
+import { ToastContainer } from 'react-toastify'
 
 export default function RootLayout({
   children,
@@ -9,7 +10,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="w-screen max-w-[100vw] overflow-x-hidden">
-        <div className="flex min-h-screen w-screen items-center justify-center bg-backgroundLight">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+        <div className="flex min-h-screen w-screen items-center justify-center bg-white">
           <div className="flex min-h-screen w-full max-w-7xl items-center justify-center lg:justify-evenly">
             <Image
               src={AuthImage}
