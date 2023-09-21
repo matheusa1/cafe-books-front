@@ -5,7 +5,7 @@ import DetailsPriceCard from '@/components/molecules/DetailsPriceCard'
 
 const DetailsImageAndPriceWrapper: React.FC<IDetailsImageAndPriceWrapper> = ({
   image,
-  originalPrice,
+  discountPrice,
   price,
   title,
 }): ReactElement => {
@@ -27,7 +27,7 @@ const DetailsImageAndPriceWrapper: React.FC<IDetailsImageAndPriceWrapper> = ({
       <DetailsPriceCard
         price={price}
         title={title}
-        originalPrice={originalPrice}
+        discountPrice={discountPrice}
       />
     </div>
   )

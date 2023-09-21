@@ -9,6 +9,7 @@ const DetailsSpecs: React.FC<IDetailsSpecs> = ({
   language,
   pages,
   release,
+  isbn,
 }): ReactElement => {
   const year = new Date(release).getFullYear()
 
@@ -20,6 +21,7 @@ const DetailsSpecs: React.FC<IDetailsSpecs> = ({
     >
       <DetailsTitle>Especificações</DetailsTitle>
       <div className="flex flex-col gap-2">
+        <DetailsSpecsInfo title="ISBN" data={isbn} />
         <DetailsSpecsInfo title="Autor" data={author} />
         <DetailsSpecsInfo title="Editor" data={editor} />
         <DetailsSpecsInfo title="Idioma" data={language} />

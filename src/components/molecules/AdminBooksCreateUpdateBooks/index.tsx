@@ -262,7 +262,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
             <Button content="wFull" type="submit" isLoading={isLoading}>
-              Criar
+              {data ? 'Atualizar' : 'Criar'}
             </Button>
             <Button
               content="wFull"
