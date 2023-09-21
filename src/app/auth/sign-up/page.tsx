@@ -4,21 +4,37 @@ import Button from '@/components/atoms/Button'
 import useWindowSize from '@/utils/hooks/useWindowSize'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Form } from '@/components/atoms/Form'
 import { ISignUpScheme, SignUpScheme } from './types'
+import { signUp } from '@/services/api'
+import { toast } from 'react-toastify'
 
 const SignUp: React.FC = (): ReactElement => {
   const { width } = useWindowSize()
   const router = useRouter()
 
+  const [emailError, setEmailError] = useState<string>('')
+
   const formMethods = useForm<ISignUpScheme>({
     resolver: zodResolver(SignUpScheme),
   })
 
-  const onHandleSubmit = (data: ISignUpScheme) => {
-    console.log(data)
+  const onHandleSubmit = async (data: ISignUpScheme) => {
+    setEmailError('')
+
+    try {
+      const res = await signUp(data)
+      toast.success(res.message)
+
+      router.push('/auth/sign-in')
+      // eslint-disable-next-line
+    } catch (error: any) {
+      console.log(error.response.data)
+      if (error.response.data.message === 'Este e-mail já está cadastrado!')
+        setEmailError(error.response.data.message)
+    }
   }
 
   return (
@@ -34,19 +50,23 @@ const SignUp: React.FC = (): ReactElement => {
         >
           <Form.Input
             label="Nome"
-            name="username"
-            id="username"
+            name="name"
+            id="name"
             placeholder="Nome"
             labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.username?.message}
+            errorMessage={formMethods.formState.errors.name?.message}
+            bgWhite
           />
           <Form.Input
+            bgWhite
             label="E-mail"
             name="email"
             id="email"
             placeholder="E-mail"
             labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.email?.message}
+            errorMessage={
+              emailError || formMethods.formState.errors.email?.message
+            }
           />
           <Form.Input
             label="Senha"
@@ -54,10 +74,12 @@ const SignUp: React.FC = (): ReactElement => {
             id="password"
             placeholder="Senha"
             password
+            bgWhite
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.password?.message}
           />
           <Form.Input
+            bgWhite
             label="Confirmar Senha"
             name="confirmPassword"
             id="confirmPassword"

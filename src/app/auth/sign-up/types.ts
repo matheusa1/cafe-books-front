@@ -10,7 +10,7 @@ export const SignUpScheme = z
   .object({
     email: z.string().email(messages.email).nonempty(messages.nonempty),
     password: z.string().min(6, messages.min).nonempty(messages.nonempty),
-    username: z.string().nonempty(messages.nonempty),
+    name: z.string().nonempty(messages.nonempty),
     confirmPassword: z
       .string()
       .min(6, messages.min)

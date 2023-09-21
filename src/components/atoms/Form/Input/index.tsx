@@ -18,7 +18,7 @@ export const LabelProps = tv({
 })
 
 export const InputProps = tv({
-  base: 'w-full rounded-lg border-2 border-dark bg-backgroundLight py-3  text-dark outline-none transition-all focus:border-brownPrimary',
+  base: 'w-full rounded-lg border-2 border-dark py-3 text-dark outline-none transition-all',
   variants: {
     password: {
       true: 'px-4 pr-12',
@@ -32,10 +32,17 @@ export const InputProps = tv({
       true: 'cursor-not-allowed bg-gray-300 px-4',
       false: 'px-4',
     },
+    bgWhite: {
+      true: 'bg-white hover:bg-backgroundLight focus:border-brownPrimary focus:bg-backgroundLight',
+      false:
+        'bg-pureWhite hover:bg-white focus:border-brownPrimary focus:bg-white',
+    },
   },
   defaultVariants: {
     password: false,
     search: false,
+    disabled: false,
+    bgWhite: false,
   },
 })
 
@@ -50,6 +57,7 @@ const InputForm: React.FC<IInputForm> = ({
   type,
   disabled,
   id,
+  bgWhite,
   ...rest
 }): ReactElement => {
   const { control } = useFormContext()
@@ -72,7 +80,7 @@ const InputForm: React.FC<IInputForm> = ({
           <div className="relative">
             <input
               className={
-                InputProps({ password, search, disabled }) +
+                InputProps({ password, search, disabled, bgWhite }) +
                 ` ${!!errorMessage && 'animate-shake border-red-500'}`
               }
               type={password ? (showPassword ? 'password' : 'text') : type}

@@ -1,3 +1,4 @@
+import { ISignUpScheme } from '@/app/auth/sign-up/types'
 import { ResponseCategoriesType } from './../types/categoriesType'
 import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
 
@@ -36,5 +37,13 @@ export const deleteBook = async (isbn: string) => {
 
 export const getBook = async (isbn: string) => {
   const response = await api.get<ResponseBookType>(`book/${isbn}`)
+  return response.data
+}
+
+export const signUp = async (data: ISignUpScheme) => {
+  const response = await api.post('api/user/', {
+    ...data,
+    confirmPassword: undefined,
+  })
   return response.data
 }

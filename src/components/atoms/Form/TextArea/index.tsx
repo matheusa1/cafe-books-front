@@ -40,7 +40,7 @@ const TextAreaForm: React.FC<ITextAreaForm> = ({
           )}
           <textarea
             className={
-              'h-32 w-full rounded-lg border-2 border-dark bg-backgroundLight p-3  text-dark outline-none transition-all focus:border-brownPrimary'
+              'h-32 w-full rounded-lg border-2 border-dark bg-pureWhite p-3 text-dark outline-none  transition-all hover:bg-white focus:border-brownPrimary focus:bg-white'
             }
             id={id}
             onChange={onChange}
