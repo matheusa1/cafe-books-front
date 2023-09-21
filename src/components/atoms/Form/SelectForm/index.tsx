@@ -23,6 +23,7 @@ const SelectForm: React.FC<ISelectForm> = ({
   errorMessage,
   labelDark,
   id,
+  hFull,
   ...rest
 }): ReactElement => {
   const { control } = useFormContext()
@@ -34,7 +35,7 @@ const SelectForm: React.FC<ISelectForm> = ({
       name={name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <div className={'flex w-full flex-col gap-2'}>
+        <div className={`flex w-full flex-col gap-2 ${hFull && 'h-full'}`}>
           {label && (
             <label className={LabelProps({ labelDark })} htmlFor={id}>
               {label}
@@ -46,12 +47,30 @@ const SelectForm: React.FC<ISelectForm> = ({
             value={value}
             id={id}
             styles={{
-              control: (base) => ({
+              control: (base, state) => ({
                 ...base,
-                backgroundColor: 'rgb(240 230 227)',
+                backgroundColor: state.isFocused ? 'rgb(240 230 227)' : 'FFF',
                 padding: '0.4rem',
                 borderRadius: '0.5rem',
                 border: '2px solid rgb(29 18 18)',
+                height: hFull ? '100%' : 'auto',
+                '&:hover': {
+                  backgroundColor: 'rgb(240 230 227)',
+                },
+              }),
+              container: (base) => ({
+                ...base,
+                height: hFull ? '100%' : 'auto',
+              }),
+              valueContainer: (base, state) => ({
+                ...base,
+                height: hFull ? '100%' : 'auto',
+                alignItems: state.hasValue || hFull ? 'start' : 'center',
+              }),
+              placeholder: (base) => ({
+                ...base,
+                paddingBottom: '1px',
+                paddingTop: '4px',
               }),
               menu: (base) => ({
                 ...base,

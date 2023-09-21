@@ -18,7 +18,7 @@ export const LabelProps = tv({
 })
 
 export const InputProps = tv({
-  base: 'w-full rounded-lg border-2 border-dark bg-backgroundLight py-3  text-dark outline-none transition-all focus:border-brownPrimary',
+  base: 'w-full rounded-lg border-2 border-dark bg-pureWhite py-3 text-dark outline-none transition-all hover:bg-white focus:border-brownPrimary focus:bg-white',
   variants: {
     password: {
       true: 'px-4 pr-12',
