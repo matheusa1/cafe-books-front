@@ -21,7 +21,7 @@ const ForYouCard: React.FC = (): ReactElement => {
 
   return (
     <div className="flex w-full max-w-7xl flex-col gap-4 rounded-md bg-pureWhite p-5">
-      <div className="flex flex-col items-center lg:p-10 lg:gap-10 justify-center gap-4 text-center md:grid md:grid-cols-3">
+      <div className="flex flex-col items-center justify-center gap-4 text-center md:grid md:grid-cols-3 lg:gap-10 lg:p-10">
         <Image
           src={'/mock/images/boxSherlock.png'}
           alt={'box'}
