@@ -47,3 +47,19 @@ export const signUp = async (data: ISignUpScheme) => {
   })
   return response.data
 }
+
+export const uploadImageToCloudnary = async (
+  file: File,
+  upload_preset?: string,
+) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('upload_preset', upload_preset ? upload_preset : 'books')
+
+  const res = await axios.post(
+    'https://api.cloudinary.com/v1_1/dkwt60tnl/image/upload',
+    formData,
+  )
+
+  return res.data
+}

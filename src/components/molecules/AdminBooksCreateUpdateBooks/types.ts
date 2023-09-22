@@ -21,7 +21,7 @@ export const AdminCreateSchema = z.object({
   publisher: z.string().nonempty(Response.string),
   country: z.string().nonempty(Response.string),
   language: z.string().nonempty(Response.string),
-  image: z.string().nonempty(Response.string),
+  image: z.any().refine((val) => val.length > 0, Response.string),
   description: z
     .string()
     .max(300, 'Máximo de 300 caracteres')

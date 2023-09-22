@@ -9,8 +9,10 @@ import Button from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { createBook, updateBook } from '@/services/api'
 import { toast } from 'react-toastify'
+import { createBook, updateBook, uploadImageToCloudnary } from '@/services/api'
+
+const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
 const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   setModalOpen,
@@ -81,13 +83,6 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       error: FormMethods?.formState?.errors?.country?.message,
     },
     {
-      label: 'Imagem da capa',
-      placeholder: '.jpg ou .png',
-      name: 'image',
-      error: FormMethods?.formState?.errors?.image?.message,
-    },
-
-    {
       label: 'Ano de lançamento',
       placeholder: '1929',
       name: 'year',
@@ -128,11 +123,13 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
     setIsLoading(true)
-
     try {
+      const res = await uploadImageToCloudnary(formData.image[0], presetUpload)
+
       if (data) {
         await updateBook({
           ...formData,
+          image: res?.secure_url,
           promotional_price: Number(formData?.promotional_price),
           price: Number(formData.price),
           stock: Number(formData.stock),
@@ -149,6 +146,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
       await createBook({
         ...formData,
+        image: res?.secure_url,
         promotional_price:
           formData?.promotional_price === null
             ? null
@@ -195,6 +193,8 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       })
     }
   }, [data, FormMethods])
+
+  console.log(FormMethods?.formState?.errors)
 
   return (
     <div className="flex max-h-screen p-5">
@@ -262,6 +262,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                   </div>
                 )
             })}
+            <input type="file" {...FormMethods.register('image')} />
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
             <Button content="wFull" type="submit" isLoading={isLoading}>
