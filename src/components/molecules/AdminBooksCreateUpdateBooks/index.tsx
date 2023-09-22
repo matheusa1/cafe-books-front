@@ -88,6 +88,8 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       name: 'year',
       error: FormMethods?.formState?.errors?.year?.message,
       type: 'number',
+      min: 0,
+      max: new Date().getFullYear(),
     },
     {
       label: 'Paginas',
@@ -95,6 +97,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       name: 'pages',
       error: FormMethods?.formState?.errors?.pages?.message,
       type: 'number',
+      min: 0,
     },
 
     {
@@ -103,6 +106,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       name: 'price',
       error: FormMethods?.formState?.errors?.price?.message,
       type: 'number',
+      min: 0,
     },
     {
       label: 'Preço com desconto',
@@ -111,6 +115,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       error: FormMethods?.formState?.errors?.promotional_price?.message,
       type: 'number',
       hidden: data ? false : true,
+      min: 0,
     },
     {
       label: 'Estoque',
@@ -118,18 +123,29 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       name: 'stock',
       error: FormMethods?.formState?.errors?.stock?.message,
       type: 'number',
+      min: 0,
     },
   ]
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
     setIsLoading(true)
     try {
-      const res = await uploadImageToCloudnary(formData.image[0], presetUpload)
+      let image
+      if (typeof formData.image !== 'string') {
+        const res = await uploadImageToCloudnary(
+          formData.image[0],
+          presetUpload,
+        )
+
+        image = res?.secure_url
+      } else {
+        image = formData.image
+      }
 
       if (data) {
         await updateBook({
           ...formData,
-          image: res?.secure_url,
+          image: image,
           promotional_price: Number(formData?.promotional_price),
           price: Number(formData.price),
           stock: Number(formData.stock),
@@ -146,7 +162,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
       await createBook({
         ...formData,
-        image: res?.secure_url,
+        image: image,
         promotional_price:
           formData?.promotional_price === null
             ? null
@@ -246,23 +262,30 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                         hFull
                       />
                     ) : (
-                      <>
-                        <Form.Input
-                          name={input.name}
-                          label={input.label}
-                          placeholder={input.placeholder}
-                          labelDark
-                          errorMessage={input.error}
-                          type={input?.type}
-                          disabled={input?.disabled}
-                          id={input.name}
-                        />
-                      </>
+                      <Form.Input
+                        name={input.name}
+                        label={input.label}
+                        placeholder={input.placeholder}
+                        labelDark
+                        errorMessage={input.error}
+                        type={input?.type}
+                        disabled={input?.disabled}
+                        id={input.name}
+                        min={input?.min}
+                        max={input?.max}
+                      />
                     )}
                   </div>
                 )
             })}
-            <input type="file" {...FormMethods.register('image')} />
+            <Form.InputFile
+              name="image"
+              label="Imagem"
+              id="imagem"
+              labelDark
+              placeholder="Selecione ou arraste a imagem"
+              errorMessage={FormMethods?.formState?.errors?.image?.message}
+            />
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
             <Button content="wFull" type="submit" isLoading={isLoading}>
