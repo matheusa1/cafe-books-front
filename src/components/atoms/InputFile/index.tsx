@@ -46,7 +46,9 @@ const InputFile: React.FC<IInputFile> = ({
         <Input value={value} />
       </div>
       {errorMessage && (
-        <span className="text-sm text-red-500">{errorMessage}</span>
+        <span className="text-sm text-red-500">
+          {typeof errorMessage === 'string' && errorMessage}
+        </span>
       )}
     </div>
   )
