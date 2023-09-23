@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 
-const Hot: React.FC = (): ReactElement => {
+const hot: React.FC = (): ReactElement => {
   return (
     <div className={''}>
       <h1>hot</h1>
@@ -8,4 +8,4 @@ const Hot: React.FC = (): ReactElement => {
   )
 }
 
-export default Hot
+export default hot
