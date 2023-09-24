@@ -1,5 +1,5 @@
-import { TratedCategoriesBookType } from '@/types/booktype'
+import { ResponseBookType, TratedCategoriesBookType } from '@/types/booktype'
 
 export type IHeadboardItem = {
-  cardInfo: TratedCategoriesBookType
+  cardInfo: TratedCategoriesBookType | ResponseBookType
 }

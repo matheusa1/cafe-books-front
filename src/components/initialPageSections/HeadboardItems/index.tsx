@@ -1,18 +1,22 @@
-'use client'
-
 import Title from '@/components/atoms/Title'
 import HeadboardItem from '@/components/molecules/HeadboardItem'
-import React, { ReactElement } from 'react'
+import React from 'react'
 
-import { headboardItemsData } from '@/mock/headboardItemsData'
-import useWindowSize from '@/utils/hooks/useWindowSize'
-import Button from '@/components/atoms/Button'
-import { ArrowCircleRight } from '@phosphor-icons/react'
-import { useRouter } from 'next/navigation'
+import ViewMoreButton from '@/components/atoms/ViewMoreButton'
+import { getBooks } from '@/services/api'
 
-const HeadboardItems: React.FC = (): ReactElement => {
-  const { width } = useWindowSize()
-  const router = useRouter()
+const getBooksData = async () => {
+  try {
+    const response = await getBooks()
+
+    return response
+  } catch (error) {
+    return undefined
+  }
+}
+
+const HeadboardItems: React.FC = async () => {
+  const books = await getBooksData()
 
   return (
     <div className={'mt-10 flex flex-col gap-10'}>
@@ -23,20 +27,13 @@ const HeadboardItems: React.FC = (): ReactElement => {
       />
       <div className="flex w-full  max-w-7xl flex-col self-center">
         <div className="grid w-full grid-cols-2 gap-2 p-2 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:grid-cols-5">
-          {headboardItemsData.map((item, index) => {
-            if (index <= 5 || width >= 768)
-              return <HeadboardItem key={item.id} cardInfo={{ ...item }} />
+          {books?.map((item, index) => {
+            if (index <= 10)
+              return <HeadboardItem key={index} cardInfo={item} />
           })}
         </div>
         <div className="self-end">
-          <Button
-            styleType="filledWhite"
-            onClick={() => router.push('/explore')}
-          >
-            <div className="flex items-center gap-2 text-dark">
-              Ver mais <ArrowCircleRight size={32} />
-            </div>
-          </Button>
+          <ViewMoreButton />
         </div>
       </div>
     </div>
