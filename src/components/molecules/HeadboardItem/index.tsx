@@ -20,14 +20,18 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
 
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
 
-  const { price, discountPrice, image, title, id } = cardInfo
+  const { price, promotional_price, image, title, isbn } = cardInfo
 
   return (
-    <div className={'flex w-full flex-col gap-3 rounded-lg bg-pureWhite p-2'}>
+    <div
+      className={
+        'flex h-full w-full flex-col gap-3 rounded-lg bg-pureWhite p-2'
+      }
+    >
       <header className="flex items-center justify-between">
         <div>
-          {discountPrice && (
-            <Badge>{`${(((price - discountPrice) / price) * 100).toFixed(
+          {promotional_price && (
+            <Badge>{`${(((price - promotional_price) / price) * 100).toFixed(
               0,
             )}% off`}</Badge>
           )}
@@ -56,13 +60,15 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
             <CurrencyText
               value={price}
               className={
-                discountPrice ? 'text-sm text-subText line-through' : 'text-lg'
+                promotional_price
+                  ? 'text-sm text-subText line-through'
+                  : 'text-lg'
               }
             />
 
-            {discountPrice && (
+            {promotional_price && (
               <CurrencyText
-                value={discountPrice}
+                value={promotional_price}
                 className="text-lg font-bold"
               />
             )}
@@ -70,7 +76,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
           <div className="flex w-full flex-col gap-2">
             <Button
               content="wFull"
-              onClick={() => router.push(`/book-info/${id}`)}
+              onClick={() => router.push(`/book-info/${isbn}`)}
             >
               Comprar
             </Button>
