@@ -27,10 +27,7 @@ const BookInfo: React.FC<{ params: { id: string } }> = async ({ params }) => {
       >
         <div className="flex w-full max-w-7xl flex-col items-center gap-5">
           <div className="flex items-center gap-4 self-start">
-            <BackButton id="backButton" />
-            <label htmlFor="backButton" className="text-2xl">
-              Voltar
-            </label>
+            <BackButton />
           </div>
           <DetailsImageAndPriceWrapper
             image={book.image}
@@ -58,10 +55,7 @@ const BookInfo: React.FC<{ params: { id: string } }> = async ({ params }) => {
     return (
       <div className="flex h-screen w-screen flex-col gap-4 px-5 pt-20 md:px-10 md:pt-28">
         <div className="flex items-center gap-4 self-start">
-          <BackButton id="backButton" />
-          <label htmlFor="backButton" className="text-2xl">
-            Voltar
-          </label>
+          <BackButton />
         </div>
         <div className="flex flex-1 items-center justify-center">
           <Image

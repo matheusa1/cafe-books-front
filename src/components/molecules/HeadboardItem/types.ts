@@ -1,5 +1,5 @@
-import { IHeadboardItemData } from '@/mock/headboardItemsData'
+import { ResponseBookType, TratedCategoriesBookType } from '@/types/booktype'
 
 export type IHeadboardItem = {
-  cardInfo: IHeadboardItemData
+  cardInfo: TratedCategoriesBookType | ResponseBookType
 }

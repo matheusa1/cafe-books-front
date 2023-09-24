@@ -4,6 +4,6 @@ import { LabelProps } from '.'
 
 export type ISelect = Props &
   VariantProps<typeof LabelProps> & {
-    label: string
+    label?: string
     errorMessage?: string
   }
