@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 import { IMainContentExplore } from './types'
 import HeadboardItem from '@/components/molecules/HeadboardItem'
-import Link from 'next/link'
 
 const MainContentExplore: React.FC<IMainContentExplore> = ({
   books,
@@ -9,15 +8,11 @@ const MainContentExplore: React.FC<IMainContentExplore> = ({
   return (
     <div
       className={
-        'grid w-full grid-cols-2 gap-2 text-dark sm:grid-cols-3 md:grid-cols-4'
+        'grid w-full grid-cols-2 gap-2 text-dark sm:grid-cols-3 md:grid-cols-4 md:gap-4'
       }
     >
       {books?.map((book, index) => {
-        return (
-          <Link href={`/book-info/${book.isbn}`} key={index}>
-            <HeadboardItem cardInfo={book} />
-          </Link>
-        )
+        return <HeadboardItem cardInfo={book} key={index} />
       })}
     </div>
   )

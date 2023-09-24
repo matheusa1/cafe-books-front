@@ -42,7 +42,10 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
           weight={isBookmarked ? 'fill' : 'regular'}
         />
       </header>
-      <main className="flex h-full w-full justify-center">
+      <main
+        className="flex h-full w-full justify-center"
+        onClick={() => router.push(`/book-info/${isbn}`)}
+      >
         <Image
           src={image}
           alt="Book image"
@@ -52,7 +55,10 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
         />
       </main>
       <footer className="flex w-full flex-col items-center justify-center ">
-        <span className="w-full truncate text-center font-semibold">
+        <span
+          className="w-full truncate text-center font-semibold"
+          onClick={() => router.push(`/book-info/${isbn}`)}
+        >
           {title}
         </span>
         <div className="w-full">
