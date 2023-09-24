@@ -1,3 +1,4 @@
+import CheckboxForm from './CheckboxForm'
 import InputForm from './Input'
 import FormInputFile from './InputFile'
 import SelectForm from './SelectForm'
@@ -8,4 +9,5 @@ export const Form = {
   TextArea: TextAreaForm,
   Select: SelectForm,
   InputFile: FormInputFile,
+  Checkbox: CheckboxForm,
 }

@@ -9,11 +9,21 @@ import React, { ReactElement, useState } from 'react'
 
 import EmptyImage from '@/assets/images/empty-box.png'
 import Image from 'next/image'
+import ExploreFilter from '@/components/organism/ExploreFilter'
+import { ExploreFilterProps } from '@/components/organism/ExploreFilter/types'
 
 const Explore: React.FC = (): ReactElement => {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
+
+  const [filter, setFilter] = useState<ExploreFilterProps>({
+    categories: [],
+    price: {
+      min: undefined,
+      max: undefined,
+    },
+  })
 
   const { data: booksData, isLoading } = useQuery(
     ['books', Infinity],
@@ -48,6 +58,43 @@ const Explore: React.FC = (): ReactElement => {
       tempData = book
     }
 
+    if (filter.categories.length > 0) {
+      tempData = book.category.some((category) =>
+        filter.categories.some(
+          (filterCategory) => filterCategory.value === category.value,
+        ),
+      )
+    }
+
+    if (filter.price.min !== undefined || filter.price.max !== undefined) {
+      if (filter.price.min === undefined && filter.price.max !== undefined) {
+        if (book?.promotional_price) {
+          tempData = book?.promotional_price <= filter.price.max
+        } else {
+          tempData = book?.price <= filter.price.max
+        }
+      }
+
+      if (filter.price.max === undefined && filter.price.min !== undefined) {
+        if (book?.promotional_price) {
+          tempData = book?.promotional_price >= filter.price.min
+        } else {
+          tempData = book.price >= filter.price.min
+        }
+      }
+
+      if (filter.price.min !== undefined && filter.price.max !== undefined) {
+        if (book?.promotional_price) {
+          tempData =
+            book?.promotional_price >= filter.price.min &&
+            book?.promotional_price <= filter.price.max
+        } else {
+          tempData =
+            book.price >= filter.price.min && book.price <= filter.price.max
+        }
+      }
+    }
+
     if (
       index >= (currentPage - 1) * itemsPerPage &&
       index < currentPage * itemsPerPage
@@ -56,13 +103,15 @@ const Explore: React.FC = (): ReactElement => {
     }
   })
 
+  console.log(filteredBooks)
+
   return (
     <div className={'my-20 flex flex-col items-center px-5 md:my-28 md:px-10'}>
       <div className="flex w-full max-w-7xl flex-col items-center gap-5">
         <ExploreHeader search={search} setSearch={setSearch} />
         <div className="flex w-full gap-5">
-          <aside className="hidden h-48 w-20 bg-blue-500 lg:flex">
-            {/* To do - Filter */}
+          <aside className="hidden w-64 p-2 lg:flex">
+            <ExploreFilter filter={filter} setFilter={setFilter} />
           </aside>
           <main className="flex flex-1 flex-col gap-5 ">
             {isLoading ? (
