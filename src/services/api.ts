@@ -5,7 +5,7 @@ import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://hendrickfs.pythonanywhere.com/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
 
 export const getCategories = async () => {
