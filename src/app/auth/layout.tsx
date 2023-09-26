@@ -22,7 +22,7 @@ export default function RootLayout({
           pauseOnHover
           theme="colored"
         />
-        <div className="flex min-h-screen w-screen items-center justify-center bg-white">
+        <div className="flex min-h-screen w-screen items-center justify-center bg-backgroundLight">
           <div className="flex min-h-screen w-full max-w-7xl items-center justify-center lg:justify-evenly">
             <Image
               src={AuthImage}

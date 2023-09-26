@@ -39,7 +39,7 @@ const config: Config = {
         brownCard: '#3C2C26',
         brownPressed: '#52392E',
         white: '#FFF4F1',
-        backgroundLight: '#F0E6E3',
+        backgroundLight: '#F1F1F1',
         'white1/2': '#C7BCBA',
         dark: '#1D1212',
         subText: '#9FA2B4',

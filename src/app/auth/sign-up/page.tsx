@@ -55,10 +55,8 @@ const SignUp: React.FC = (): ReactElement => {
             placeholder="Nome"
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.name?.message}
-            bgWhite
           />
           <Form.Input
-            bgWhite
             label="E-mail"
             name="email"
             id="email"
@@ -74,12 +72,10 @@ const SignUp: React.FC = (): ReactElement => {
             id="password"
             placeholder="Senha"
             password
-            bgWhite
             labelDark={width >= 1024}
             errorMessage={formMethods.formState.errors.password?.message}
           />
           <Form.Input
-            bgWhite
             label="Confirmar Senha"
             name="confirmPassword"
             id="confirmPassword"

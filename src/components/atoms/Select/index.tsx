@@ -23,6 +23,7 @@ const Select: React.FC<ISelect> = ({
   errorMessage,
   labelDark,
   id,
+  bgWhite,
   ...rest
 }): ReactElement => {
   if (label && !id) throw new Error('You must provide an id for the select')
@@ -40,7 +41,7 @@ const Select: React.FC<ISelect> = ({
         styles={{
           control: (base) => ({
             ...base,
-            backgroundColor: 'rgb(240 230 227)',
+            backgroundColor: bgWhite ? 'rgb(240 230 227)' : 'transparent',
             padding: '0.4rem',
             borderRadius: '0.5rem',
             border: '2px solid rgb(29 18 18)',
@@ -49,11 +50,15 @@ const Select: React.FC<ISelect> = ({
             ...base,
             borderRadius: '0.5rem',
             border: '2px solid rgb(29 18 18)',
-            backgroundColor: 'rgb(240 230 227)',
+            backgroundColor: bgWhite ? 'rgb(240 230 227)' : '#FFF',
           }),
           option: (base, state) => ({
             ...base,
-            backgroundColor: state.isFocused ? 'rgb(200 190 187)' : 'none',
+            backgroundColor: state.isFocused
+              ? bgWhite
+                ? 'rgb(200 190 187)'
+                : '#e1e1e1'
+              : 'none',
           }),
         }}
       />

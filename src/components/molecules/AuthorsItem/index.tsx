@@ -11,7 +11,7 @@ const AuthorsItem: React.FC<IAuthorsItem> = ({
     <Link
       href={'#'}
       className={
-        'flex w-32 shrink-0 flex-col gap-2 rounded-lg p-4 text-center transition-all hover:bg-white'
+        'flex w-32 shrink-0 flex-col gap-2 rounded-lg p-4 text-center transition-all hover:bg-pureWhite'
       }
     >
       <Image

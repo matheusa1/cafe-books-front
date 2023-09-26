@@ -13,7 +13,3 @@
 .brownDisabledButton {
   @apply bg-brownPrimary/50 cursor-not-allowed;
 }
-
-.whiteButton {
-  @apply bg-white transition-all hover:bg-gray-100;
-}

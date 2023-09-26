@@ -24,6 +24,7 @@ const SelectForm: React.FC<ISelectForm> = ({
   labelDark,
   id,
   hFull,
+  bgWhite,
   ...rest
 }): ReactElement => {
   const { control } = useFormContext()
@@ -47,16 +48,12 @@ const SelectForm: React.FC<ISelectForm> = ({
             value={value}
             id={id}
             styles={{
-              control: (base, state) => ({
+              control: (base) => ({
                 ...base,
-                backgroundColor: state.isFocused ? 'rgb(240 230 227)' : 'FFF',
+                backgroundColor: bgWhite ? 'rgb(240 230 227)' : 'transparent',
                 padding: '0.4rem',
                 borderRadius: '0.5rem',
                 border: '2px solid rgb(29 18 18)',
-                height: hFull ? '100%' : 'auto',
-                '&:hover': {
-                  backgroundColor: 'rgb(240 230 227)',
-                },
               }),
               container: (base) => ({
                 ...base,
@@ -76,11 +73,15 @@ const SelectForm: React.FC<ISelectForm> = ({
                 ...base,
                 borderRadius: '0.5rem',
                 border: '2px solid rgb(29 18 18)',
-                backgroundColor: 'rgb(240 230 227)',
+                backgroundColor: bgWhite ? 'rgb(240 230 227)' : '#FFF',
               }),
               option: (base, state) => ({
                 ...base,
-                backgroundColor: state.isFocused ? 'rgb(200 190 187)' : 'none',
+                backgroundColor: state.isFocused
+                  ? bgWhite
+                    ? 'rgb(200 190 187)'
+                    : '#e1e1e1'
+                  : 'none',
               }),
             }}
           />
