@@ -11,6 +11,9 @@ dependencies:
   '@cloudinary/url-gen':
     specifier: ^1.11.2
     version: 1.11.2
+  '@files-ui/react':
+    specifier: ^1.0.8
+    version: 1.0.8(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
   '@hookform/resolvers':
     specifier: ^3.3.1
     version: 3.3.1(react-hook-form@7.46.0)
@@ -283,6 +286,11 @@ packages:
       '@cloudinary/transformation-builder-sdk': 1.6.1
     dev: false
 
+  /@dynamicss/dynamicss@2.2.8:
+    resolution: {integrity: sha512-e6hrGUydr8f+c9E/9fHFSG5LoSLdq/MdZXXfbzEDWIVuzKF2hcdxZE7nHNqUNF2htw1mZ17Pyoshu3A6kFEeFA==}
+    requiresBuild: true
+    dev: false
+
   /@emotion/babel-plugin@11.11.0:
     resolution: {integrity: sha512-m4HEDZleaaCH+XgDDsPF15Ht6wTLsgDTeR3WYj9Q/k76JtWhrJjcP4+/XlG8LGT/Rol9qUfOIztXeA84ATpqPQ==}
     dependencies:
@@ -404,6 +412,24 @@ packages:
   /@eslint/js@8.48.0:
     resolution: {integrity: sha512-ZSjtmelB7IJfWD2Fvb7+Z+ChTIKWq6kjda95fLcQKNS5aheVHn4IkfgRQE3sIIzTcSLwLcLZUD9UBt+V7+h+Pw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@files-ui/core@1.0.4:
+    resolution: {integrity: sha512-CaSyHSwjeWEkctfALoK4MwAxq3Zr7+Ozyk5AMoB3s1UBIVgh2618wvNuUIHSVhWFKeB28bOoYxCzM2PEXO4QgA==}
+    dev: false
+
+  /@files-ui/react@1.0.8(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-yveLiDziZ0WOf1rqRwnQGH6NErvNjkkOURtnK4YyiD2jgTMYlUNhghegciqzHjHd1P5UiD86W+++QYDvtS/rnQ==}
+    peerDependencies:
+      '@types/react': ^17.0.0 || ^18.0.0
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@dynamicss/dynamicss': 2.2.8
+      '@files-ui/core': 1.0.4
+      '@types/react': 18.2.20
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@floating-ui/core@1.5.0:
     resolution: {integrity: sha512-kK1h4m36DQ0UHGj5Ah4db7R0rHemTqqO0QLvUqi1/mUUp3LuAWbWxdxSIf/XsnH9VS6rRVPLJCncjRzUvyCLXg==}
