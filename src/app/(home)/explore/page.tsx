@@ -103,8 +103,6 @@ const Explore: React.FC = (): ReactElement => {
     }
   })
 
-  console.log(filteredBooks)
-
   return (
     <div className={'my-20 flex flex-col items-center px-5 md:my-28 md:px-10'}>
       <div className="flex w-full max-w-7xl flex-col items-center gap-5">
