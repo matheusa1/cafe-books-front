@@ -28,17 +28,17 @@ const CategoriesItem: React.FC<ICategoriesItem> = ({
       <div className="relative h-24 w-24">
         <div
           className={
-            'absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-700 transition-all data-[isHover=true]:h-28 data-[isHover=true]:w-28'
+            'absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-700 transition-all data-[ishover=true]:h-28 data-[ishover=true]:w-28'
           }
-          data-isHover={isHover}
+          data-ishover={isHover}
         />
         <ImageWithFallback
-          data-isHover={isHover}
+          data-ishover={isHover}
           src={image}
           alt="bookImage"
           width={96}
           height={96}
-          className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 object-contain transition-all duration-500 data-[isHover=true]:rotate-12"
+          className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 object-contain transition-all duration-500 data-[ishover=true]:rotate-12"
         />
       </div>
       <p>{title}</p>

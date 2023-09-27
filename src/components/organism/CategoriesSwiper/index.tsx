@@ -1,6 +1,9 @@
 import CategoriesItem from '@/components/molecules/CategoriesItem'
 import React, { ReactElement } from 'react'
 import { ICategoriesSwiper } from './types'
+
+import fallBackImage from '@/assets/images/notFoundImage.png'
+
 const CategoriesSwiper: React.FC<ICategoriesSwiper> = ({
   categories,
 }): ReactElement => {
@@ -13,7 +16,7 @@ const CategoriesSwiper: React.FC<ICategoriesSwiper> = ({
               <CategoriesItem
                 key={index}
                 title={item.name}
-                image={item.image_url === null ? '' : item.image_url}
+                image={item.image_url === null ? fallBackImage : item.image_url}
               />
             ),
         )}
