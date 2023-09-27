@@ -6,4 +6,5 @@ export type ISelect = Props &
   VariantProps<typeof LabelProps> & {
     label?: string
     errorMessage?: string
+    bgWhite?: boolean
   }

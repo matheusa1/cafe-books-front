@@ -35,7 +35,7 @@ export const InputProps = tv({
     bgWhite: {
       true: 'bg-white hover:bg-backgroundLight focus:border-brownPrimary focus:bg-backgroundLight',
       false:
-        'bg-pureWhite hover:bg-white focus:border-brownPrimary focus:bg-white',
+        'bg-transparent hover:bg-pureWhite focus:border-brownPrimary focus:bg-pureWhite',
     },
   },
   defaultVariants: {

@@ -3,7 +3,7 @@ import { IButton } from './types'
 import { tv, VariantProps } from 'tailwind-variants'
 
 const buttonWrapper = tv({
-  base: 'flex h-11 items-center justify-center text-white transition-all',
+  base: 'flex h-11 items-center justify-center text-white transition-all ',
   variants: {
     content: {
       icon: 'aspect-square p-2',
@@ -14,7 +14,8 @@ const buttonWrapper = tv({
     },
     styleType: {
       filled: 'brownButton',
-      filledWhite: 'whiteButton',
+      filledWhite:
+        'border-2 border-pureWhite bg-pureWhite text-dark hover:bg-dark hover:text-pureWhite',
       danger: 'dangerButton',
       brownDisabled: 'brownDisabledButton',
       secondary: 'bg-brownPrimary/60',
@@ -51,7 +52,7 @@ const Button: React.FC<IButton & VariantProps<typeof buttonWrapper>> = ({
       {...rest}
     >
       {isLoading ? (
-        <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-white"></div>
+        <div className="h-6 w-6 animate-spin rounded-full border-b-2 border-pureWhite"></div>
       ) : (
         children
       )}

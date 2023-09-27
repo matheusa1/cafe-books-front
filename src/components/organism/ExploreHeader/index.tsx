@@ -21,7 +21,6 @@ const ExploreHeader: React.FC<IExploreHeader> = ({
       </div>
       <Input
         search
-        bgWhite
         onChange={(e) => setSearch(e.target.value)}
         value={search}
         placeholder="Pesquisar por título ou ISBN"

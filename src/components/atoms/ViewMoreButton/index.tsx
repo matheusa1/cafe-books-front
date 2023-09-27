@@ -10,7 +10,7 @@ const ViewMoreButton: React.FC = (): ReactElement => {
 
   return (
     <Button styleType="filledWhite" onClick={() => router.push('/explore')}>
-      <div className="flex items-center gap-2 text-dark">
+      <div className="flex items-center gap-2">
         Ver mais <ArrowCircleRight size={32} />
       </div>
     </Button>
