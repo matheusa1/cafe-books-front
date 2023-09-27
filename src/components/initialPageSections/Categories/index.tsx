@@ -1,8 +1,21 @@
 import Title from '@/components/atoms/Title'
 import CategoriesSwiper from '@/components/organism/CategoriesSwiper'
-import React, { ReactElement } from 'react'
 
-const Categories: React.FC = (): ReactElement => {
+import { getCategories } from '@/services/api'
+
+const getCategoriesData = async () => {
+  try {
+    const response = await getCategories()
+    return response
+  } catch (error) {
+    return undefined
+  }
+}
+
+export const revalidate = 60 * 60 * 24
+
+const Categories: React.FC = async () => {
+  const categories = await getCategoriesData()
   return (
     <div className={'mt-20'}>
       <Title
@@ -10,7 +23,7 @@ const Categories: React.FC = (): ReactElement => {
         boldText={'Nossa estante'}
         text={'de livros'}
       />
-      <CategoriesSwiper />
+      <CategoriesSwiper categories={categories} />
     </div>
   )
 }
