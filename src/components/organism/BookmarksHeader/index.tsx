@@ -8,7 +8,7 @@ const BookmarksHeader: React.FC = (): ReactElement => {
         'flex w-full flex-col items-center gap-2 md:flex-row md:justify-between'
       }
     >
-      <h1 className="text-xl font-bold">BookmarksHeader</h1>
+      <h1 className="text-xl font-bold">Meus Favoritos</h1>
       <div className="w-full max-w-sm">
         <Input search />
       </div>
