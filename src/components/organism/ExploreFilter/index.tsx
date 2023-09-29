@@ -6,10 +6,11 @@ import { getCategories } from '@/services/api'
 import { toTitleCase } from '@/utils/toTitleCase'
 import { Funnel } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { ExploreFilterProps, IExploreFilter, selectProps } from './types'
 import Input from '@/components/atoms/Input'
 import Button from '@/components/atoms/Button'
+import { useSearchParams } from 'next/navigation'
 
 const ExploreFilter: React.FC<IExploreFilter> = ({
   filter,
@@ -29,6 +30,29 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
 
     return categoriesList
   })
+
+  const params = useSearchParams()
+
+  useEffect(() => {
+    if (params.get('category')) {
+      const newCategory = categories?.filter((category) => {
+        return category.value === params.get('category')
+      })
+
+      if (newCategory) {
+        setFilter({
+          ...filter,
+          categories: newCategory,
+        })
+
+        setLocalFilter({
+          ...localFilter,
+          categories: newCategory,
+        })
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params, categories])
 
   return (
     <div className={'flex w-full flex-col gap-5'}>
