@@ -3,7 +3,7 @@ import { FC } from 'react'
 
 export const CartItemsTable: FC = () => {
   return (
-    <div className={''}>
+    <div className={'w-full'}>
       <header className="hidden">
         <div>
           <span>Produto</span>

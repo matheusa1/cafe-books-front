@@ -19,7 +19,7 @@ export const CartItemContent: FC = () => {
           alt={'book image'}
           className="col-span-2 h-16 object-contain"
         />
-        <div className="col-span-3 self-center ">
+        <div className="col-span-3 self-center">
           <header className="flex items-center justify-between">
             <span className="text-xs text-subText">J.R.R. Tolkien</span>
             <Trash className="h-6 w-6 text-danger" />
@@ -28,18 +28,21 @@ export const CartItemContent: FC = () => {
         </div>
       </header>
       <div className="flex flex-col gap-2">
-        <header className="grid grid-cols-5">
-          <div className="col-span-3 flex gap-2 self-center">
-            <span>Preço un.</span>
-            <CurrencyText value={100} />
-          </div>
-          <div className="col-span-2">
+        <header className="flex items-center justify-between">
+          <span>Quantidade</span>
+          <div className="">
             <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
           </div>
         </header>
-        <div className="flex justify-between">
-          <span className="text-lg font-bold">Total</span>
-          <CurrencyText value={value * quantity} />
+        <div className="flex items-center justify-between">
+          <div className="flex gap-2 self-center">
+            <span>Preço un.</span>
+            <CurrencyText value={100} />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold">Total</span>
+            <CurrencyText value={value * quantity} />
+          </div>
         </div>
       </div>
     </div>
