@@ -129,7 +129,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
       <main className="w-[90vw] max-w-xl flex-col rounded-md bg-pureWhite p-5">
         <header className="mb-5 flex justify-between">
           <h1 className="text-lg font-semibold">Alterar endereço</h1>
-          <Dialog.Close>
+          <Dialog.Close onClick={() => setOpen(false)}>
             <X className="h-6 w-6 text-dark" />
           </Dialog.Close>
         </header>
@@ -220,7 +220,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
               <Button content="wFull" styleType="success">
                 Salvar
               </Button>
-              <Dialog.Close asChild>
+              <Dialog.Close asChild onClick={() => setOpen(false)}>
                 <Button type="button" content="wFull" styleType="outlinedBrown">
                   Cancelar
                 </Button>
