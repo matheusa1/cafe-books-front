@@ -1,3 +1,4 @@
+import { CartContent } from '@/components/organism/CartContent'
 import { CartResume } from '@/components/organism/CartResume'
 import React, { ReactElement } from 'react'
 
@@ -9,11 +10,15 @@ const Cart: React.FC = (): ReactElement => {
       }
     >
       <div className="grid w-full flex-1 grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="col-span-1 bg-red-500 md:col-span-2">Endereco</div>
-        <div className="order-1 row-span-1 md:order-none md:row-span-2">
+        <div className="order-1 col-span-1 bg-red-500 md:order-none md:col-span-2">
+          Endereco
+        </div>
+        <div className="order-2 row-span-1 md:order-none md:row-span-2">
           <CartResume />
         </div>
-        <div className="col-span-1 bg-blue-500 md:col-span-2">Carrinho</div>
+        <div className="col-span-1 md:col-span-2">
+          <CartContent />
+        </div>
       </div>
     </div>
   )
