@@ -20,7 +20,7 @@ export const Routes = [
     icon: () => <SquaresFour size={24} color={'white'} />,
   },
   {
-    path: '/profile',
+    path: '/auth/sign-in',
     icon: () => <User size={24} color={'white'} />,
   },
   {

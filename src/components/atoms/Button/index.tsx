@@ -14,6 +14,7 @@ const buttonWrapper = tv({
     },
     styleType: {
       filled: 'brownButton',
+      success: 'bg-emerald-500 text-white hover:bg-emerald-600',
       filledWhite:
         'border-2 border-pureWhite bg-pureWhite text-dark hover:bg-dark hover:text-pureWhite',
       danger: 'dangerButton',
