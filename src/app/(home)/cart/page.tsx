@@ -1,3 +1,4 @@
+import { CartAddress } from '@/components/organism/CartAddress'
 import { CartContent } from '@/components/organism/CartContent'
 import { CartResume } from '@/components/organism/CartResume'
 import React, { ReactElement } from 'react'
@@ -10,8 +11,8 @@ const Cart: React.FC = (): ReactElement => {
       }
     >
       <div className="grid w-full flex-1 grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="order-1 col-span-1 bg-red-500 lg:order-none lg:col-span-2">
-          Endereco
+        <div className="order-1 col-span-1 lg:order-none lg:col-span-2">
+          <CartAddress />
         </div>
         <div className="order-2 row-span-1 lg:order-none lg:row-span-2">
           <CartResume />
