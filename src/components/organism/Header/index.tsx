@@ -1,7 +1,7 @@
 'use client'
 
 import InputHeaderSearch from '@/components/atoms/InputHeaderSearch'
-import { HeaderItem, HeaderItemToggle } from '@/components/molecules/HeaderItem'
+import { HeaderItem } from '@/components/molecules/HeaderItem'
 import useScrollPosition from '@/utils/hooks/useScrollPosition'
 import useWindowSize from '@/utils/hooks/useWindowSize'
 import {
@@ -106,8 +106,9 @@ const Header: React.FC = (): ReactElement => {
               }
             />
           </div>
-          <HeaderItemToggle
+          <HeaderItem
             title="Carrinho"
+            path="/cart"
             icon={<ShoppingCart size={24} color="white" />}
           />
         </div>
