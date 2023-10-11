@@ -1,4 +1,4 @@
-import Input from '@/components/atoms/Input'
+import { Input } from '@/components/atoms/Input'
 import React, { ReactElement } from 'react'
 
 const BookmarksHeader: React.FC = (): ReactElement => {
@@ -10,7 +10,10 @@ const BookmarksHeader: React.FC = (): ReactElement => {
     >
       <h1 className="text-xl font-bold">Meus Favoritos</h1>
       <div className="w-full max-w-sm">
-        <Input search />
+        <Input.Input
+          variant="search"
+          className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
+        />
       </div>
     </div>
   )

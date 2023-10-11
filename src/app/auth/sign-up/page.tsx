@@ -1,29 +1,23 @@
 'use client'
 
 import { Button } from '@/components/atoms/Button'
-import useWindowSize from '@/utils/hooks/useWindowSize'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { Form } from '@/components/atoms/Form'
 import { ISignUpScheme, SignUpScheme } from './types'
 import { signUp } from '@/services/api'
 import { toast } from 'react-toastify'
+import { Form } from '@/components/atoms/Form'
 
 const SignUp: React.FC = (): ReactElement => {
-  const { width } = useWindowSize()
   const router = useRouter()
-
-  const [emailError, setEmailError] = useState<string>('')
 
   const formMethods = useForm<ISignUpScheme>({
     resolver: zodResolver(SignUpScheme),
   })
 
   const onHandleSubmit = async (data: ISignUpScheme) => {
-    setEmailError('')
-
     try {
       const res = await signUp(data)
       toast.success(res.message)
@@ -32,8 +26,13 @@ const SignUp: React.FC = (): ReactElement => {
       // eslint-disable-next-line
     } catch (error: any) {
       console.log(error.response.data)
-      if (error.response.data.message === 'Este e-mail já está cadastrado!')
-        setEmailError(error.response.data.message)
+      if (error.response.data.message === 'Este e-mail já está cadastrado!') {
+        // setEmailError(error.response.data.message)
+        formMethods.setError('email', {
+          type: 'manual',
+          message: error.response.data.message,
+        })
+      }
     }
   }
 
@@ -48,42 +47,86 @@ const SignUp: React.FC = (): ReactElement => {
           className="flex w-full flex-col gap-2"
           onSubmit={formMethods.handleSubmit(onHandleSubmit)}
         >
-          <Form.Input
-            label="Nome"
-            name="name"
-            id="name"
-            placeholder="Nome"
-            labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.name?.message}
-          />
-          <Form.Input
-            label="E-mail"
-            name="email"
-            id="email"
-            placeholder="E-mail"
-            labelDark={width >= 1024}
-            errorMessage={
-              emailError || formMethods.formState.errors.email?.message
-            }
-          />
-          <Form.Input
-            label="Senha"
-            name="password"
-            id="password"
-            placeholder="Senha"
-            password
-            labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.password?.message}
-          />
-          <Form.Input
-            label="Confirmar Senha"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="Confirmar Senha"
-            password
-            labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.confirmPassword?.message}
-          />
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="name"
+              required
+              className="text-pureWhite lg:text-dark"
+            >
+              Nome
+            </Form.Input.Label>
+            <Form.Input.Input
+              id="name"
+              name="name"
+              placeholder="Nome"
+              error={!!formMethods.formState.errors.name?.message}
+              className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.name?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="email"
+              required
+              className="text-pureWhite lg:text-dark"
+            >
+              E-mail
+            </Form.Input.Label>
+            <Form.Input.Input
+              id="email"
+              name="email"
+              placeholder="E-mail"
+              error={!!formMethods.formState.errors.email?.message}
+              className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.email?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="password"
+              required
+              className="text-pureWhite lg:text-dark"
+            >
+              Senha
+            </Form.Input.Label>
+            <Form.Input.Input
+              id="password"
+              name="password"
+              placeholder="Senha"
+              type="password"
+              error={!!formMethods.formState.errors.password?.message}
+              className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
+              variant="password"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.password?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="confirmPassword"
+              required
+              className="text-pureWhite lg:text-dark"
+            >
+              Confirmar Senha
+            </Form.Input.Label>
+            <Form.Input.Input
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirmar Senha"
+              type="password"
+              error={!!formMethods.formState.errors.confirmPassword?.message}
+              className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
+              variant="password"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.confirmPassword?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
           <div className="mt-10 flex flex-col justify-between gap-4">
             <Button.Root type="submit">
               <Button.Text>Continuar</Button.Text>

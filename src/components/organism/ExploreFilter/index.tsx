@@ -8,7 +8,7 @@ import { Funnel } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ExploreFilterProps, IExploreFilter, selectProps } from './types'
-import Input from '@/components/atoms/Input'
+import { Input } from '@/components/atoms/Input'
 import { Button } from '@/components/atoms/Button'
 import { useSearchParams } from 'next/navigation'
 
@@ -80,7 +80,8 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
           <div className="flex w-full items-center justify-between">
             <span className="">Valor mínimo:</span>
             <div className="w-24">
-              <Input
+              <Input.Input
+                className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
                 type="number"
                 min={0}
                 placeholder="20.5"
@@ -104,7 +105,8 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
           <div className="flex w-full items-center justify-between">
             <span className="">Valor máximo:</span>
             <div className="w-24">
-              <Input
+              <Input.Input
+                className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
                 type="number"
                 placeholder="20.5"
                 value={

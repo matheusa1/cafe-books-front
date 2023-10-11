@@ -29,7 +29,6 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
   FormMethods.watch('image')
 
-  const [IsbnMessage, setIsbnMessage] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
@@ -87,7 +86,10 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       // eslint-disable-next-line
     } catch (error: any) {
       if (error?.response?.data?.type === 'isbn') {
-        setIsbnMessage(error?.response?.data?.message)
+        FormMethods.setError('isbn', {
+          type: 'manual',
+          message: error?.response?.data?.message,
+        })
       } else {
         toast.error('Erro ao criar livro')
       }
@@ -137,25 +139,37 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
             </div>
           </header>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-10">
-            <Form.Input
-              name="isbn"
-              label="ISBN"
-              placeholder="000-0-00-000000-0"
-              labelDark
-              disabled={!!data}
-              id={'isbn'}
-              errorMessage={
-                FormMethods?.formState?.errors?.isbn?.message || IsbnMessage
-              }
-            />
-            <Form.Input
-              name="title"
-              label="Titulo"
-              placeholder="O dia em ..."
-              labelDark
-              id={'title'}
-              errorMessage={FormMethods?.formState?.errors?.title?.message}
-            />
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="isbn" required>
+                ISBN
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="isbn"
+                name="isbn"
+                placeholder="000-0-00-000000-0"
+                disabled={!!data}
+                error={!!FormMethods.formState.errors.isbn?.message}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.isbn?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="title" required>
+                Titulo
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="title"
+                name="title"
+                placeholder="O dia em ..."
+                error={!!FormMethods.formState.errors.title?.message}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.title?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
             <div className="md:col-span-2">
               <Form.TextArea
                 name="description"
@@ -213,110 +227,170 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               options={categoriesList}
               isMulti
             />
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="author" required>
+                Autor
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="author"
+                name="author"
+                placeholder="Stan Lee, Machado de Assis, ..."
+                error={!!FormMethods.formState.errors.author?.message}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.author?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
 
-            <Form.Input
-              name="author"
-              label="Autor"
-              placeholder="Stan Lee, Machado de Assis, ..."
-              labelDark
-              id={'author'}
-              errorMessage={FormMethods?.formState?.errors?.author?.message}
-            />
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="publisher" required>
+                Editora
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="publisher"
+                name="publisher"
+                placeholder="Panini"
+                error={!!FormMethods.formState.errors.publisher?.message}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.publisher?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
 
-            <Form.Input
-              name="publisher"
-              label="Editora"
-              placeholder="Panini"
-              labelDark
-              id={'publisher'}
-              errorMessage={FormMethods?.formState?.errors?.publisher?.message}
-            />
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="language" required>
+                Idioma
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="language"
+                name="language"
+                placeholder="Português"
+                error={!!FormMethods.formState.errors.language?.message}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.language?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
 
-            <Form.Input
-              name="language"
-              label="Idioma"
-              placeholder="Português"
-              labelDark
-              id={'language'}
-              errorMessage={FormMethods?.formState?.errors?.language?.message}
-            />
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="country" required>
+                Idioma Original
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="country"
+                name="country"
+                placeholder="Inglês"
+                error={!!FormMethods.formState.errors.country?.message}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.country?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
 
-            <Form.Input
-              name="country"
-              label="Idioma Original"
-              placeholder="Inglês"
-              labelDark
-              id={'country'}
-              errorMessage={FormMethods?.formState?.errors?.country?.message}
-            />
-
-            <Form.Input
-              name="year"
-              label="Ano de lançamento"
-              placeholder="1929"
-              labelDark
-              id={'year'}
-              errorMessage={FormMethods?.formState?.errors?.year?.message}
-              type="number"
-              min={0}
-              max={new Date().getFullYear()}
-            />
-
-            <Form.Input
-              name="pages"
-              label="Paginas"
-              placeholder="2"
-              labelDark
-              id={'pages'}
-              errorMessage={FormMethods?.formState?.errors?.pages?.message}
-              type="number"
-              min={0}
-            />
-
-            <Form.Input
-              name="price"
-              label="Preço"
-              placeholder="31.2"
-              labelDark
-              step="0.01"
-              id={'price'}
-              errorMessage={FormMethods?.formState?.errors?.price?.message}
-              type="number"
-              min={0}
-            />
-            {data && (
-              <Form.Input
-                name="promotional_price"
-                label="Preço com desconto"
-                placeholder="31.2"
-                labelDark
-                step="0.01"
-                id={'promotional_price'}
-                errorMessage={
-                  FormMethods?.formState?.errors?.promotional_price?.message
-                }
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="year" required>
+                Ano de lançamento
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="year"
+                name="year"
+                placeholder="1929"
+                error={!!FormMethods.formState.errors.year?.message}
                 type="number"
                 min={0}
+                max={new Date().getFullYear()}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-            )}
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.year?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
 
-            <Form.Input
-              name="stock"
-              label="Estoque"
-              placeholder="5"
-              labelDark
-              id={'stock'}
-              errorMessage={FormMethods?.formState?.errors?.stock?.message}
-              type="number"
-              min={0}
-            />
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="pages" required>
+                Paginas
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="pages"
+                name="pages"
+                placeholder="2"
+                error={!!FormMethods.formState.errors.pages?.message}
+                type="number"
+                min={0}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.pages?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
+
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="price" required>
+                Preço
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="price"
+                name="price"
+                placeholder="31.2"
+                error={!!FormMethods.formState.errors.price?.message}
+                type="number"
+                min={0}
+                step="0.01"
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.price?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
+            {data && (
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="promotional_price">
+                  Preço com desconto
+                </Form.Input.Label>
+                <Form.Input.Input
+                  id="promotional_price"
+                  name="promotional_price"
+                  placeholder="31.2"
+                  error={
+                    !!FormMethods.formState.errors.promotional_price?.message
+                  }
+                  type="number"
+                  min={0}
+                  step="0.01"
+                  className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+                />
+                <Form.Input.Feedback type="error">
+                  {FormMethods.formState.errors.promotional_price?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
+            )}
+            <Form.Input.Root>
+              <Form.Input.Label htmlFor="stock" required>
+                Estoque
+              </Form.Input.Label>
+              <Form.Input.Input
+                id="stock"
+                name="stock"
+                placeholder="5"
+                error={!!FormMethods.formState.errors.stock?.message}
+                type="number"
+                min={0}
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Input.Feedback type="error">
+                {FormMethods.formState.errors.stock?.message}
+              </Form.Input.Feedback>
+            </Form.Input.Root>
           </div>
-          <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
+          <footer className="flex flex-col gap-2 md:flex-row md:gap-10 md:self-end">
             <Button.Root type="submit" loading={isLoading}>
               {data ? 'Atualizar' : 'Criar'}
             </Button.Root>
             <Button.Root
-              content="wFull"
               variant={'outline'}
               type="button"
               loading={isLoading}

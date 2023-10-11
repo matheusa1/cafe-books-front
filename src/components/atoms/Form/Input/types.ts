@@ -1,5 +1,5 @@
-import { IInput } from '../../Input/types'
+import { IInputMain } from '../../Input/types'
 
-export type IInputForm = IInput & {
+export type IInputForm = {
   name: string
-}
+} & IInputMain

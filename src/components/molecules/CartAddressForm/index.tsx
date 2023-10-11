@@ -98,6 +98,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
         ...formMethods.getValues(),
         street: data.logradouro,
         neighborhood: data.bairro,
+        number: '',
         city: {
           label: data.localidade,
           value: data.localidade,
@@ -139,15 +140,22 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
             onSubmit={formMethods.handleSubmit(onHandleSubmit)}
           >
             <div className="col-span-4">
-              <Form.Input
-                name="cep"
-                id="cep"
-                label="CEP"
-                labelDark
-                placeholder="XXXXXXXX"
-                type="number"
-                errorMessage={formMethods.formState.errors.cep?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="cep" required>
+                  CEP
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="cep"
+                  name="cep"
+                  placeholder="XXXXXXXX"
+                  type="number"
+                  error={!!formMethods.formState.errors.cep?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.cep?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
               <Form.Select
@@ -173,47 +181,73 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
               />
             </div>
             <div className="col-span-3">
-              <Form.Input
-                name="street"
-                id="street"
-                label="Rua ou avenida"
-                labelDark
-                placeholder="Av. Irmãos Pereira"
-                errorMessage={formMethods.formState.errors.street?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="street" required>
+                  Rua ou avenida
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="street"
+                  name="street"
+                  placeholder="Av. Irmãos Pereira"
+                  error={!!formMethods.formState.errors.street?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.street?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-1">
-              <Form.Input
-                name="number"
-                id="number"
-                label="Número"
-                labelDark
-                placeholder="500"
-                type="number"
-                errorMessage={formMethods.formState.errors.number?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="number" required>
+                  Número
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="number"
+                  name="number"
+                  placeholder="500"
+                  type="number"
+                  error={!!formMethods.formState.errors.number?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.number?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Input
-                name="complement"
-                id="complement"
-                label="Complemento"
-                labelDark
-                placeholder="apto. 10"
-                errorMessage={formMethods.formState.errors.complement?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="complement">
+                  Complemento
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="complement"
+                  name="complement"
+                  placeholder="apto. 10"
+                  error={!!formMethods.formState.errors.complement?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.complement?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Input
-                name="neighborhood"
-                id="neighborhood"
-                label="Bairro"
-                labelDark
-                placeholder="Centro"
-                errorMessage={
-                  formMethods.formState.errors.neighborhood?.message
-                }
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="neighborhood" required>
+                  Bairro
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="neighborhood"
+                  name="neighborhood"
+                  placeholder="Centro"
+                  error={!!formMethods.formState.errors.neighborhood?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.neighborhood?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
 
             <div className="col-span-4 mt-5 flex flex-col gap-4">

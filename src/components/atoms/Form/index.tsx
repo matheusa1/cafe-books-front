@@ -1,11 +1,13 @@
-import InputForm from './Input'
-import FormInputFile from './InputFile'
+import { InputForm } from './Input'
+import { Input } from '../Input'
 import SelectForm from './SelectForm'
 import TextAreaForm from './TextArea'
 
 export const Form = {
-  Input: InputForm,
+  Input: {
+    ...Input,
+    Input: InputForm,
+  },
   TextArea: TextAreaForm,
   Select: SelectForm,
-  InputFile: FormInputFile,
 }

@@ -2,7 +2,7 @@
 
 import React, { ReactElement, useState } from 'react'
 import { IAdminBooksHeader } from './types'
-import Input from '@/components/atoms/Input'
+import { Input } from '@/components/atoms/Input'
 import { Button } from '@/components/atoms/Button'
 import AdminBooksCreateUpdateBooks from '@/components/molecules/AdminBooksCreateUpdateBooks'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -19,9 +19,10 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className={'flex w-full items-center gap-5 md:max-w-sm'}>
-        <Input
+        <Input.Input
           value={search}
-          search
+          variant="search"
+          className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
           onChange={(e) => setSearch(e.target.value)}
         />
         <Button.Root className="aspect-square" size="md">
