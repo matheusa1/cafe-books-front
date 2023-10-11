@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import useWindowSize from '@/utils/hooks/useWindowSize'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -55,14 +55,17 @@ const SignIn: React.FC = (): ReactElement => {
             <Link href="/auth/sign-up">Esqueceu sua senha?</Link>
           </div>
           <div className="mt-10 flex flex-col justify-between gap-4">
-            <Button type="submit">Continuar</Button>
-            <Button
-              styleType={width >= 1024 ? 'outlinedBrown' : 'outlinedWhite'}
-              onClick={() => router.push('/')}
+            <Button.Root type="submit">
+              <Button.Text>Continuar</Button.Text>
+            </Button.Root>
+            <Button.Root
+              variant={'outline'}
+              onClick={() => router.back()}
               type="button"
+              className="border-pureWhite text-pureWhite hover:bg-pureWhite hover:text-brownPrimary lg:border-brownPrimary lg:text-brownPrimary lg:hover:bg-brownPrimary lg:hover:text-pureWhite"
             >
-              Voltar
-            </Button>
+              <Button.Text className="">Voltar</Button.Text>
+            </Button.Root>
           </div>
         </form>
       </FormProvider>

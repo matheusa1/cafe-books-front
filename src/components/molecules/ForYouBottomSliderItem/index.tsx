@@ -1,6 +1,6 @@
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import CurrencyText from '@/components/atoms/CurrencyText'
-import { ShoppingCart } from '@phosphor-icons/react'
+import { ShoppingBasket } from 'lucide-react'
 import Image from 'next/image'
 import React, { ReactElement } from 'react'
 
@@ -29,12 +29,12 @@ const ForYouBottomSliderItem: React.FC = (): ReactElement => {
           />
         </div>
         <div className="flex items-center justify-center gap-4">
-          <Button content="text-sm" styleType="secondary">
-            Comprar
-          </Button>
-          <Button content="icon-sm" styleType="secondary">
-            <ShoppingCart color="white" weight="bold" />
-          </Button>
+          <Button.Root>
+            <Button.Text>Comprar</Button.Text>
+          </Button.Root>
+          <Button.Root className="aspect-square">
+            <Button.Icon icon={ShoppingBasket} />
+          </Button.Root>
         </div>
       </div>
     </div>

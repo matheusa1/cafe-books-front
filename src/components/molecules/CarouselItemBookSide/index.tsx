@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react'
 import { ICarouselItemBookSide } from './types'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import Image from 'next/image'
-import Button from '@/components/atoms/Button'
-import { ShoppingCart } from '@phosphor-icons/react'
+import { Button } from '@/components/atoms/Button'
+import { ShoppingBasket } from 'lucide-react'
 
 const CarouselItemBookSide: React.FC<ICarouselItemBookSide> = ({
   title,
@@ -43,10 +43,12 @@ const CarouselItemBookSide: React.FC<ICarouselItemBookSide> = ({
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-4 lg:hidden">
-        <Button>Comprar</Button>
-        <Button content="icon">
-          <ShoppingCart size={24} color="white" weight="bold" />
-        </Button>
+        <Button.Root>
+          <Button.Text>Comprar</Button.Text>
+        </Button.Root>
+        <Button.Root className="aspect-square">
+          <Button.Icon icon={ShoppingBasket} />
+        </Button.Root>
       </div>
     </div>
   )

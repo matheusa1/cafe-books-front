@@ -1,19 +1,15 @@
 'use client'
 
 import React, { ReactElement } from 'react'
-import Button from '../Button'
-import { useRouter } from 'next/navigation'
-import { ArrowCircleRight } from '@phosphor-icons/react'
+import { Button } from '../Button'
+import { ArrowRightCircle } from 'lucide-react'
 
 const ViewMoreButton: React.FC = (): ReactElement => {
-  const router = useRouter()
-
   return (
-    <Button styleType="filledWhite" onClick={() => router.push('/explore')}>
-      <div className="flex items-center gap-2">
-        Ver mais <ArrowCircleRight size={32} />
-      </div>
-    </Button>
+    <Button.RootLink href={'/explore'} className="bg-pureWhite">
+      <Button.Text className="text-dark">View More</Button.Text>
+      <Button.Icon icon={ArrowRightCircle} className="text-dark" />
+    </Button.RootLink>
   )
 }
 

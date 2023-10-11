@@ -5,7 +5,7 @@ import {
   AdminCreateSchema,
   IAdminBooksCreateUpdateBooks,
 } from './types'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -312,18 +312,18 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
             />
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10">
-            <Button content="wFull" type="submit" isLoading={isLoading}>
+            <Button.Root type="submit" loading={isLoading}>
               {data ? 'Atualizar' : 'Criar'}
-            </Button>
-            <Button
+            </Button.Root>
+            <Button.Root
               content="wFull"
-              styleType="outlinedBrown"
+              variant={'outline'}
               type="button"
-              isLoading={isLoading}
+              loading={isLoading}
               onClick={() => setModalOpen(false)}
             >
               Cancelar
-            </Button>
+            </Button.Root>
           </footer>
         </form>
       </FormProvider>

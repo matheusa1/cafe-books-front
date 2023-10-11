@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ExploreFilterProps, IExploreFilter, selectProps } from './types'
 import Input from '@/components/atoms/Input'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { useSearchParams } from 'next/navigation'
 
 const ExploreFilter: React.FC<IExploreFilter> = ({
@@ -127,8 +127,7 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
           </div>
         </ExploreFilterItem>
         <div className="flex flex-col gap-2">
-          <Button
-            styleType="outlinedBrown"
+          <Button.Root
             onClick={() => {
               setFilter({
                 categories: [],
@@ -141,9 +140,11 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
               })
             }}
           >
-            Limpar filtro
-          </Button>
-          <Button onClick={() => setFilter(localFilter)}>Filtrar</Button>
+            <Button.Text>Limpar filtro</Button.Text>
+          </Button.Root>
+          <Button.Root onClick={() => setFilter(localFilter)}>
+            <Button.Text>Filtrar</Button.Text>
+          </Button.Root>
         </div>
       </main>
     </div>

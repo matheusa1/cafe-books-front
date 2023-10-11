@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { IPagination } from './types'
-import Button from '../Button'
+import { Button } from '../Button'
 
 const Pagination: React.FC<IPagination> = ({
   currentPage,
@@ -32,31 +32,28 @@ const Pagination: React.FC<IPagination> = ({
           </select>
         </div>
         <div>
-          {/* 30-36 de 36 */}
           {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
             currentPage * itemsPerPage,
             totalItems,
           )} de ${totalItems}`}
         </div>
       </div>
-      <div className="flex w-full max-w-xs gap-2">
-        <Button
-          content="wFull"
-          styleType={currentPage === 1 ? 'brownDisabled' : 'filled'}
+      <div className="flex w-full max-w-xs justify-center gap-2 lg:justify-end">
+        <Button.Root
+          // styleType={currentPage === 1 ? 'brownDisabled' : 'filled'}
+          disabled={currentPage === 1}
           onClick={() => {
             if (currentPage > 1) {
               handlePageChange(currentPage - 1)
             }
           }}
         >
-          Anterior
-        </Button>
-        <Button
-          content="wFull"
-          styleType={
-            currentPage === Math.ceil(totalItems / itemsPerPage)
-              ? 'brownDisabled'
-              : 'filled'
+          <Button.Text>Anterior</Button.Text>
+        </Button.Root>
+        <Button.Root
+          disabled={
+            currentPage === Math.ceil(totalItems / itemsPerPage) ||
+            totalItems === 0
           }
           onClick={() => {
             if (currentPage < Math.ceil(totalItems / itemsPerPage)) {
@@ -64,8 +61,8 @@ const Pagination: React.FC<IPagination> = ({
             }
           }}
         >
-          Próximo
-        </Button>
+          <Button.Text>Próximo</Button.Text>
+        </Button.Root>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { CartResumePrices } from '@/components/molecules/CartResumePrices'
 import { FC } from 'react'
 
@@ -14,12 +14,12 @@ export const CartResume: FC = () => {
       <CartResumePrices />
 
       <div className={'flex w-full flex-col items-center gap-2'}>
-        <Button content="wFull" styleType="success">
+        <Button.Root className="w-full bg-emerald-500 font-semibold hover:bg-emerald-700">
           IR PARA PAGAMENTO
-        </Button>
-        <Button content="wFull" styleType="outlinedBrown">
+        </Button.Root>
+        <Button.Root variant="outline" className="w-full font-semibold">
           CONTINUAR COMPRANDO
-        </Button>
+        </Button.Root>
       </div>
     </div>
   )

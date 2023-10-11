@@ -3,19 +3,15 @@
 import DetailsTitle from '@/components/atoms/DetailsTitle'
 import React, { ReactElement } from 'react'
 import { IDetailsDescription } from './types'
-import { CaretCircleDown } from '@phosphor-icons/react'
+import { Button } from '@/components/atoms/Button'
+import { ButtonIcon } from '@/components/atoms/Button/parts/ButtonIcon'
+import { ChevronDown } from 'lucide-react'
+import { twMerge } from 'tailwind-merge'
 
 const DetailsDescription: React.FC<IDetailsDescription> = ({
   description,
 }): ReactElement => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
-
-  const scrollToDescription = () => {
-    const descriptionElement = document.getElementById('purchase')
-    if (descriptionElement) {
-      descriptionElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
-    }
-  }
 
   return (
     <div
@@ -28,18 +24,20 @@ const DetailsDescription: React.FC<IDetailsDescription> = ({
       <div className={isOpen ? '' : 'max-h-40 overflow-hidden'}>
         <span className="text-sm">{description}</span>
       </div>
-      <button
+
+      <Button.Root
+        className="aspect-square w-fit self-center rounded-full"
         onClick={() => {
           setIsOpen((prev) => !prev)
-          if (isOpen) scrollToDescription()
         }}
-        className="self-center"
       >
-        <div className="flex flex-col items-center">
-          <CaretCircleDown size={32} className={isOpen ? 'rotate-180' : ''} />
-          {isOpen ? 'Mostrar menos' : 'Mostrar mais'}
-        </div>
-      </button>
+        <ButtonIcon
+          icon={ChevronDown}
+          size="lg"
+          className={twMerge('rotate-0 transition-all', isOpen && 'rotate-180')}
+        />
+        {/* <CaretCircleDown size={32} className={isOpen ? 'rotate-180' : ''} /> */}
+      </Button.Root>
     </div>
   )
 }

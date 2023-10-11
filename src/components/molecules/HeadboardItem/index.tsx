@@ -6,7 +6,7 @@ import React, { ReactElement, useState } from 'react'
 import { IHeadboardItem } from './types'
 import Image from 'next/image'
 import CurrencyText from '@/components/atoms/CurrencyText'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { useRouter } from 'next/navigation'
 
 const HeadboardItem: React.FC<IHeadboardItem> = ({
@@ -80,16 +80,12 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
             )}
           </div>
           <div className="flex w-full flex-col gap-2">
-            <Button
-              content="wFull"
-              onClick={() => router.push(`/book-info/${isbn}`)}
-            >
-              Comprar
-            </Button>
-            <Button content="wFull" onClick={onHandleAddToCart}>
-              {/* <Basket size={24} /> */}
-              <span className="text-sm">Adicionar à sacola</span>
-            </Button>
+            <Button.RootLink href={`/book-info/${isbn}`}>
+              <Button.Text>Comprar</Button.Text>
+            </Button.RootLink>
+            <Button.Root onClick={onHandleAddToCart}>
+              <Button.Text className="text-sm">Adicionar à sacola</Button.Text>
+            </Button.Root>
           </div>
         </div>
       </footer>

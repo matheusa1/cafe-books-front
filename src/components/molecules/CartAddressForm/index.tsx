@@ -11,7 +11,7 @@ import {
   CartAddressSchemaInput,
 } from './schema'
 import { Form } from '@/components/atoms/Form'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { IStates } from '@/types/states'
@@ -217,13 +217,13 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
             </div>
 
             <div className="col-span-4 mt-5 flex flex-col gap-4">
-              <Button content="wFull" styleType="success">
+              <Button.Root className="bg-emerald-500 hover:bg-emerald-700">
                 Salvar
-              </Button>
+              </Button.Root>
               <Dialog.Close asChild onClick={() => setOpen(false)}>
-                <Button type="button" content="wFull" styleType="outlinedBrown">
+                <Button.Root type="button" variant="outline">
                   Cancelar
-                </Button>
+                </Button.Root>
               </Dialog.Close>
             </div>
           </form>
