@@ -171,16 +171,21 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               </Form.Input.Feedback>
             </Form.Input.Root>
             <div className="md:col-span-2">
-              <Form.TextArea
-                name="description"
-                label="Descrição"
-                placeholder="Tudo começou quando um relógio esquisito..."
-                labelDark
-                id={'description'}
-                errorMessage={
-                  FormMethods?.formState?.errors?.description?.message
-                }
-              />
+              <Form.TextArea.Root>
+                <Form.TextArea.Label htmlFor="description" required>
+                  Descrição
+                </Form.TextArea.Label>
+                <Form.TextArea.TextArea
+                  id="description"
+                  name="description"
+                  placeholder="Tudo começou quando um relógio esquisito..."
+                  error={!!FormMethods.formState.errors.description?.message}
+                  className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+                />
+                <Form.TextArea.Feedback type="error">
+                  {FormMethods.formState.errors.description?.message}
+                </Form.TextArea.Feedback>
+              </Form.TextArea.Root>
             </div>
 
             <div className="col-span-1 flex flex-col gap-2 md:col-span-2">

@@ -19,11 +19,3 @@ export type IInputFeedback = {
 
 export type IInputMain = InputHTMLAttributes<HTMLInputElement> &
   VariantProps<typeof InputStyle>
-
-export type IInput = {
-  label: string
-  errorMessage: string
-  warnMessage: string
-  placeholder: string
-} & InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof InputStyle>
