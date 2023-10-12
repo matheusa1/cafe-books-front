@@ -1,10 +1,16 @@
+import { LabelHTMLAttributes } from 'react'
 import { Props } from 'react-select'
 import { VariantProps } from 'tailwind-variants'
-import { LabelProps } from '.'
+import { SelectStyle } from './parts/main'
 
-export type ISelect = Props &
-  VariantProps<typeof LabelProps> & {
-    label?: string
-    errorMessage?: string
-    bgWhite?: boolean
-  }
+export type ISelectLabel = {
+  children: string
+  required?: boolean
+} & LabelHTMLAttributes<HTMLLabelElement>
+
+export type ISelectFeedback = {
+  children?: string
+  type?: 'error' | 'warn'
+}
+
+export type ISelectMain = Props & VariantProps<typeof SelectStyle>

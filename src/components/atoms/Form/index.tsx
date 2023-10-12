@@ -3,6 +3,7 @@ import { Input } from '../Input'
 import SelectForm from './SelectForm'
 import TextAreaForm from './TextArea'
 import { TextArea } from '../TextArea'
+import { Select } from '../Select'
 
 export const Form = {
   Input: {
@@ -13,5 +14,8 @@ export const Form = {
     ...TextArea,
     TextArea: TextAreaForm,
   },
-  Select: SelectForm,
+  Select: {
+    ...Select,
+    Select: SelectForm,
+  },
 }

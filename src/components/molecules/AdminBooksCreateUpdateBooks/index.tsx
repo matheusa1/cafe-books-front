@@ -222,7 +222,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               )}
             </div>
 
-            <Form.Select
+            {/* <Form.Select
               name="category"
               label="Categorias"
               placeholder="Categorias"
@@ -231,7 +231,25 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               errorMessage={FormMethods?.formState?.errors?.category?.message}
               options={categoriesList}
               isMulti
-            />
+            /> */}
+            <Form.Select.Root>
+              <Form.Select.Label htmlFor="category" required>
+                Categorias
+              </Form.Select.Label>
+              <Form.Select.Select
+                id="category"
+                name="category"
+                placeholder="Categorias"
+                error={!!FormMethods.formState.errors.category?.message}
+                options={categoriesList}
+                isMulti
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Select.Feedback type="error">
+                {FormMethods.formState.errors.category?.message}
+              </Form.Select.Feedback>
+            </Form.Select.Root>
+
             <Form.Input.Root>
               <Form.Input.Label htmlFor="author" required>
                 Autor

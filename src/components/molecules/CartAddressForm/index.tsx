@@ -158,27 +158,38 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
               </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Select
-                name="state"
-                id="state"
-                label="Estado"
-                labelDark
-                placeholder="Paraná"
-                options={estados}
-                errorMessage={formMethods.formState.errors.state?.message}
-              />
+              <Form.Select.Root>
+                <Form.Select.Label htmlFor="state" required>
+                  Estado
+                </Form.Select.Label>
+                <Form.Select.Select
+                  className={'border-2 border-dark'}
+                  id="state"
+                  name="state"
+                  placeholder="Paraná"
+                  options={estados}
+                />
+                <Form.Select.Feedback type="error">
+                  {formMethods.formState.errors.state?.message}
+                </Form.Select.Feedback>
+              </Form.Select.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Select
-                name="city"
-                id="city"
-                label="Cidade"
-                labelDark
-                options={cities}
-                placeholder="Campo Mourão"
-                noOptionsMessage={() => 'Selecione um estado'}
-                errorMessage={formMethods.formState.errors.city?.message}
-              />
+              <Form.Select.Root>
+                <Form.Select.Label htmlFor="city" required>
+                  Cidade
+                </Form.Select.Label>
+                <Form.Select.Select
+                  className={'border-2 border-dark'}
+                  id="city"
+                  name="city"
+                  placeholder="Campo Mourão"
+                  options={cities}
+                />
+                <Form.Select.Feedback type="error">
+                  {formMethods.formState.errors.city?.message}
+                </Form.Select.Feedback>
+              </Form.Select.Root>
             </div>
             <div className="col-span-3">
               <Form.Input.Root>

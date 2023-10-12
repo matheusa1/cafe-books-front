@@ -1,6 +1,6 @@
 'use client'
 
-import Select from '@/components/atoms/Select'
+import { Select } from '@/components/atoms/Select'
 import ExploreFilterItem from '@/components/molecules/ExploreFilterItem'
 import { getCategories } from '@/services/api'
 import { toTitleCase } from '@/utils/toTitleCase'
@@ -62,18 +62,22 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
       </header>
       <main className="flex flex-col gap-5">
         <ExploreFilterItem title={'Categorias'}>
-          <Select
-            isMulti
-            placeholder={'Selecione'}
-            options={categories}
-            value={localFilter.categories}
-            onChange={(value: unknown) =>
-              setLocalFilter({
-                ...localFilter,
-                categories: value as selectProps,
-              })
-            }
-          />
+          <Select.Root>
+            <Select.Label>Categorias</Select.Label>
+            <Select.Select
+              className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
+              isMulti
+              placeholder={'Selecione'}
+              options={categories}
+              value={localFilter.categories}
+              onChange={(value: unknown) =>
+                setLocalFilter({
+                  ...localFilter,
+                  categories: value as selectProps,
+                })
+              }
+            />
+          </Select.Root>
         </ExploreFilterItem>
 
         <ExploreFilterItem title={'Preço'}>
