@@ -22,10 +22,7 @@ export const AdminCreateSchema = z.object({
   country: z.string().nonempty(Response.string),
   language: z.string().nonempty(Response.string),
   image: z.any().refine((val) => val && val.length > 0, Response.string),
-  description: z
-    .string()
-    .max(300, 'Máximo de 300 caracteres')
-    .nonempty(Response.string),
+  description: z.string().nonempty(Response.string),
   year: z.string().nonempty(Response.string),
   pages: z.string().nonempty(Response.string),
   price: z.string().nonempty(Response.string),
