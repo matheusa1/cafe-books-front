@@ -1,6 +1,5 @@
-import { ISelect } from '../../Select/types'
+import { ISelectMain } from '../../Select/types'
 
-export type ISelectForm = ISelect & {
+export type ISelectForm = ISelectMain & {
   name: string
-  hFull?: boolean
 }

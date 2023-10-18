@@ -2,11 +2,11 @@
 
 import React, { ReactElement, useState } from 'react'
 import { IAdminBooksHeader } from './types'
-import Input from '@/components/atoms/Input'
-import Button from '@/components/atoms/Button'
-import { Funnel } from '@phosphor-icons/react'
+import { Input } from '@/components/atoms/Input'
+import { Button } from '@/components/atoms/Button'
 import AdminBooksCreateUpdateBooks from '@/components/molecules/AdminBooksCreateUpdateBooks'
 import * as Dialog from '@radix-ui/react-dialog'
+import { Filter } from 'lucide-react'
 
 const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
   search,
@@ -18,25 +18,26 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <div className={'flex w-full gap-5 md:max-w-sm'}>
-        <Input
+      <div className={'flex w-full items-center gap-5 md:max-w-sm'}>
+        <Input.Input
           value={search}
-          search
+          variant="search"
+          className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button content="icon">
-          <Funnel size={20} />
-        </Button>
+        <Button.Root className="aspect-square" size="md">
+          <Button.Icon icon={Filter} />
+        </Button.Root>
       </div>
       <Dialog.Root open={isModalOpen}>
         <Dialog.Trigger asChild>
-          <div className="w-full md:max-w-[150px]">
-            <Button
-              content="wFull"
+          <div className="w-full md:max-w-[250px]">
+            <Button.Root
               onClick={() => setIsModalOpen((prev) => !prev)}
+              className="w-full"
             >
               Criar novo livro
-            </Button>
+            </Button.Root>
           </div>
         </Dialog.Trigger>
         <Dialog.Portal>

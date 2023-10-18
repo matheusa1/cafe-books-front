@@ -1,5 +1,5 @@
-import { ITextArea } from '../../TextArea/types'
+import { ITextAreaMain } from '../../TextArea/types'
 
-export type ITextAreaForm = ITextArea & {
+export type ITextAreaForm = ITextAreaMain & {
   name: string
 }

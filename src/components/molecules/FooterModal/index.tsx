@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { IFooterModal } from './types'
 import { X } from '@phosphor-icons/react'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 
 const FooterModal: React.FC<IFooterModal> = ({
   content,
@@ -62,7 +62,9 @@ const FooterModal: React.FC<IFooterModal> = ({
             <p>{content}</p>
           </main>
           <div className="flex justify-end" onClick={() => setIsOpen(false)}>
-            <Button>Continuar</Button>
+            <Button.Root>
+              <Button.Text>Continuar</Button.Text>
+            </Button.Root>
           </div>
         </Dialog.Content>
       </Dialog.Portal>

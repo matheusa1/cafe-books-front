@@ -1,7 +1,7 @@
 import { Trash, X } from '@phosphor-icons/react'
 import React, { ReactElement, useState } from 'react'
 import { IDeleteItemModal } from './types'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { deleteBook } from '@/services/api'
 import { toast } from 'react-toastify'
 
@@ -48,24 +48,24 @@ const DeleteItemModal: React.FC<IDeleteItemModal> = ({
         </div>
 
         <footer className="flex flex-col gap-2">
-          <Button
+          <Button.Root
             content="wFull"
-            styleType="danger"
+            className="bg-danger hover:bg-danger/70"
             type="button"
             onClick={onHandleDelete}
-            isLoading={isLoading}
+            loading={isLoading}
           >
             Apagar
-          </Button>
-          <Button
+          </Button.Root>
+          <Button.Root
             content="wFull"
-            styleType="outlinedBrown"
+            variant="outline"
             type="button"
             onClick={() => setIsOpen(false)}
-            isLoading={isLoading}
+            loading={isLoading}
           >
             Cancelar
-          </Button>
+          </Button.Root>
         </footer>
       </div>
     </div>

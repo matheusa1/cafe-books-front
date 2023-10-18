@@ -4,10 +4,9 @@ import React, { ReactElement } from 'react'
 import { ICarouselItem } from './types'
 import Image from 'next/image'
 import CarouselItemBookSide from '@/components/molecules/CarouselItemBookSide'
-import Button from '@/components/atoms/Button'
-import { ShoppingCart } from '@phosphor-icons/react'
+import { Button } from '@/components/atoms/Button'
 import useWindowSize from '@/utils/hooks/useWindowSize'
-import { useRouter } from 'next/navigation'
+import { ShoppingBasket } from 'lucide-react'
 
 const CarouselItem: React.FC<ICarouselItem> = ({
   banner,
@@ -17,7 +16,6 @@ const CarouselItem: React.FC<ICarouselItem> = ({
   punchline,
 }): ReactElement => {
   const { height } = useWindowSize()
-  const router = useRouter()
 
   return (
     <div className={'h-screen w-screen overflow-hidden'}>
@@ -42,12 +40,12 @@ const CarouselItem: React.FC<ICarouselItem> = ({
               {infoText}
             </p>
             <div className="mt-14 hidden items-center gap-4 lg:flex">
-              <Button onClick={() => router.push(`/book-info/${id}`)}>
+              <Button.RootLink href={`/book-info/${id}`}>
                 Comprar
-              </Button>
-              <Button content="icon">
-                <ShoppingCart size={24} color="white" weight="bold" />
-              </Button>
+              </Button.RootLink>
+              <Button.Root className="aspect-square">
+                <Button.Icon icon={ShoppingBasket} />
+              </Button.Root>
             </div>
           </div>
           <div className="flex h-full w-full items-end justify-center">

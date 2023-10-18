@@ -1,13 +1,21 @@
-import { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react'
 import { VariantProps } from 'tailwind-variants'
-import { InputProps, LabelProps } from '.'
+import { InputStyle } from './parts/InputMain'
 
-export type IInput = InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof InputProps> &
-  VariantProps<typeof LabelProps> & {
-    label?: string
-    password?: boolean
-    errorMessage?: string
-    onHandleSearch?: () => void
-    type?: string
-  }
+export type IInputRoot = {
+  children: ReactNode
+  className?: string
+}
+
+export type IInputLabel = {
+  children: string
+  required?: boolean
+} & LabelHTMLAttributes<HTMLLabelElement>
+
+export type IInputFeedback = {
+  children?: string
+  type?: 'error' | 'warn'
+}
+
+export type IInputMain = InputHTMLAttributes<HTMLInputElement> &
+  VariantProps<typeof InputStyle>

@@ -11,7 +11,7 @@ import {
   CartAddressSchemaInput,
 } from './schema'
 import { Form } from '@/components/atoms/Form'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { IStates } from '@/types/states'
@@ -98,6 +98,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
         ...formMethods.getValues(),
         street: data.logradouro,
         neighborhood: data.bairro,
+        number: '',
         city: {
           label: data.localidade,
           value: data.localidade,
@@ -139,91 +140,135 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
             onSubmit={formMethods.handleSubmit(onHandleSubmit)}
           >
             <div className="col-span-4">
-              <Form.Input
-                name="cep"
-                id="cep"
-                label="CEP"
-                labelDark
-                placeholder="XXXXXXXX"
-                type="number"
-                errorMessage={formMethods.formState.errors.cep?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="cep" required>
+                  CEP
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="cep"
+                  name="cep"
+                  placeholder="XXXXXXXX"
+                  type="number"
+                  error={!!formMethods.formState.errors.cep?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.cep?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Select
-                name="state"
-                id="state"
-                label="Estado"
-                labelDark
-                placeholder="Paraná"
-                options={estados}
-                errorMessage={formMethods.formState.errors.state?.message}
-              />
+              <Form.Select.Root>
+                <Form.Select.Label htmlFor="state" required>
+                  Estado
+                </Form.Select.Label>
+                <Form.Select.Select
+                  className={'border-2 border-dark'}
+                  id="state"
+                  name="state"
+                  placeholder="Paraná"
+                  options={estados}
+                />
+                <Form.Select.Feedback type="error">
+                  {formMethods.formState.errors.state?.message}
+                </Form.Select.Feedback>
+              </Form.Select.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Select
-                name="city"
-                id="city"
-                label="Cidade"
-                labelDark
-                options={cities}
-                placeholder="Campo Mourão"
-                noOptionsMessage={() => 'Selecione um estado'}
-                errorMessage={formMethods.formState.errors.city?.message}
-              />
+              <Form.Select.Root>
+                <Form.Select.Label htmlFor="city" required>
+                  Cidade
+                </Form.Select.Label>
+                <Form.Select.Select
+                  className={'border-2 border-dark'}
+                  id="city"
+                  name="city"
+                  placeholder="Campo Mourão"
+                  options={cities}
+                />
+                <Form.Select.Feedback type="error">
+                  {formMethods.formState.errors.city?.message}
+                </Form.Select.Feedback>
+              </Form.Select.Root>
             </div>
             <div className="col-span-3">
-              <Form.Input
-                name="street"
-                id="street"
-                label="Rua ou avenida"
-                labelDark
-                placeholder="Av. Irmãos Pereira"
-                errorMessage={formMethods.formState.errors.street?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="street" required>
+                  Rua ou avenida
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="street"
+                  name="street"
+                  placeholder="Av. Irmãos Pereira"
+                  error={!!formMethods.formState.errors.street?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.street?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-1">
-              <Form.Input
-                name="number"
-                id="number"
-                label="Número"
-                labelDark
-                placeholder="500"
-                type="number"
-                errorMessage={formMethods.formState.errors.number?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="number" required>
+                  Número
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="number"
+                  name="number"
+                  placeholder="500"
+                  type="number"
+                  error={!!formMethods.formState.errors.number?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.number?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Input
-                name="complement"
-                id="complement"
-                label="Complemento"
-                labelDark
-                placeholder="apto. 10"
-                errorMessage={formMethods.formState.errors.complement?.message}
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="complement">
+                  Complemento
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="complement"
+                  name="complement"
+                  placeholder="apto. 10"
+                  error={!!formMethods.formState.errors.complement?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.complement?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
-              <Form.Input
-                name="neighborhood"
-                id="neighborhood"
-                label="Bairro"
-                labelDark
-                placeholder="Centro"
-                errorMessage={
-                  formMethods.formState.errors.neighborhood?.message
-                }
-              />
+              <Form.Input.Root>
+                <Form.Input.Label htmlFor="neighborhood" required>
+                  Bairro
+                </Form.Input.Label>
+                <Form.Input.Input
+                  className={'border-2 border-dark'}
+                  id="neighborhood"
+                  name="neighborhood"
+                  placeholder="Centro"
+                  error={!!formMethods.formState.errors.neighborhood?.message}
+                />
+                <Form.Input.Feedback type="error">
+                  {formMethods.formState.errors.neighborhood?.message}
+                </Form.Input.Feedback>
+              </Form.Input.Root>
             </div>
 
             <div className="col-span-4 mt-5 flex flex-col gap-4">
-              <Button content="wFull" styleType="success">
+              <Button.Root className="bg-emerald-500 hover:bg-emerald-700">
                 Salvar
-              </Button>
+              </Button.Root>
               <Dialog.Close asChild onClick={() => setOpen(false)}>
-                <Button type="button" content="wFull" styleType="outlinedBrown">
+                <Button.Root type="button" variant="outline">
                   Cancelar
-                </Button>
+                </Button.Root>
               </Dialog.Close>
             </div>
           </form>

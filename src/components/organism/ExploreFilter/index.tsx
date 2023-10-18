@@ -1,6 +1,6 @@
 'use client'
 
-import Select from '@/components/atoms/Select'
+import { Select } from '@/components/atoms/Select'
 import ExploreFilterItem from '@/components/molecules/ExploreFilterItem'
 import { getCategories } from '@/services/api'
 import { toTitleCase } from '@/utils/toTitleCase'
@@ -8,8 +8,8 @@ import { Funnel } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ExploreFilterProps, IExploreFilter, selectProps } from './types'
-import Input from '@/components/atoms/Input'
-import Button from '@/components/atoms/Button'
+import { Input } from '@/components/atoms/Input'
+import { Button } from '@/components/atoms/Button'
 import { useSearchParams } from 'next/navigation'
 
 const ExploreFilter: React.FC<IExploreFilter> = ({
@@ -62,25 +62,30 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
       </header>
       <main className="flex flex-col gap-5">
         <ExploreFilterItem title={'Categorias'}>
-          <Select
-            isMulti
-            placeholder={'Selecione'}
-            options={categories}
-            value={localFilter.categories}
-            onChange={(value: unknown) =>
-              setLocalFilter({
-                ...localFilter,
-                categories: value as selectProps,
-              })
-            }
-          />
+          <Select.Root>
+            <Select.Label>Categorias</Select.Label>
+            <Select.Select
+              className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
+              isMulti
+              placeholder={'Selecione'}
+              options={categories}
+              value={localFilter.categories}
+              onChange={(value: unknown) =>
+                setLocalFilter({
+                  ...localFilter,
+                  categories: value as selectProps,
+                })
+              }
+            />
+          </Select.Root>
         </ExploreFilterItem>
 
         <ExploreFilterItem title={'Preço'}>
           <div className="flex w-full items-center justify-between">
             <span className="">Valor mínimo:</span>
             <div className="w-24">
-              <Input
+              <Input.Input
+                className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
                 type="number"
                 min={0}
                 placeholder="20.5"
@@ -104,7 +109,8 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
           <div className="flex w-full items-center justify-between">
             <span className="">Valor máximo:</span>
             <div className="w-24">
-              <Input
+              <Input.Input
+                className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
                 type="number"
                 placeholder="20.5"
                 value={
@@ -127,8 +133,7 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
           </div>
         </ExploreFilterItem>
         <div className="flex flex-col gap-2">
-          <Button
-            styleType="outlinedBrown"
+          <Button.Root
             onClick={() => {
               setFilter({
                 categories: [],
@@ -141,9 +146,11 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
               })
             }}
           >
-            Limpar filtro
-          </Button>
-          <Button onClick={() => setFilter(localFilter)}>Filtrar</Button>
+            <Button.Text>Limpar filtro</Button.Text>
+          </Button.Root>
+          <Button.Root onClick={() => setFilter(localFilter)}>
+            <Button.Text>Filtrar</Button.Text>
+          </Button.Root>
         </div>
       </main>
     </div>

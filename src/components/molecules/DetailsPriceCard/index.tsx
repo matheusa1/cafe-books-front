@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 import { IDetailsPriceCard } from './types'
 import { BookmarkSimple } from '@phosphor-icons/react'
 import CurrencyText from '@/components/atoms/CurrencyText'
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import QuantitySelector from '@/components/atoms/QuantitySelector'
 
 const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
@@ -51,14 +51,19 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <Button
-          styleType={isOnCart ? 'danger' : 'filled'}
+        <Button.Root
+          // styleType={isOnCart ? 'danger' : 'filled'}
           onClick={() => setIsOnCart((prev) => !prev)}
-          content="wFull"
+          data-isoncart={isOnCart}
+          className="data-[isoncart=true]:bg-danger"
         >
-          {isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}
-        </Button>
-        <Button content="wFull">Comprar agora</Button>
+          <Button.Text>
+            {isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}
+          </Button.Text>
+        </Button.Root>
+        <Button.Root>
+          <Button.Text>Comprar agora</Button.Text>
+        </Button.Root>
       </div>
     </div>
   )

@@ -1,17 +1,15 @@
 'use client'
 
-import Button from '@/components/atoms/Button'
-import { Form } from '@/components/atoms/Form'
-import useWindowSize from '@/utils/hooks/useWindowSize'
+import { Button } from '@/components/atoms/Button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { ReactElement } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { ISignInScheme, SignInScheme } from './types'
+import { Form } from '@/components/atoms/Form'
 
 const SignIn: React.FC = (): ReactElement => {
-  const { width } = useWindowSize()
   const router = useRouter()
 
   const formMethods = useForm<ISignInScheme>({
@@ -33,36 +31,62 @@ const SignIn: React.FC = (): ReactElement => {
           className="flex w-full flex-col gap-2"
           onSubmit={formMethods.handleSubmit(onHandleSubmit)}
         >
-          <Form.Input
-            label="E-mail"
-            name="email"
-            id="email"
-            placeholder="E-mail"
-            labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.email?.message}
-          />
-          <Form.Input
-            label="Senha"
-            name="password"
-            placeholder="Senha"
-            id="password"
-            password
-            labelDark={width >= 1024}
-            errorMessage={formMethods.formState.errors.password?.message}
-          />
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="email"
+              required
+              className="text-pureWhite lg:text-dark"
+            >
+              E-mail
+            </Form.Input.Label>
+            <Form.Input.Input
+              id="email"
+              name="email"
+              placeholder="E-mail"
+              error={!!formMethods.formState.errors.email?.message}
+              className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.email?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
+
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="password"
+              required
+              className="text-pureWhite lg:text-dark"
+            >
+              Senha
+            </Form.Input.Label>
+            <Form.Input.Input
+              id="password"
+              name="password"
+              placeholder="Senha"
+              error={!!formMethods.formState.errors.password?.message}
+              className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
+              variant="password"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.password?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
           <div className="flex justify-between text-xs">
             <Link href="/auth/sign-up">Cadastre-se</Link>
             <Link href="/auth/sign-up">Esqueceu sua senha?</Link>
           </div>
           <div className="mt-10 flex flex-col justify-between gap-4">
-            <Button type="submit">Continuar</Button>
-            <Button
-              styleType={width >= 1024 ? 'outlinedBrown' : 'outlinedWhite'}
-              onClick={() => router.push('/')}
+            <Button.Root type="submit">
+              <Button.Text>Continuar</Button.Text>
+            </Button.Root>
+            <Button.Root
+              variant={'outline'}
+              onClick={() => router.back()}
               type="button"
+              className="border-pureWhite text-pureWhite hover:bg-pureWhite hover:text-brownPrimary lg:border-brownPrimary lg:text-brownPrimary lg:hover:bg-brownPrimary lg:hover:text-pureWhite"
             >
-              Voltar
-            </Button>
+              <Button.Text className="">Voltar</Button.Text>
+            </Button.Root>
           </div>
         </form>
       </FormProvider>

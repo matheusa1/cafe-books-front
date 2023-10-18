@@ -1,23 +1,17 @@
 'use client'
 
-import Button from '@/components/atoms/Button'
+import { Button } from '@/components/atoms/Button'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import ForYouBottomSlider from '@/components/molecules/ForYouBottomSlider'
 import useWindowSize from '@/utils/hooks/useWindowSize'
-import { CaretRight, ShoppingCart } from '@phosphor-icons/react'
+import { ChevronDown, ShoppingBasket } from 'lucide-react'
 import Image from 'next/image'
 import React, { ReactElement, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 const ForYouCard: React.FC = (): ReactElement => {
   const [isOpen, setIsOpen] = useState(false)
   const { width } = useWindowSize()
-
-  const scrollToCard = () => {
-    const cardElement = document.getElementById('card')
-    if (cardElement) {
-      cardElement.scrollIntoView({ block: 'start', behavior: 'smooth' })
-    }
-  }
 
   return (
     <div className="flex w-full max-w-7xl flex-col gap-4 rounded-md bg-pureWhite p-5">
@@ -56,31 +50,32 @@ const ForYouCard: React.FC = (): ReactElement => {
               />
             </div>
             <div className="mt-4 flex items-center justify-center gap-4 md:items-start md:justify-start">
-              <Button>Comprar</Button>
-              <Button content="icon">
-                <ShoppingCart size={24} color="white" weight="bold" />
-              </Button>
+              <Button.Root>
+                <Button.Text>Comprar</Button.Text>
+              </Button.Root>
+              <Button.Root className="aspect-square">
+                <Button.Icon icon={ShoppingBasket} size="md" />
+              </Button.Root>
             </div>
           </div>
         </div>
 
         {width < 768 && (
-          <Button
-            rounded="full"
-            content="icon"
+          <Button.Root
+            className="aspect-square w-fit rounded-full"
             onClick={() => {
               setIsOpen((prev) => !prev)
-              if (isOpen) scrollToCard()
             }}
           >
-            <CaretRight
-              className={
-                isOpen
-                  ? '-rotate-90'
-                  : 'rotate-90' + ' transition-all duration-500'
-              }
+            <Button.Icon
+              icon={ChevronDown}
+              size={'lg'}
+              className={twMerge(
+                'transition-all duration-500 rotate-0',
+                isOpen && 'rotate-180',
+              )}
             />
-          </Button>
+          </Button.Root>
         )}
       </div>
       <ForYouBottomSlider />
