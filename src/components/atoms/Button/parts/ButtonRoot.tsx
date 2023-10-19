@@ -34,6 +34,7 @@ export const ButtonRoot: React.FC<IButtonRoot> = ({
   return (
     <button
       {...rest}
+      onClick={loading ? undefined : rest.onClick}
       className={twMerge(ButtonStyle({ size, variant }), rest.className)}
     >
       {loading ? (

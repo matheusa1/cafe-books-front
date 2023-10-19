@@ -48,6 +48,14 @@ export const signUp = async (data: ISignUpScheme) => {
   return response.data
 }
 
+export const signIn = async (email: string, password: string) => {
+  const response = await api.post('token/', {
+    email,
+    password,
+  })
+  return response.data
+}
+
 export const uploadImageToCloudnary = async (
   file: File,
   upload_preset?: string,

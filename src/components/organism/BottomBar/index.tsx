@@ -4,14 +4,13 @@ import { HeaderItem } from '@/components/molecules/HeaderItem'
 
 import React, { ReactElement } from 'react'
 
-import { Routes } from './routes'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import useWindowSize from '@/utils/hooks/useWindowSize'
+import { Bookmark, GaugeCircle, Grid2X2, Home, LogIn, User } from 'lucide-react'
+import { useAuth } from '@/context/AuthContext'
 
 const BottomBar: React.FC = (): ReactElement => {
-  const pathname = usePathname()
   const { width } = useWindowSize()
+  const { user } = useAuth()
 
   return width && width < 768 ? (
     <div
@@ -19,20 +18,15 @@ const BottomBar: React.FC = (): ReactElement => {
         'fixed bottom-0 left-0 z-30 flex w-screen justify-between rounded-t-lg bg-brownCard px-8 py-5'
       }
     >
-      {Routes.map((route, index) => (
-        <Link
-          href={route.path}
-          key={index}
-          // className={route.permission === 'admin' ? 'hidden' : ''}
-        >
-          <HeaderItem
-            path={route.path}
-            title=""
-            icon={route.icon()}
-            active={pathname === route.path}
-          />
-        </Link>
-      ))}
+      <HeaderItem path={'/bookmark'} title="Favoritos" icon={Bookmark} />
+      <HeaderItem path={'/'} title="Início" icon={Home} />
+      <HeaderItem path={'/explore'} title="Explorar" icon={Grid2X2} />
+      <HeaderItem
+        path={'/auth/sign-in'}
+        title={user ? 'Perfil' : 'Entrar'}
+        icon={user ? User : LogIn}
+      />
+      {user && <HeaderItem path={'/admin'} title="admin" icon={GaugeCircle} />}
     </div>
   ) : (
     <div />

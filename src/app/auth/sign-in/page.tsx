@@ -4,20 +4,40 @@ import { Button } from '@/components/atoms/Button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { ISignInScheme, SignInScheme } from './types'
 import { Form } from '@/components/atoms/Form'
+import { useAuth } from '@/context/AuthContext'
 
 const SignIn: React.FC = (): ReactElement => {
   const router = useRouter()
+  const { signIn } = useAuth()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const formMethods = useForm<ISignInScheme>({
     resolver: zodResolver(SignInScheme),
   })
 
-  const onHandleSubmit = (data: ISignInScheme) => {
-    console.log(data)
+  const onHandleSubmit = async (data: ISignInScheme) => {
+    setLoading(true)
+    const res = await signIn(data.email, data.password)
+    setLoading(false)
+
+    if (!res) {
+      formMethods.setError('email', {
+        type: 'manual',
+        message: 'Email ou senha incorretos',
+      })
+      formMethods.setError('password', {
+        type: 'manual',
+        message: 'Email ou senha incorretos',
+      })
+    }
+
+    if (res) {
+      router.push('/')
+    }
   }
 
   return (
@@ -76,11 +96,12 @@ const SignIn: React.FC = (): ReactElement => {
             <Link href="/auth/sign-up">Esqueceu sua senha?</Link>
           </div>
           <div className="mt-10 flex flex-col justify-between gap-4">
-            <Button.Root type="submit">
+            <Button.Root type="submit" loading={loading}>
               <Button.Text>Continuar</Button.Text>
             </Button.Root>
             <Button.Root
               variant={'outline'}
+              loading={loading}
               onClick={() => router.back()}
               type="button"
               className="border-pureWhite text-pureWhite hover:bg-pureWhite hover:text-brownPrimary lg:border-brownPrimary lg:text-brownPrimary lg:hover:bg-brownPrimary lg:hover:text-pureWhite"
