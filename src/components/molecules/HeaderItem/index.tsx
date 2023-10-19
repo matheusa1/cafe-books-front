@@ -2,9 +2,10 @@ import React, { ReactElement } from 'react'
 import { IHeaderItem, IHeaderItemToggle } from './types'
 import { tv, VariantProps } from 'tailwind-variants'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const container = tv({
-  base: 'flex select-none flex-col items-center justify-center rounded-lg p-2 transition-all md:h-14 md:w-14 md:bg-transparent md:hover:bg-brownPrimary',
+  base: 'flex h-14 w-14 shrink-0 select-none flex-col items-center justify-center rounded-lg p-2 transition-all md:bg-transparent md:hover:bg-brownPrimary',
   variants: {
     active: {
       true: 'brownButton',
@@ -16,23 +17,33 @@ const container = tv({
   },
 })
 
-export const HeaderItem: React.FC<
-  IHeaderItem & VariantProps<typeof container>
-> = ({ icon, title, active = false, onClick, path }): ReactElement => {
+export const HeaderItem: React.FC<IHeaderItem> = ({
+  icon: Icon,
+  title,
+  onClick,
+  path,
+}): ReactElement => {
+  const pathname = usePathname()
+
   return (
-    <Link href={path} className={container({ active })} onClick={onClick}>
-      {icon}
-      <h1 className="hidden text-xs text-white md:flex">{title}</h1>
+    <Link
+      href={path}
+      className={container({ active: !!(pathname === path) })}
+      onClick={onClick}
+    >
+      <Icon className="text-white" />
+      <h1 className="text-xs text-white md:flex">{title}</h1>
     </Link>
   )
 }
 
 export const HeaderItemToggle: React.FC<
   IHeaderItemToggle & VariantProps<typeof container>
-> = ({ icon, title, active = false, onClick }): ReactElement => {
+> = ({ icon: Icon, title, active = false, onClick }): ReactElement => {
   return (
     <div className={container({ active })} onClick={onClick}>
-      {icon}
+      <Icon />
+
       <h1 className="hidden text-xs text-white md:flex">{title}</h1>
     </div>
   )

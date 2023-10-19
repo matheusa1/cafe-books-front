@@ -4,19 +4,21 @@ import InputHeaderSearch from '@/components/atoms/InputHeaderSearch'
 import { HeaderItem } from '@/components/molecules/HeaderItem'
 import useScrollPosition from '@/utils/hooks/useScrollPosition'
 import useWindowSize from '@/utils/hooks/useWindowSize'
-import {
-  Bookmarks,
-  Gauge,
-  ShoppingCart,
-  SquaresFour,
-  User,
-} from '@phosphor-icons/react'
 import Image from 'next/image'
 import React, { ReactElement, useState } from 'react'
 import { tv } from 'tailwind-variants'
 
 import Logo from '@/assets/svgs/LogoTextCol.svg'
 import Link from 'next/link'
+import { useAuth } from '@/context/AuthContext'
+import {
+  Bookmark,
+  GaugeCircle,
+  Grid2X2,
+  LogIn,
+  ShoppingBasket,
+  User,
+} from 'lucide-react'
 
 const headerWrapper = tv({
   base: 'fixed left-0 top-0 z-30 w-screen transition-all',
@@ -45,9 +47,9 @@ const headerContainer = tv({
 })
 
 const Header: React.FC = (): ReactElement => {
-  const isUserSignedIn = false
   const scroll = useScrollPosition()
   const { height, width } = useWindowSize()
+  const { user } = useAuth()
 
   const [isInputOpen, setIsInputOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -79,38 +81,26 @@ const Header: React.FC = (): ReactElement => {
         </Link>
         <div className="flex justify-end gap-5 md:w-full">
           <div className="hidden gap-5 md:flex">
-            <HeaderItem
-              title={'Admin'}
-              path="/admin/books"
-              icon={<Gauge size={24} color="white" />}
-            />
+            {user && (
+              <HeaderItem
+                title={'Admin'}
+                path="/admin/books"
+                icon={GaugeCircle}
+              />
+            )}
             <HeaderItem
               title={'Favoritos'}
-              path="/bookmarks"
-              icon={<Bookmarks size={24} color="white" />}
+              path={'/bookmarks'}
+              icon={Bookmark}
             />
+            <HeaderItem title={'Explorar'} path="/explore" icon={Grid2X2} />
             <HeaderItem
-              title={'Categorias'}
-              path="/explore"
-              icon={<SquaresFour size={24} color="white" />}
-            />
-            <HeaderItem
-              title={isUserSignedIn ? 'Perfil' : 'Entrar'}
-              path={isUserSignedIn ? '/profile' : '/auth/sign-in'}
-              icon={
-                isUserSignedIn ? (
-                  <ShoppingCart size={24} color="white" />
-                ) : (
-                  <User size={24} color="white" />
-                )
-              }
+              title={user ? 'Perfil' : 'Entrar'}
+              path={user ? '/profile' : '/auth/sign-in'}
+              icon={user ? User : LogIn}
             />
           </div>
-          <HeaderItem
-            title="Carrinho"
-            path="/cart"
-            icon={<ShoppingCart size={24} color="white" />}
-          />
+          <HeaderItem title="Carrinho" path={'/cart'} icon={ShoppingBasket} />
         </div>
       </div>
     </header>

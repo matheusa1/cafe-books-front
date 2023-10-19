@@ -1,8 +1,8 @@
-import { ReactNode } from 'react'
+import { ElementType } from 'react'
 
 export type IHeaderItemToggle = {
   title: string
-  icon: ReactNode
+  icon: ElementType
   onClick?: () => void
 }
 
