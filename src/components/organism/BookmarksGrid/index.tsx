@@ -1,5 +1,9 @@
+'use client'
+
 import HeadboardItem from '@/components/molecules/HeadboardItem'
-import React, { ReactElement } from 'react'
+import { useAuth } from '@/context/AuthContext'
+import { getUserFavorites } from '@/services/api'
+import React, { ReactElement, useCallback, useEffect } from 'react'
 
 const mockData = {
   isbn: '978-8560280940',
@@ -21,6 +25,22 @@ const mockData = {
 }
 
 const BookmarksGrid: React.FC = (): ReactElement => {
+  const { user } = useAuth()
+
+  const handleGetUserFavorites = useCallback(async () => {
+    try {
+      const res = await getUserFavorites(user!.id!)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [user])
+
+  useEffect(() => {
+    handleGetUserFavorites()
+    console.log('refresh')
+  }, [handleGetUserFavorites])
+
   return (
     <div
       className={

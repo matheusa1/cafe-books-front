@@ -56,6 +56,11 @@ export const signIn = async (email: string, password: string) => {
   return response.data
 }
 
+export const getUser = async (id: number) => {
+  const response = await api.get(`user/${id}/`)
+  return response.data
+}
+
 export const uploadImageToCloudnary = async (
   file: File,
   upload_preset?: string,
@@ -70,4 +75,34 @@ export const uploadImageToCloudnary = async (
   )
 
   return res.data
+}
+
+export const addBookToFavorites = async (ISBN: string, userId: number) => {
+  const response = await api.post('api/favorites/', {
+    book: ISBN,
+    user: userId,
+  })
+
+  return response.data
+}
+
+export const removeBookToFavorites = async (ISBN: string, userId: number) => {
+  const response = await api.delete('api/favorites/', {
+    data: {
+      book: ISBN,
+      user: userId,
+    },
+  })
+
+  return response.data
+}
+
+export const getUserFavorites = async (userId: number) => {
+  const response = await api.get('api/favorites/', {
+    data: {
+      user: userId,
+    },
+  })
+
+  return response.data
 }

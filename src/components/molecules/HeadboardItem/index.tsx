@@ -8,6 +8,8 @@ import Image from 'next/image'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import { Button } from '@/components/atoms/Button'
 import { useRouter } from 'next/navigation'
+import { addBookToFavorites, removeBookToFavorites } from '@/services/api'
+import { useAuth } from '@/context/AuthContext'
 
 const HeadboardItem: React.FC<IHeadboardItem> = ({
   cardInfo,
@@ -15,12 +17,35 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
   const onHandleAddToCart = () => {
     console.log('add to cart')
   }
+  const { user } = useAuth()
 
   const router = useRouter()
 
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(
+    user?.favorites?.includes(cardInfo.isbn) || false,
+  )
 
   const { price, promotional_price, image, title, isbn } = cardInfo
+
+  const onHandleFavorite = async (ISBN: string) => {
+    if (!user) return
+
+    try {
+      if (isBookmarked) {
+        const res = await removeBookToFavorites(ISBN, user.id)
+        console.log(res)
+        setIsBookmarked(false)
+
+        return
+      }
+
+      const res = await addBookToFavorites(ISBN, user.id)
+      setIsBookmarked(true)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div
@@ -38,7 +63,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
         </div>
         <BookmarkSimple
           className={`h-8 w-8 ${isBookmarked && 'text-yellow-500'}`}
-          onClick={() => setIsBookmarked(!isBookmarked)}
+          onClick={() => onHandleFavorite(isbn)}
           weight={isBookmarked ? 'fill' : 'regular'}
         />
       </header>

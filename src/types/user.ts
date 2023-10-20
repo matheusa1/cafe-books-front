@@ -1,5 +1,11 @@
 export type IUserType = {
   id: number
+  type: string
+  name: string
+  address: string
+  phone: string
+  sex: string
+  favorites: string[]
 }
 
 export type IJWTDecode = {

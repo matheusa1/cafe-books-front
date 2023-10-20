@@ -3,7 +3,7 @@
 import { Button } from '@/components/atoms/Button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { ISignUpScheme, SignUpScheme } from './types'
 import { signUp } from '@/services/api'
@@ -12,6 +12,7 @@ import { Form } from '@/components/atoms/Form'
 
 const SignUp: React.FC = (): ReactElement => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const formMethods = useForm<ISignUpScheme>({
     resolver: zodResolver(SignUpScheme),
@@ -19,9 +20,10 @@ const SignUp: React.FC = (): ReactElement => {
 
   const onHandleSubmit = async (data: ISignUpScheme) => {
     try {
+      setLoading(true)
       const res = await signUp(data)
+      setLoading(false)
       toast.success(res.message)
-
       router.push('/auth/sign-in')
       // eslint-disable-next-line
     } catch (error: any) {
@@ -128,10 +130,11 @@ const SignUp: React.FC = (): ReactElement => {
             </Form.Input.Feedback>
           </Form.Input.Root>
           <div className="mt-10 flex flex-col justify-between gap-4">
-            <Button.Root type="submit">
+            <Button.Root type="submit" loading={loading}>
               <Button.Text>Continuar</Button.Text>
             </Button.Root>
             <Button.Root
+              loading={loading}
               variant={'outline'}
               onClick={() => router.back()}
               type="button"

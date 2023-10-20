@@ -2,7 +2,7 @@ import BookmarksGrid from '@/components/organism/BookmarksGrid'
 import BookmarksHeader from '@/components/organism/BookmarksHeader'
 import React, { ReactElement } from 'react'
 
-const Bookmarks: React.FC = (): ReactElement => {
+const Bookmark: React.FC = (): ReactElement => {
   return (
     <div
       className={
@@ -17,4 +17,4 @@ const Bookmarks: React.FC = (): ReactElement => {
   )
 }
 
-export default Bookmarks
+export default Bookmark

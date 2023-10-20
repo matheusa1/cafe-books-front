@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import Cookie from 'js-cookie'
-import { signIn } from '@/services/api'
+import { getUser, signIn } from '@/services/api'
 import jwt from 'jwt-decode'
 import { IJWTDecode, IUserType } from '@/types/user'
 import { contextType } from './types'
@@ -31,10 +31,23 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
 
       const decoded: IJWTDecode = await jwt(res.access)
 
-      setUser({ id: decoded.user_id })
+      const userInfo = await getUser(decoded.user_id)
+
+      console.log(userInfo)
+
+      setUser({
+        id: decoded.user_id,
+        address: userInfo.address,
+        name: userInfo.name,
+        phone: userInfo.phone,
+        sex: userInfo.sex,
+        type: userInfo.type,
+        favorites: userInfo.favorites,
+      })
 
       return true
     } catch (error) {
+      console.log(error)
       return false
     }
   }, [])
@@ -50,13 +63,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
   }, [])
 
   useEffect(() => {
-    const token = Cookie.get('token')
-
-    if (token) {
-      const decoded: IJWTDecode = jwt(token)
-
-      setUser({ id: decoded.user_id })
-    }
+    Cookie.remove('token')
   }, [])
 
   return (
