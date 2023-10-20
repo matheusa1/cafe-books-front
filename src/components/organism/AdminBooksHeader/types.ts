@@ -5,4 +5,5 @@ export type IAdminBooksHeader = {
   setSearch: (search: string) => void
   categoriesList: TratedCategoriesType
   refetch: () => void
+  refetchCategories: () => void
 }

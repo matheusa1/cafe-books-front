@@ -14,6 +14,7 @@ import { createBook, updateBook, uploadImageToCloudnary } from '@/services/api'
 
 import { Dropzone, FileCard } from '@files-ui/react'
 import Image from 'next/image'
+import { CreateCategoryModal } from '../CreateCategoryModal'
 
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
@@ -21,6 +22,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   setModalOpen,
   data,
   categoriesList,
+  refetchCategories,
   refetch,
 }): ReactElement => {
   const FormMethods = useForm<AdminCreateOutput>({
@@ -30,6 +32,8 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   FormMethods.watch('image')
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const [isCreateModalOpen, setIsCreateMdoalOpen] = useState<boolean>(false)
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
     setIsLoading(true)
@@ -189,7 +193,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
             </div>
 
             <div className="col-span-1 flex flex-col gap-2 md:col-span-2">
-              <span className="text-lg font-bold">Imagem</span>
+              <Form.Input.Label>Imagem</Form.Input.Label>
               <Dropzone
                 onChange={(file) => FormMethods.setValue('image', file)}
                 label="Arraste e solte a imagem aqui"
@@ -216,22 +220,11 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               </Dropzone>
               {typeof FormMethods?.formState?.errors?.image?.message ===
                 'string' && (
-                <span className="text-red-500">
+                <Form.Input.Feedback>
                   {FormMethods?.formState?.errors?.image?.message}
-                </span>
+                </Form.Input.Feedback>
               )}
             </div>
-
-            {/* <Form.Select
-              name="category"
-              label="Categorias"
-              placeholder="Categorias"
-              labelDark
-              id={'category'}
-              errorMessage={FormMethods?.formState?.errors?.category?.message}
-              options={categoriesList}
-              isMulti
-            /> */}
             <Form.Select.Root>
               <Form.Select.Label htmlFor="category" required>
                 Categorias
@@ -242,6 +235,14 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 placeholder="Categorias"
                 error={!!FormMethods.formState.errors.category?.message}
                 options={categoriesList}
+                modal={
+                  <CreateCategoryModal
+                    setModalOpen={setIsCreateMdoalOpen}
+                    refetch={refetchCategories}
+                  />
+                }
+                isModalOpen={isCreateModalOpen}
+                setIsModalOpen={setIsCreateMdoalOpen}
                 isMulti
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />

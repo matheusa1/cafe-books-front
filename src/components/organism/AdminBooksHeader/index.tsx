@@ -13,6 +13,7 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
   setSearch,
   categoriesList,
   refetch,
+  refetchCategories,
 }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -50,6 +51,7 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
               refetch={refetch}
               categoriesList={categoriesList}
               setModalOpen={setIsModalOpen}
+              refetchCategories={refetchCategories}
             />
           </Dialog.Content>
         </Dialog.Portal>

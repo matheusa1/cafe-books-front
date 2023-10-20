@@ -15,18 +15,21 @@ const Book: React.FC = (): ReactElement => {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
 
-  const { data: categories } = useQuery(['categories', Infinity], async () => {
-    const categories = await getCategories()
+  const { data: categories, refetch: refetchCategories } = useQuery(
+    ['categories', Infinity],
+    async () => {
+      const categories = await getCategories()
 
-    const categoriesList = categories.map((category) => {
-      return {
-        label: toTitleCase(category.name),
-        value: category.name,
-      }
-    })
+      const categoriesList = categories.map((category) => {
+        return {
+          label: toTitleCase(category.name),
+          value: category.name,
+        }
+      })
 
-    return categoriesList
-  })
+      return categoriesList
+    },
+  )
 
   const {
     data: booksData,
@@ -89,6 +92,7 @@ const Book: React.FC = (): ReactElement => {
         search={search}
         setSearch={setSearch}
         refetch={refetch}
+        refetchCategories={refetchCategories}
       />
       <div className="flex flex-1">
         <AdminBooksContent

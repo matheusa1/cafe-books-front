@@ -115,3 +115,24 @@ export const getUserFavorites = async (token: string) => {
 
   return response.data
 }
+
+export const createCategory = async (
+  name: string,
+  image: string,
+  token: string,
+) => {
+  const response = await api.post(
+    'api/book/category/',
+    {
+      name,
+      image_url: image,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}

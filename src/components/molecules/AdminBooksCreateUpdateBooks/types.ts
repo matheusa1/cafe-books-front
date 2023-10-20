@@ -8,6 +8,7 @@ export type IAdminBooksCreateUpdateBooks = {
   data?: TratedCategoriesBookType | RowDataType<never>
   categoriesList: TratedCategoriesType
   refetch: () => void
+  refetchCategories: () => void
 }
 
 const Response = {
