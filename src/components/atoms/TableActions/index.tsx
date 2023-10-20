@@ -11,6 +11,7 @@ const TableActions: React.FC<ITableActions> = ({
   rowData,
   categoriesList,
   refetch,
+  refetchCategories,
 }): ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [ModalType, setModalType] = useState<'update' | 'delete'>('update')
@@ -52,6 +53,7 @@ const TableActions: React.FC<ITableActions> = ({
                 categoriesList={categoriesList}
                 data={rowData}
                 setModalOpen={setIsModalOpen}
+                refetchCategories={refetchCategories}
               />
             )}
           </Dialog.Content>

@@ -6,4 +6,5 @@ export type ITableActions = {
   rowData: TratedCategoriesBookType | RowDataType<never>
   categoriesList: TratedCategoriesType
   refetch: () => void
+  refetchCategories: () => void
 }

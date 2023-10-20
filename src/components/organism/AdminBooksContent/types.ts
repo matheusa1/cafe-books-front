@@ -6,4 +6,5 @@ export type IAdminBooksContent = {
   categoriesList: TratedCategoriesType
   isLoading: boolean
   refetch: () => void
+  refetchCategories: () => void
 }

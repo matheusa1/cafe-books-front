@@ -13,6 +13,7 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
   categoriesList,
   isLoading,
   refetch,
+  refetchCategories,
 }): ReactElement => {
   const ActionCell = ({
     rowData,
@@ -24,6 +25,7 @@ const AdminBooksContent: React.FC<IAdminBooksContent> = ({
         refetch={refetch}
         rowData={rowData}
         categoriesList={categoriesList}
+        refetchCategories={refetchCategories}
       />
     )
   }

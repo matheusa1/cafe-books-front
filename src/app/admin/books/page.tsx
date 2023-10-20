@@ -100,6 +100,7 @@ const Book: React.FC = (): ReactElement => {
           isLoading={isLoading}
           categoriesList={categories}
           books={filteredBooks || []}
+          refetchCategories={refetchCategories}
         />
       </div>
       {filteredBooks && filteredBooks.length > 0 && (
