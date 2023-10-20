@@ -77,30 +77,39 @@ export const uploadImageToCloudnary = async (
   return res.data
 }
 
-export const addBookToFavorites = async (ISBN: string, userId: number) => {
-  const response = await api.post('api/favorites/', {
-    book: ISBN,
-    user: userId,
-  })
+export const addBookToFavorites = async (ISBN: string, token: string) => {
+  const response = await api.post(
+    'api/favorites/',
+    {
+      book: ISBN,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 
   return response.data
 }
 
-export const removeBookToFavorites = async (ISBN: string, userId: number) => {
+export const removeBookToFavorites = async (ISBN: string, token: string) => {
   const response = await api.delete('api/favorites/', {
     data: {
       book: ISBN,
-      user: userId,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
 
   return response.data
 }
 
-export const getUserFavorites = async (userId: number) => {
+export const getUserFavorites = async (token: string) => {
   const response = await api.get('api/favorites/', {
-    data: {
-      user: userId,
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
 

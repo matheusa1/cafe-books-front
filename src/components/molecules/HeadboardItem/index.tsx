@@ -17,7 +17,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
   const onHandleAddToCart = () => {
     console.log('add to cart')
   }
-  const { user } = useAuth()
+  const { user, token } = useAuth()
 
   const router = useRouter()
 
@@ -32,16 +32,14 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
 
     try {
       if (isBookmarked) {
-        const res = await removeBookToFavorites(ISBN, user.id)
-        console.log(res)
+        await removeBookToFavorites(ISBN, token!)
         setIsBookmarked(false)
 
         return
       }
 
-      const res = await addBookToFavorites(ISBN, user.id)
+      await addBookToFavorites(ISBN, token!)
       setIsBookmarked(true)
-      console.log(res)
     } catch (error) {
       console.log(error)
     }
@@ -68,7 +66,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
         />
       </header>
       <main
-        className="flex h-full w-full justify-center"
+        className="flex h-full w-full cursor-pointer justify-center"
         onClick={() => router.push(`/book-info/${isbn}`)}
       >
         <Image
@@ -81,7 +79,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({
       </main>
       <footer className="flex w-full flex-col items-center justify-center ">
         <span
-          className="w-full truncate text-center font-semibold"
+          className="w-full cursor-pointer truncate text-center font-semibold"
           onClick={() => router.push(`/book-info/${isbn}`)}
         >
           {title}

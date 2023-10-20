@@ -68,7 +68,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ user, signIn: handleSignIn, signOut, getToken }}
+      value={{ user, signIn: handleSignIn, signOut, token: getToken() }}
     >
       {children}
     </AuthContext.Provider>
