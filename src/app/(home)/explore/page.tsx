@@ -20,6 +20,7 @@ const Explore: React.FC = (): ReactElement => {
 
   const [filter, setFilter] = useState<ExploreFilterProps>({
     categories: [],
+    authors: [],
     price: {
       min: undefined,
       max: undefined,
@@ -69,6 +70,14 @@ const Explore: React.FC = (): ReactElement => {
       tempData = book.category.some((category) =>
         filter.categories.some(
           (filterCategory) => filterCategory.value === category.value,
+        ),
+      )
+    }
+
+    if (filter.authors.length > 0) {
+      tempData = book.author.some((author) =>
+        filter.categories.some(
+          (filterAuthor) => filterAuthor.value === author.value,
         ),
       )
     }

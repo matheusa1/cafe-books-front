@@ -3,6 +3,10 @@ export type ExploreFilterProps = {
     value: string
     label: string
   }[]
+  authors: {
+    value: string
+    label: string
+  }[]
   price: {
     min?: number
     max?: number

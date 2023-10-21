@@ -43,14 +43,18 @@ export const SelectMain: FC<ISelectMain> = ({
       <Selecta
         {...rest}
         className={twMerge(rest.className, SelectStyle({ error }))}
-        noOptionsMessage={() => (
-          <p
-            onClick={() => setIsModalOpen!(true)}
-            className="cursor-pointer hover:bg-gray-100"
-          >
-            Criar
-          </p>
-        )}
+        noOptionsMessage={() =>
+          modal ? (
+            <p
+              onClick={() => setIsModalOpen!(true)}
+              className="cursor-pointer hover:bg-gray-100"
+            >
+              Criar
+            </p>
+          ) : (
+            'Nenhuma opção encontrada'
+          )
+        }
       />
     </>
   )

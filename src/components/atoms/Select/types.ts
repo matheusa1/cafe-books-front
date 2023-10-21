@@ -18,4 +18,5 @@ export type ISelectMain = Props &
     modal?: ReactNode
     isModalOpen?: boolean
     setIsModalOpen?: (value: boolean) => void
+    haveModal?: boolean
   }
