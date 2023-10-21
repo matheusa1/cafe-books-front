@@ -9,7 +9,7 @@ import { Form } from '@/components/atoms/Form'
 import { X } from 'lucide-react'
 import { ICreateAuthorModal } from './types'
 import { Button } from '@/components/atoms/Button'
-import { createCategory, uploadImageToCloudnary } from '@/services/api'
+import { createAuthor, uploadImageToCloudnary } from '@/services/api'
 import { useAuth } from '@/context/AuthContext'
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
@@ -34,7 +34,7 @@ export const CreateAuthorModal: FC<ICreateAuthorModal> = ({
 
       const image = res?.secure_url
 
-      await createCategory(data.name, image, token!)
+      await createAuthor(data.name, image, token!)
       refetch()
       setIsLoading(false)
       setModalOpen(false)
@@ -63,7 +63,7 @@ export const CreateAuthorModal: FC<ICreateAuthorModal> = ({
         <Form.Input.Root>
           <Form.Input.Label required>Nome do(a) autor(a)</Form.Input.Label>
           <Form.Input.Input
-            placeholder={'Nome da categoria'}
+            placeholder={'Nome do(a) autor(a)'}
             className={'rounded-md border-2 border-dark'}
             name="name"
             error={!!FormMethods.formState.errors.name?.message}

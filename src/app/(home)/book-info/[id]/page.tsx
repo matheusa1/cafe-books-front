@@ -11,6 +11,7 @@ import notFound from '@/assets/images/empty-box.png'
 const getBookInfo = async (isbn: string) => {
   try {
     const response = await getBook(isbn)
+    console.log(response)
     return response
   } catch (error) {
     return undefined

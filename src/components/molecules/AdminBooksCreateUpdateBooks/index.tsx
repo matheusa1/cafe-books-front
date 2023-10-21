@@ -15,6 +15,8 @@ import { createBook, updateBook, uploadImageToCloudnary } from '@/services/api'
 import { Dropzone, FileCard } from '@files-ui/react'
 import Image from 'next/image'
 import { CreateCategoryModal } from '../CreateCategoryModal'
+import { CreateAuthorModal } from '../CreateAuthorModal'
+import { useAuth } from '@/context/AuthContext'
 
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
@@ -24,16 +26,23 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
   categoriesList,
   refetchCategories,
   refetch,
+  authorsList,
+  refetchAuthors,
 }): ReactElement => {
   const FormMethods = useForm<AdminCreateOutput>({
     resolver: zodResolver(AdminCreateSchema),
   })
 
+  const { token } = useAuth()
+
   FormMethods.watch('image')
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const [isCreateModalOpen, setIsCreateMdoalOpen] = useState<boolean>(false)
+  const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] =
+    useState<boolean>(false)
+  const [isCreateAuthorModalOpen, setIsCreateAuthorModalOpen] =
+    useState<boolean>(false)
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
     setIsLoading(true)
@@ -52,15 +61,18 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       }
 
       if (data) {
-        await updateBook({
-          ...formData,
-          image: image,
-          promotional_price: Number(formData?.promotional_price),
-          price: Number(formData.price),
-          stock: Number(formData.stock),
-          pages: Number(formData.pages),
-          year: Number(formData.year),
-        })
+        await updateBook(
+          {
+            ...formData,
+            image: image,
+            promotional_price: Number(formData?.promotional_price),
+            price: Number(formData.price),
+            stock: Number(formData.stock),
+            pages: Number(formData.pages),
+            year: Number(formData.year),
+          },
+          token!,
+        )
         refetch()
         setModalOpen(false)
         toast.success('Livro atualizado com sucesso!')
@@ -69,18 +81,21 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         return
       }
 
-      await createBook({
-        ...formData,
-        image: image,
-        promotional_price:
-          formData?.promotional_price === null
-            ? null
-            : Number(formData.promotional_price),
-        price: Number(formData.price),
-        stock: Number(formData.stock),
-        pages: Number(formData.pages),
-        year: Number(formData.year),
-      })
+      await createBook(
+        {
+          ...formData,
+          image: image,
+          promotional_price:
+            formData?.promotional_price === null
+              ? null
+              : Number(formData.promotional_price),
+          price: Number(formData.price),
+          stock: Number(formData.stock),
+          pages: Number(formData.pages),
+          year: Number(formData.year),
+        },
+        token!,
+      )
       refetch()
       setModalOpen(false)
 
@@ -237,12 +252,12 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 options={categoriesList}
                 modal={
                   <CreateCategoryModal
-                    setModalOpen={setIsCreateMdoalOpen}
+                    setModalOpen={setIsCreateCategoryModalOpen}
                     refetch={refetchCategories}
                   />
                 }
-                isModalOpen={isCreateModalOpen}
-                setIsModalOpen={setIsCreateMdoalOpen}
+                isModalOpen={isCreateCategoryModalOpen}
+                setIsModalOpen={setIsCreateCategoryModalOpen}
                 isMulti
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
@@ -251,7 +266,33 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               </Form.Select.Feedback>
             </Form.Select.Root>
 
-            <Form.Input.Root>
+            <Form.Select.Root>
+              <Form.Select.Label htmlFor="category" required>
+                Autor
+              </Form.Select.Label>
+              <Form.Select.Select
+                id="author"
+                name="author"
+                placeholder="Categorias"
+                error={!!FormMethods.formState.errors.author?.message}
+                options={authorsList}
+                modal={
+                  <CreateAuthorModal
+                    setModalOpen={setIsCreateAuthorModalOpen}
+                    refetch={refetchAuthors}
+                  />
+                }
+                isModalOpen={isCreateAuthorModalOpen}
+                setIsModalOpen={setIsCreateAuthorModalOpen}
+                isMulti
+                className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
+              />
+              <Form.Select.Feedback type="error">
+                {FormMethods.formState.errors.author?.message}
+              </Form.Select.Feedback>
+            </Form.Select.Root>
+
+            {/* <Form.Input.Root>
               <Form.Input.Label htmlFor="author" required>
                 Autor
               </Form.Input.Label>
@@ -265,7 +306,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
               <Form.Input.Feedback type="error">
                 {FormMethods.formState.errors.author?.message}
               </Form.Input.Feedback>
-            </Form.Input.Root>
+            </Form.Input.Root> */}
 
             <Form.Input.Root>
               <Form.Input.Label htmlFor="publisher" required>

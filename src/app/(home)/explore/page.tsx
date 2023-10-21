@@ -40,6 +40,12 @@ const Explore: React.FC = (): ReactElement => {
               value: category,
             }
           }),
+          author: book.author.map((author) => {
+            return {
+              label: toTitleCase(author),
+              value: author,
+            }
+          }),
         }
       })
 

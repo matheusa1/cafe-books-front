@@ -1,7 +1,6 @@
 export type ResponseBookType = {
   isbn: string
   title: string
-  author: string
   publisher: string
   country: string
   language: string
@@ -12,6 +11,7 @@ export type ResponseBookType = {
   price: number
   promotional_price: null | number
   stock: number
+  author: string[]
   category: string[]
 }
 
@@ -20,7 +20,10 @@ export type ResponseBooksType = ResponseBookType[]
 export type TratedCategoriesBookType = {
   isbn: string
   title: string
-  author: string
+  author: {
+    label: string
+    value: string
+  }[]
   publisher: string
   country: string
   language: string

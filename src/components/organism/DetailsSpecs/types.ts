@@ -1,5 +1,5 @@
 export type IDetailsSpecs = {
-  author: string
+  author: string[]
   editor: string
   pages: number
   release: number

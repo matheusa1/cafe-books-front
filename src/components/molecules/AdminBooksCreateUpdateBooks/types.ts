@@ -1,3 +1,4 @@
+import { TratedAuthorsType } from '@/types/authorTypes'
 import { TratedCategoriesBookType } from '@/types/booktype'
 import { TratedCategoriesType } from '@/types/categoriesType'
 import { RowDataType } from 'rsuite-table'
@@ -7,8 +8,10 @@ export type IAdminBooksCreateUpdateBooks = {
   setModalOpen: (value: boolean) => void
   data?: TratedCategoriesBookType | RowDataType<never>
   categoriesList: TratedCategoriesType
+  authorsList: TratedAuthorsType
   refetch: () => void
   refetchCategories: () => void
+  refetchAuthors: () => void
 }
 
 const Response = {
@@ -18,7 +21,6 @@ const Response = {
 export const AdminCreateSchema = z.object({
   isbn: z.string().nonempty(Response.string),
   title: z.string().nonempty(Response.string),
-  author: z.string().nonempty(Response.string),
   publisher: z.string().nonempty(Response.string),
   country: z.string().nonempty(Response.string),
   language: z.string().nonempty(Response.string),
@@ -29,6 +31,15 @@ export const AdminCreateSchema = z.object({
   price: z.string().nonempty(Response.string),
   promotional_price: z.string().nullish(),
   stock: z.string().nonempty(Response.string),
+  author: z
+    .array(
+      z.object({
+        label: z.string().nonempty(Response.string),
+        value: z.string().nonempty(Response.string),
+      }),
+    )
+    .min(1, 'Deve conter ao menos uma categoria')
+    .transform((val) => val.map((item) => item.value)),
   category: z
     .array(
       z.object({

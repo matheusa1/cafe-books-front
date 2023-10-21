@@ -13,24 +13,40 @@ export const getCategories = async () => {
   return response.data
 }
 
+export const getAuthor = async () => {
+  const response = await api.get<ResponseCategoriesType>('/author/')
+  return response.data
+}
+
 export const getBooks = async () => {
   const response = await api.get<ResponseBooksType>('/book/')
   return response.data
 }
 
-export const createBook = async (data: ResponseBookType) => {
-  const response = await api.post('api/book/', data)
+export const createBook = async (data: ResponseBookType, token: string) => {
+  const response = await api.post('api/book/', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
   return response.data
 }
 
-export const updateBook = async (data: ResponseBookType) => {
-  const response = await api.put('api/book/', data)
+export const updateBook = async (data: ResponseBookType, token: string) => {
+  const response = await api.put('api/book/', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
   return response.data
 }
 
-export const deleteBook = async (isbn: string) => {
+export const deleteBook = async (isbn: string, token: string) => {
   const response = await api.delete('api/book/', {
     data: { isbn: isbn },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
   return response.data
 }
@@ -123,6 +139,27 @@ export const createCategory = async (
 ) => {
   const response = await api.post(
     'api/book/category/',
+    {
+      name,
+      image_url: image,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const createAuthor = async (
+  name: string,
+  image: string,
+  token: string,
+) => {
+  const response = await api.post(
+    'api/book/author/',
     {
       name,
       image_url: image,
