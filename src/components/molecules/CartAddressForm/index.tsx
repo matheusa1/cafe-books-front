@@ -26,18 +26,18 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
   const formMethods = useForm<CartAddressSchemaInput>({
     resolver: zodResolver(CartAddressSchema),
     defaultValues: {
-      cep: address.cep,
-      street: address.street,
-      number: address.number,
-      complement: address.complement,
-      neighborhood: address.neighborhood,
+      cep: address?.cep || undefined,
+      street: address?.street || undefined,
+      number: address?.number || undefined,
+      complement: address?.complement || undefined,
+      neighborhood: address?.neighborhood || undefined,
       city: {
-        label: address.city,
-        value: address.city,
+        label: address?.city || undefined,
+        value: address?.city || undefined,
       },
       state: {
-        label: address.state,
-        value: address.state,
+        label: address?.state || undefined,
+        value: address?.state || undefined,
       },
     },
   })
@@ -48,7 +48,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
   const onHandleSubmit = (data: CartAddressSchemaInfer) => {
     setAddress({
       ...data,
-      complement: data.complement || '',
+      complement: data.complement || ' ',
       city: data.city.value,
       state: data.state.value,
     })

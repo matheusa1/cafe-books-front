@@ -33,8 +33,6 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
 
       const userInfo = await getUser(decoded.user_id)
 
-      console.log(userInfo)
-
       setUser({
         id: decoded.user_id,
         address: userInfo.address,

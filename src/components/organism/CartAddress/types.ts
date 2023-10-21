@@ -1,7 +1,6 @@
 import { IAddress } from '@/types/address'
 
-export type ICartAddressForm = {
+export type ICartAddress = {
   address: IAddress | undefined
   setAddress: (address: IAddress) => void
-  setOpen: (open: boolean) => void
 }
