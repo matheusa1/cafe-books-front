@@ -14,4 +14,5 @@ export type IJWTDecode = {
   jti: string
   token_type: string
   user_id: number
+  type: string
 }

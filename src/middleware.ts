@@ -1,21 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
+import jwt from 'jwt-decode'
+import { IJWTDecode } from './types/user'
 
 export default function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
 
-  const homeUrl = new URL('/auth/sign-in', request.url)
+  const signInUrl = new URL('/auth/sign-in', request.url)
   const profileUrl = new URL('/profile', request.url)
+  const homeUrl = new URL('/', request.url)
 
   console.log('executing middleware')
 
   if (!token) {
-    if (
-      request.nextUrl.pathname === '/auth/sign-in' ||
-      request.nextUrl.pathname === '/auth/sign-up'
-    ) {
+    if (request.nextUrl.pathname === '/auth/sign-in' || request.nextUrl.pathname === '/auth/sign-up') {
       return NextResponse.next()
     }
 
+    return NextResponse.redirect(signInUrl)
+  }
+
+  const payload: IJWTDecode = jwt(token)
+
+  if (request.nextUrl.pathname.includes('/admin') && payload.type !== 'admin') {
     return NextResponse.redirect(homeUrl)
   }
 
@@ -25,12 +31,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/bookmark',
-    '/cart',
-    '/payment',
-    '/profile',
-    '/admin/:path*',
-    '/auth/:path*',
-  ],
+  matcher: ['/bookmark', '/cart', '/payment', '/profile', '/admin/:path*', '/auth/:path*'],
 }

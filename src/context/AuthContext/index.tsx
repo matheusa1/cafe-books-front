@@ -1,13 +1,6 @@
 'use client'
 
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react'
 import Cookie from 'js-cookie'
 import { getUser, signIn } from '@/services/api'
 import jwt from 'jwt-decode'
@@ -16,9 +9,7 @@ import { contextType } from './types'
 
 const AuthContext = createContext({} as contextType)
 
-export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUserType>()
 
   const handleSignIn = useCallback(async (email: string, password: string) => {
@@ -64,13 +55,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
     Cookie.remove('token')
   }, [])
 
-  return (
-    <AuthContext.Provider
-      value={{ user, signIn: handleSignIn, signOut, token: getToken() }}
-    >
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={{ user, signIn: handleSignIn, signOut, token: getToken() }}>{children}</AuthContext.Provider>
 }
 
 export const useAuth = () => {
