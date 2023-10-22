@@ -33,7 +33,7 @@ export const InputMain: React.FC<IInputMain> = ({
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div className={'relative'}>
+    <div className={'relative w-full'}>
       <input
         {...rest}
         type={
