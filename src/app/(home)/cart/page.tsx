@@ -46,13 +46,13 @@ const Cart: React.FC = (): ReactElement => {
         theme="colored"
       />
       <div className="grid w-full flex-1 grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="order-1 col-span-1 lg:order-none lg:col-span-2">
+        <div className="order-1 col-span-1 h-fit  lg:order-none lg:col-span-2">
           <CartAddress address={address} setAddress={setAddress} />
         </div>
-        <div className="order-2 row-span-1 lg:order-none lg:row-span-2">
+        <div className="order-2 row-span-1  lg:order-none lg:row-span-2">
           <CartResume onHandlePurchase={onHandlePurchase} />
         </div>
-        <div className="col-span-1 lg:col-span-2">
+        <div className="col-span-1 place-items-start lg:col-span-2">
           <CartContent />
         </div>
       </div>

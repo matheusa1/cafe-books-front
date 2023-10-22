@@ -16,7 +16,12 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
     const decoded: IJWTDecode = await jwt(token)
 
     const userInfo = await getUser(decoded.user_id)
-    const cartInfo = await getUserCart(token)
+    let cartInfo
+    try {
+      cartInfo = await getUserCart(token)
+    } catch (error) {
+      cartInfo = undefined
+    }
 
     setUser({
       id: decoded.user_id,

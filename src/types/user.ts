@@ -8,7 +8,7 @@ export type IUserType = {
   phone: string
   sex: string
   favorites: string[]
-  cart: ICart
+  cart?: ICart
 }
 
 export type IJWTDecode = {
