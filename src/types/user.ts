@@ -1,3 +1,5 @@
+import { ICart } from './cart'
+
 export type IUserType = {
   id: number
   type: string
@@ -6,6 +8,7 @@ export type IUserType = {
   phone: string
   sex: string
   favorites: string[]
+  cart: ICart
 }
 
 export type IJWTDecode = {

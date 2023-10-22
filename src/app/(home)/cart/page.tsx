@@ -5,6 +5,7 @@ import { CartResume } from '@/components/organism/CartResume'
 import { useAuth } from '@/context/AuthContext'
 import { IAddress } from '@/types/address'
 import React, { ReactElement, useState } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 const Cart: React.FC = (): ReactElement => {
   const { user } = useAuth()
@@ -31,11 +32,19 @@ const Cart: React.FC = (): ReactElement => {
   }
 
   return (
-    <div
-      className={
-        'flex min-h-screen flex-col items-center px-5 py-20 md:px-10 md:py-28'
-      }
-    >
+    <div className={'flex min-h-screen flex-col items-center px-5 py-20 md:px-10 md:py-28'}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="grid w-full flex-1 grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="order-1 col-span-1 lg:order-none lg:col-span-2">
           <CartAddress address={address} setAddress={setAddress} />

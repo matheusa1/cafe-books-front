@@ -3,6 +3,7 @@ import { ResponseCategoriesType } from './../types/categoriesType'
 import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
 
 import axios from 'axios'
+import { ICart } from '@/types/cart'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -77,18 +78,12 @@ export const getUser = async (id: number) => {
   return response.data
 }
 
-export const uploadImageToCloudnary = async (
-  file: File,
-  upload_preset?: string,
-) => {
+export const uploadImageToCloudnary = async (file: File, upload_preset?: string) => {
   const formData = new FormData()
   formData.append('file', file)
   formData.append('upload_preset', upload_preset ? upload_preset : 'books')
 
-  const res = await axios.post(
-    'https://api.cloudinary.com/v1_1/dkwt60tnl/image/upload',
-    formData,
-  )
+  const res = await axios.post('https://api.cloudinary.com/v1_1/dkwt60tnl/image/upload', formData)
 
   return res.data
 }
@@ -132,11 +127,7 @@ export const getUserFavorites = async (token: string) => {
   return response.data
 }
 
-export const createCategory = async (
-  name: string,
-  image: string,
-  token: string,
-) => {
+export const createCategory = async (name: string, image: string, token: string) => {
   const response = await api.post(
     'api/book/category/',
     {
@@ -153,16 +144,39 @@ export const createCategory = async (
   return response.data
 }
 
-export const createAuthor = async (
-  name: string,
-  image: string,
-  token: string,
-) => {
+export const createAuthor = async (name: string, image: string, token: string) => {
   const response = await api.post(
     'api/book/author/',
     {
       name,
       image_url: image,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const getUserCart = async (token: string) => {
+  const response = await api.get<ICart>('api/cart/', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response.data
+}
+
+export const apiHandleCart = async ({ token, add, book, quantity }: { token: string; add: boolean; book: string; quantity?: number }) => {
+  const response = await api.post(
+    'api/cart/',
+    {
+      add: add ? 'true' : 'false',
+      book,
+      quantity: quantity ? quantity : 1,
     },
     {
       headers: {

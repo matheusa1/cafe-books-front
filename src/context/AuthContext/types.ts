@@ -5,4 +5,5 @@ export type contextType = {
   token?: string
   signIn: (email: string, password: string) => Promise<boolean>
   signOut: () => void
+  refetchCart: () => void
 }

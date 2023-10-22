@@ -7,6 +7,7 @@ import { getBook } from '@/services/api'
 import Image from 'next/image'
 
 import notFound from '@/assets/images/empty-box.png'
+import { ToastContainer } from 'react-toastify'
 
 const getBookInfo = async (isbn: string) => {
   try {
@@ -23,6 +24,18 @@ const BookInfo: React.FC<{ params: { id: string } }> = async ({ params }) => {
 
   return (
     <div className={'my-20 flex flex-col items-center px-5 md:my-28 md:px-10'}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="flex min-h-screen w-full max-w-7xl flex-col items-center gap-5">
         <div className="flex items-center gap-4 self-start">
           <BackButton />
@@ -32,30 +45,15 @@ const BookInfo: React.FC<{ params: { id: string } }> = async ({ params }) => {
             <DetailsImageAndPriceWrapper
               image={book.image}
               price={book.price}
-              discountPrice={
-                book.promotional_price !== null
-                  ? book.promotional_price
-                  : undefined
-              }
+              discountPrice={book.promotional_price !== null ? book.promotional_price : undefined}
               title={book.title}
             />
             <DetailsDescription description={book.description} />
-            <DetailsSpecs
-              author={book.author}
-              editor={book.publisher}
-              language={book.language}
-              pages={book.pages}
-              release={book.year}
-              isbn={book.isbn}
-            />
+            <DetailsSpecs author={book.author} editor={book.publisher} language={book.language} pages={book.pages} release={book.year} isbn={book.isbn} />
           </>
         ) : (
           <div className="flex flex-1 items-center justify-center">
-            <Image
-              alt="not found image"
-              src={notFound}
-              className="w-1/12 min-w-[150px]"
-            />
+            <Image alt="not found image" src={notFound} className="w-1/12 min-w-[150px]" />
             <h1 className="text-xl">Livro não encontrado...</h1>
           </div>
         )}
