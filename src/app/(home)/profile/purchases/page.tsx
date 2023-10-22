@@ -1,14 +1,13 @@
 'use client'
-import { useSidebar } from '@/context/AuthSidebarContext'
+import { ProfilePurchaseContent } from '@/components/organism/ProfilePurchaseContent'
+import { ProfilePurchaseHeader } from '@/components/organism/ProfilePurchaseHeader'
 import { FC } from 'react'
 
 const Purchases: FC = () => {
-  const { toggleSidebar } = useSidebar()
-
   return (
-    <div className={''}>
-      <button onClick={toggleSidebar}>toggle sidebar</button>
-      <h1>purchases</h1>
+    <div className={'flex flex-col gap-10'}>
+      <ProfilePurchaseHeader />
+      <ProfilePurchaseContent />
     </div>
   )
 }
