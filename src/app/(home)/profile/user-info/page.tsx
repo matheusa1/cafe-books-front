@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
-const Profile: FC = () => {
+const UserInfo: FC = () => {
   return (
     <div className={''}>
-      <h1>profile</h1>
+      <h1>UserInfo</h1>
     </div>
   )
 }
 
-export default Profile
+export default UserInfo
