@@ -10,9 +10,9 @@ const Home: React.FC = (): ReactElement => {
     <div className={''}>
       <StartCarousel />
       <Categories />
+      <ForYou />
       <HeadboardItems />
       <Authors />
-      <ForYou />
     </div>
   )
 }
