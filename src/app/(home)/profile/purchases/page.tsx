@@ -5,7 +5,7 @@ import { FC } from 'react'
 
 const Purchases: FC = () => {
   return (
-    <div className={'flex flex-col gap-10'}>
+    <div className={'flex h-full flex-col gap-10'}>
       <ProfilePurchaseHeader />
       <ProfilePurchaseContent />
     </div>
