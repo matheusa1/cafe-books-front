@@ -96,7 +96,7 @@ const Header: React.FC = (): ReactElement => {
             <HeaderItem title={'Explorar'} path="/explore" icon={Grid2X2} />
             <HeaderItem
               title={user ? 'Perfil' : 'Entrar'}
-              path={user ? '/profile' : '/auth/sign-in'}
+              path={user ? '/profile/purchases' : '/auth/sign-in'}
               icon={user ? User : LogIn}
             />
           </div>
