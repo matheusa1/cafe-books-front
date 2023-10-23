@@ -10,14 +10,14 @@ export const ProfilePurchasesItemHeader: FC = () => {
         'flex flex-col gap-2 md:flex-row md:items-center md:justify-between'
       }
     >
-      <div className="flex gap-2 md:w-full md:justify-between">
+      <div className="flex md:w-full md:justify-between">
         <ProfilePurchaseItemHeaderItem title={'Pedido'} value={'1'} />
         <ProfilePurchaseItemHeaderItem
           title={'Data do pedido:'}
           value={'20/10/2023'}
         />
       </div>
-      <div className="flex gap-2 md:w-full md:justify-between">
+      <div className="flex md:w-full md:justify-between">
         <ProfilePurchaseItemHeaderItem title={'PAGAMENTO'} value={'PIX'} />
         <ProfilePurchaseItemHeaderItem
           title={'total'}
