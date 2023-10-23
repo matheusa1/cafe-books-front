@@ -7,10 +7,13 @@ import { ToastContainer, toast } from 'react-toastify'
 
 const PurchaseConfirmed: React.FC = (): ReactElement => {
   const { push } = useRouter()
-  useEffect(() => { toast.success('Você será redirecionado à página principal em breve...')
+  useEffect(() => {
+    toast.success(
+      'Você será redirecionado à página principal em 10 segundos...',
+    )
     const t = setTimeout(() => {
       push('/')
-    }, 5000)
+    }, 10000)
 
     return () => clearTimeout(t)
   })
@@ -19,7 +22,7 @@ const PurchaseConfirmed: React.FC = (): ReactElement => {
     <div className="flex min-h-screen flex-col place-items-center justify-center px-5 md:px-10">
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={10000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -45,7 +48,10 @@ const PurchaseConfirmed: React.FC = (): ReactElement => {
             Obrigado por comprar com a gente! 🤎
           </span>
         </div>
-        <Button.Root className="w-full max-w-xs">
+        <Button.Root
+          className="w-full max-w-xs"
+          onClick={() => push('/profile/purchases')}
+        >
           <Button.Text>Ver pedido</Button.Text>
         </Button.Root>
       </div>
