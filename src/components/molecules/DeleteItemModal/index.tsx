@@ -4,6 +4,7 @@ import { IDeleteItemModal } from './types'
 import { Button } from '@/components/atoms/Button'
 import { deleteBook } from '@/services/api'
 import { toast } from 'react-toastify'
+import { useAuth } from '@/context/AuthContext'
 
 const DeleteItemModal: React.FC<IDeleteItemModal> = ({
   setIsOpen,
@@ -11,11 +12,12 @@ const DeleteItemModal: React.FC<IDeleteItemModal> = ({
   refetch,
 }): ReactElement => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { token } = useAuth()
 
   const onHandleDelete = async () => {
     setIsLoading(true)
     try {
-      const res = await deleteBook(isbn)
+      const res = await deleteBook(isbn, token!)
       toast.success(res.message)
 
       refetch()

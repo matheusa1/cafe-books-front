@@ -12,6 +12,7 @@ import EmptyImage from '@/assets/images/empty-box.png'
 import Image from 'next/image'
 import ExploreFilter from '@/components/organism/ExploreFilter'
 import { ExploreFilterProps } from '@/components/organism/ExploreFilter/types'
+import { ToastContainer } from 'react-toastify'
 
 const Explore: React.FC = (): ReactElement => {
   const [search, setSearch] = useState('')
@@ -20,51 +21,52 @@ const Explore: React.FC = (): ReactElement => {
 
   const [filter, setFilter] = useState<ExploreFilterProps>({
     categories: [],
+    authors: [],
     price: {
       min: undefined,
       max: undefined,
     },
   })
 
-  const { data: booksData, isLoading } = useQuery(
-    ['books', Infinity],
-    async () => {
-      const books = await getBooks()
+  const { data: booksData, isLoading } = useQuery(['books', Infinity], async () => {
+    const books = await getBooks()
 
-      const booksList = books.map((book) => {
-        return {
-          ...book,
-          category: book.category.map((category) => {
-            return {
-              label: toTitleCase(category),
-              value: category,
-            }
-          }),
-        }
-      })
+    const booksList = books.map((book) => {
+      return {
+        ...book,
+        category: book.category.map((category) => {
+          return {
+            label: toTitleCase(category),
+            value: category,
+          }
+        }),
+        author: book.author.map((author) => {
+          return {
+            label: toTitleCase(author),
+            value: author,
+          }
+        }),
+      }
+    })
 
-      return booksList
-    },
-  )
+    return booksList
+  })
 
   const filteredBooks = booksData?.filter((book, index) => {
     let tempData
 
     if (search === '') {
       tempData = book
-    } else if (
-      book.title.toLowerCase().includes(search.toLowerCase()) ||
-      book.isbn.toLowerCase().includes(search.toLowerCase())
-    ) {
+    } else if (book.title.toLowerCase().includes(search.toLowerCase()) || book.isbn.toLowerCase().includes(search.toLowerCase())) {
       tempData = book
     }
 
     if (filter.categories.length > 0) {
-      tempData = book.category.some((category) =>
-        filter.categories.some(
-          (filterCategory) => filterCategory.value === category.value,
-        ),
-      )
+      tempData = book.category.some((category) => filter.categories.some((filterCategory) => filterCategory.value === category.value))
+    }
+
+    if (filter.authors.length > 0) {
+      tempData = book.author.some((author) => filter.categories.some((filterAuthor) => filterAuthor.value === author.value))
     }
 
     if (filter.price.min !== undefined || filter.price.max !== undefined) {
@@ -86,26 +88,32 @@ const Explore: React.FC = (): ReactElement => {
 
       if (filter.price.min !== undefined && filter.price.max !== undefined) {
         if (book?.promotional_price) {
-          tempData =
-            book?.promotional_price >= filter.price.min &&
-            book?.promotional_price <= filter.price.max
+          tempData = book?.promotional_price >= filter.price.min && book?.promotional_price <= filter.price.max
         } else {
-          tempData =
-            book.price >= filter.price.min && book.price <= filter.price.max
+          tempData = book.price >= filter.price.min && book.price <= filter.price.max
         }
       }
     }
 
-    if (
-      index >= (currentPage - 1) * itemsPerPage &&
-      index < currentPage * itemsPerPage
-    ) {
+    if (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) {
       return tempData
     }
   })
 
   return (
     <div className={'my-20 flex flex-col items-center px-5 md:my-28 md:px-10'}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="flex w-full max-w-7xl flex-col items-center gap-5">
         <ExploreHeader search={search} setSearch={setSearch} />
         <div className="flex w-full gap-5">

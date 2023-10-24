@@ -2,7 +2,7 @@
 
 import React, { ReactElement, useState } from 'react'
 import 'rsuite-table/dist/css/rsuite-table.css'
-import { getBooks, getCategories } from '@/services/api'
+import { getAuthor, getBooks, getCategories } from '@/services/api'
 import Pagination from '@/components/atoms/Pagination'
 import AdminBooksHeader from '@/components/organism/AdminBooksHeader'
 import AdminBooksContent from '@/components/organism/AdminBooksContent'
@@ -15,18 +15,37 @@ const Book: React.FC = (): ReactElement => {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(10)
 
-  const { data: categories } = useQuery(['categories', Infinity], async () => {
-    const categories = await getCategories()
+  const { data: categories, refetch: refetchCategories } = useQuery(
+    ['categories', Infinity],
+    async () => {
+      const categories = await getCategories()
 
-    const categoriesList = categories.map((category) => {
-      return {
-        label: toTitleCase(category.name),
-        value: category.name,
-      }
-    })
+      const categoriesList = categories.map((category) => {
+        return {
+          label: toTitleCase(category.name),
+          value: category.name,
+        }
+      })
 
-    return categoriesList
-  })
+      return categoriesList
+    },
+  )
+
+  const { data: author, refetch: refetchAuthor } = useQuery(
+    ['author', Infinity],
+    async () => {
+      const author = await getAuthor()
+
+      const authorList = author?.map((author) => {
+        return {
+          label: toTitleCase(author.name),
+          value: author.name,
+        }
+      })
+
+      return authorList
+    },
+  )
 
   const {
     data: booksData,
@@ -42,6 +61,12 @@ const Book: React.FC = (): ReactElement => {
           return {
             label: toTitleCase(category),
             value: category,
+          }
+        }),
+        author: book.author.map((author) => {
+          return {
+            label: toTitleCase(author),
+            value: author,
           }
         }),
       }
@@ -89,6 +114,9 @@ const Book: React.FC = (): ReactElement => {
         search={search}
         setSearch={setSearch}
         refetch={refetch}
+        refetchCategories={refetchCategories}
+        refetchAuthors={refetchAuthor}
+        authorsList={author}
       />
       <div className="flex flex-1">
         <AdminBooksContent
@@ -96,6 +124,9 @@ const Book: React.FC = (): ReactElement => {
           isLoading={isLoading}
           categoriesList={categories}
           books={filteredBooks || []}
+          refetchCategories={refetchCategories}
+          authorsList={author}
+          refetchAuthors={refetchAuthor}
         />
       </div>
       {filteredBooks && filteredBooks.length > 0 && (

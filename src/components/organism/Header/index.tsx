@@ -81,7 +81,7 @@ const Header: React.FC = (): ReactElement => {
         </Link>
         <div className="flex justify-end gap-5 md:w-full">
           <div className="hidden gap-5 md:flex">
-            {user && (
+            {user && user.type === 'admin' && (
               <HeaderItem
                 title={'Admin'}
                 path="/admin/books"
@@ -90,7 +90,7 @@ const Header: React.FC = (): ReactElement => {
             )}
             <HeaderItem
               title={'Favoritos'}
-              path={'/bookmarks'}
+              path={'/bookmark'}
               icon={Bookmark}
             />
             <HeaderItem title={'Explorar'} path="/explore" icon={Grid2X2} />

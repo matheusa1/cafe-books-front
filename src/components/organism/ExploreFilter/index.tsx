@@ -2,7 +2,7 @@
 
 import { Select } from '@/components/atoms/Select'
 import ExploreFilterItem from '@/components/molecules/ExploreFilterItem'
-import { getCategories } from '@/services/api'
+import { getAuthor, getCategories } from '@/services/api'
 import { toTitleCase } from '@/utils/toTitleCase'
 import { Funnel } from '@phosphor-icons/react'
 import { useQuery } from '@tanstack/react-query'
@@ -29,6 +29,19 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
     })
 
     return categoriesList
+  })
+
+  const { data: authors } = useQuery(['authors', Infinity], async () => {
+    const authors = await getAuthor()
+
+    const authorList = authors.map((author) => {
+      return {
+        label: toTitleCase(author.name),
+        value: author.name,
+      }
+    })
+
+    return authorList
   })
 
   const params = useSearchParams()
@@ -62,24 +75,36 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
       </header>
       <main className="flex flex-col gap-5">
         <ExploreFilterItem title={'Categorias'}>
-          <Select.Root>
-            <Select.Label>Categorias</Select.Label>
-            <Select.Select
-              className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
-              isMulti
-              placeholder={'Selecione'}
-              options={categories}
-              value={localFilter.categories}
-              onChange={(value: unknown) =>
-                setLocalFilter({
-                  ...localFilter,
-                  categories: value as selectProps,
-                })
-              }
-            />
-          </Select.Root>
+          <Select.Select
+            className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
+            isMulti
+            placeholder={'Selecione'}
+            options={categories}
+            value={localFilter.categories}
+            onChange={(value: unknown) =>
+              setLocalFilter({
+                ...localFilter,
+                categories: value as selectProps,
+              })
+            }
+          />
         </ExploreFilterItem>
 
+        <ExploreFilterItem title={'Autores'}>
+          <Select.Select
+            className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
+            isMulti
+            placeholder={'Selecione'}
+            options={authors}
+            value={localFilter.authors}
+            onChange={(value: unknown) =>
+              setLocalFilter({
+                ...localFilter,
+                authors: value as selectProps,
+              })
+            }
+          />
+        </ExploreFilterItem>
         <ExploreFilterItem title={'Preço'}>
           <div className="flex w-full items-center justify-between">
             <span className="">Valor mínimo:</span>
@@ -137,11 +162,13 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
             onClick={() => {
               setFilter({
                 categories: [],
+                authors: [],
                 price: { min: undefined, max: undefined },
               })
 
               setLocalFilter({
                 categories: [],
+                authors: [],
                 price: { min: undefined, max: undefined },
               })
             }}

@@ -5,11 +5,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { X } from '@phosphor-icons/react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  CartAddressSchema,
-  CartAddressSchemaInfer,
-  CartAddressSchemaInput,
-} from './schema'
+import { CartAddressSchema, CartAddressSchemaInfer, CartAddressSchemaInput } from './schema'
 import { Form } from '@/components/atoms/Form'
 import { Button } from '@/components/atoms/Button'
 import { useQuery } from '@tanstack/react-query'
@@ -17,27 +13,23 @@ import axios from 'axios'
 import { IStates } from '@/types/states'
 import { ICartAddressForm } from './types'
 
-export const CartAddressForm: FC<ICartAddressForm> = ({
-  address,
-  setAddress,
-  setOpen,
-}) => {
+export const CartAddressForm: FC<ICartAddressForm> = ({ address, setAddress, setOpen, buy }) => {
   const [cities, setCities] = useState<{ label: string; value: string }[]>([])
   const formMethods = useForm<CartAddressSchemaInput>({
     resolver: zodResolver(CartAddressSchema),
     defaultValues: {
-      cep: address.cep,
-      street: address.street,
-      number: address.number,
-      complement: address.complement,
-      neighborhood: address.neighborhood,
+      cep: address?.cep || undefined,
+      street: address?.street || undefined,
+      number: address?.number || undefined,
+      complement: address?.complement || undefined,
+      neighborhood: address?.neighborhood || undefined,
       city: {
-        label: address.city,
-        value: address.city,
+        label: address?.city || undefined,
+        value: address?.city || undefined,
       },
       state: {
-        label: address.state,
-        value: address.state,
+        label: address?.state || undefined,
+        value: address?.state || undefined,
       },
     },
   })
@@ -45,10 +37,10 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
   const state = formMethods.watch('state')
   const cep = formMethods.watch('cep')
 
-  const onHandleSubmit = (data: CartAddressSchemaInfer) => {
+  const onHandleSubmit = async (data: CartAddressSchemaInfer) => {
     setAddress({
       ...data,
-      complement: data.complement || '',
+      complement: data.complement || ' ',
       city: data.city.value,
       state: data.state.value,
     })
@@ -56,9 +48,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
   }
 
   const { data: estados } = useQuery(['state'], async () => {
-    const response = await axios.get<IStates>(
-      'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
-    )
+    const response = await axios.get<IStates>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
     const data = response.data
 
     return data.map((estado) => ({
@@ -68,9 +58,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
   })
 
   const getCities = useCallback(async (state: string) => {
-    const response = await axios.get(
-      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`,
-    )
+    const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`)
     const data = response.data
 
     setCities(
@@ -135,10 +123,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
           </Dialog.Close>
         </header>
         <FormProvider {...formMethods}>
-          <form
-            className="grid max-h-[60vh] grid-cols-4 gap-2 overflow-auto pr-2 md:max-h-[70vh]"
-            onSubmit={formMethods.handleSubmit(onHandleSubmit)}
-          >
+          <form className="grid max-h-[60vh] grid-cols-4 gap-2 overflow-auto pr-2 md:max-h-[70vh]" onSubmit={formMethods.handleSubmit(onHandleSubmit)}>
             <div className="col-span-4">
               <Form.Input.Root>
                 <Form.Input.Label htmlFor="cep" required>
@@ -152,9 +137,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                   type="number"
                   error={!!formMethods.formState.errors.cep?.message}
                 />
-                <Form.Input.Feedback type="error">
-                  {formMethods.formState.errors.cep?.message}
-                </Form.Input.Feedback>
+                <Form.Input.Feedback type="error">{formMethods.formState.errors.cep?.message}</Form.Input.Feedback>
               </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
@@ -162,16 +145,8 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                 <Form.Select.Label htmlFor="state" required>
                   Estado
                 </Form.Select.Label>
-                <Form.Select.Select
-                  className={'border-2 border-dark'}
-                  id="state"
-                  name="state"
-                  placeholder="Paraná"
-                  options={estados}
-                />
-                <Form.Select.Feedback type="error">
-                  {formMethods.formState.errors.state?.message}
-                </Form.Select.Feedback>
+                <Form.Select.Select className={'border-2 border-dark'} id="state" name="state" placeholder="Paraná" options={estados} />
+                <Form.Select.Feedback type="error">{formMethods.formState.errors.state?.message}</Form.Select.Feedback>
               </Form.Select.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
@@ -179,16 +154,8 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                 <Form.Select.Label htmlFor="city" required>
                   Cidade
                 </Form.Select.Label>
-                <Form.Select.Select
-                  className={'border-2 border-dark'}
-                  id="city"
-                  name="city"
-                  placeholder="Campo Mourão"
-                  options={cities}
-                />
-                <Form.Select.Feedback type="error">
-                  {formMethods.formState.errors.city?.message}
-                </Form.Select.Feedback>
+                <Form.Select.Select className={'border-2 border-dark'} id="city" name="city" placeholder="Campo Mourão" options={cities} />
+                <Form.Select.Feedback type="error">{formMethods.formState.errors.city?.message}</Form.Select.Feedback>
               </Form.Select.Root>
             </div>
             <div className="col-span-3">
@@ -203,9 +170,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                   placeholder="Av. Irmãos Pereira"
                   error={!!formMethods.formState.errors.street?.message}
                 />
-                <Form.Input.Feedback type="error">
-                  {formMethods.formState.errors.street?.message}
-                </Form.Input.Feedback>
+                <Form.Input.Feedback type="error">{formMethods.formState.errors.street?.message}</Form.Input.Feedback>
               </Form.Input.Root>
             </div>
             <div className="col-span-1">
@@ -221,16 +186,12 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                   type="number"
                   error={!!formMethods.formState.errors.number?.message}
                 />
-                <Form.Input.Feedback type="error">
-                  {formMethods.formState.errors.number?.message}
-                </Form.Input.Feedback>
+                <Form.Input.Feedback type="error">{formMethods.formState.errors.number?.message}</Form.Input.Feedback>
               </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
               <Form.Input.Root>
-                <Form.Input.Label htmlFor="complement">
-                  Complemento
-                </Form.Input.Label>
+                <Form.Input.Label htmlFor="complement">Complemento</Form.Input.Label>
                 <Form.Input.Input
                   className={'border-2 border-dark'}
                   id="complement"
@@ -238,9 +199,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                   placeholder="apto. 10"
                   error={!!formMethods.formState.errors.complement?.message}
                 />
-                <Form.Input.Feedback type="error">
-                  {formMethods.formState.errors.complement?.message}
-                </Form.Input.Feedback>
+                <Form.Input.Feedback type="error">{formMethods.formState.errors.complement?.message}</Form.Input.Feedback>
               </Form.Input.Root>
             </div>
             <div className="col-span-4 md:col-span-2">
@@ -255,16 +214,12 @@ export const CartAddressForm: FC<ICartAddressForm> = ({
                   placeholder="Centro"
                   error={!!formMethods.formState.errors.neighborhood?.message}
                 />
-                <Form.Input.Feedback type="error">
-                  {formMethods.formState.errors.neighborhood?.message}
-                </Form.Input.Feedback>
+                <Form.Input.Feedback type="error">{formMethods.formState.errors.neighborhood?.message}</Form.Input.Feedback>
               </Form.Input.Root>
             </div>
 
             <div className="col-span-4 mt-5 flex flex-col gap-4">
-              <Button.Root className="bg-emerald-500 hover:bg-emerald-700">
-                Salvar
-              </Button.Root>
+              <Button.Root className="bg-emerald-500 hover:bg-emerald-700">{buy ? 'Comprar' : 'Salvar'}</Button.Root>
               <Dialog.Close asChild onClick={() => setOpen(false)}>
                 <Button.Root type="button" variant="outline">
                   Cancelar

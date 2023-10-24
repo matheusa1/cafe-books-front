@@ -1,4 +1,4 @@
-import { LabelHTMLAttributes } from 'react'
+import { LabelHTMLAttributes, ReactNode } from 'react'
 import { Props } from 'react-select'
 import { VariantProps } from 'tailwind-variants'
 import { SelectStyle } from './parts/main'
@@ -13,4 +13,10 @@ export type ISelectFeedback = {
   type?: 'error' | 'warn'
 }
 
-export type ISelectMain = Props & VariantProps<typeof SelectStyle>
+export type ISelectMain = Props &
+  VariantProps<typeof SelectStyle> & {
+    modal?: ReactNode
+    isModalOpen?: boolean
+    setIsModalOpen?: (value: boolean) => void
+    haveModal?: boolean
+  }

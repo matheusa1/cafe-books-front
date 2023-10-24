@@ -1,3 +1,4 @@
+import { IPurchaseBooks } from '@/types/purcheses'
 import { ReactNode } from 'react'
 
 export type IProfilePurchaseItemModal = {
@@ -7,4 +8,5 @@ export type IProfilePurchaseItemModal = {
   address: string
   date: string
   value: ReactNode
+  content: IPurchaseBooks[]
 }
