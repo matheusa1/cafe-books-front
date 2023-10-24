@@ -39,7 +39,17 @@ export const CartItemsTable: FC = () => {
               className="absolute bottom-0 left-0 h-10 w-full bg-gradient-to-t from-pureWhite data-[itenslen='1']:hidden data-[itenslen='2']:hidden"
             />
             <div className="h-fit max-h-96 overflow-auto lg:max-h-[50vh]">
-              {user?.cart?.books.map((book) => <CartItemContent isbn={book.book_isbn} price={book.price} quantity={book.quantity} key={book.book_isbn} />)}
+              {user?.cart?.books.map((book) => (
+                <CartItemContent
+                  author={book.book_author}
+                  image={book.book_image}
+                  title={book.book_title}
+                  isbn={book.book_isbn}
+                  price={book.price}
+                  quantity={book.quantity}
+                  key={book.book_isbn}
+                />
+              ))}
             </div>
           </div>
         </>

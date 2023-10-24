@@ -4,6 +4,7 @@ import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
 
 import axios from 'axios'
 import { ICart } from '@/types/cart'
+import { IPurchases } from '@/types/purcheses'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -184,6 +185,16 @@ export const apiHandleCart = async ({ token, add, book, quantity }: { token: str
       },
     },
   )
+
+  return response.data
+}
+
+export const getUserPurchases = async (token: string) => {
+  const response = await api.get<IPurchases>('api/user/purchase/', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
   return response.data
 }

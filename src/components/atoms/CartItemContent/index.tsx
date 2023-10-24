@@ -1,7 +1,6 @@
 'use client'
 
 import { FC, useEffect, useState } from 'react'
-import BookImage from '@/../public/mock/images/OHobbit.png'
 import { Trash } from '@phosphor-icons/react'
 import CurrencyText from '../CurrencyText'
 import QuantitySelector from '../QuantitySelector'
@@ -9,7 +8,14 @@ import Image from 'next/image'
 import { useAuth } from '@/context/AuthContext'
 import { apiHandleCart } from '@/services/api'
 
-export const CartItemContent: FC<{ isbn: string; quantity: number; price: number }> = ({ isbn, quantity: q, price }) => {
+export const CartItemContent: FC<{ isbn: string; quantity: number; price: number; image: string; title: string; author: string[] }> = ({
+  isbn,
+  quantity: q,
+  price,
+  author,
+  image,
+  title,
+}) => {
   const [quantity, setQuantity] = useState(q)
   const { refetchCart, token } = useAuth()
 
@@ -26,13 +32,13 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
   return (
     <div className="flex flex-col border-y border-b-gray-200 p-2 lg:grid lg:grid-cols-5 lg:place-items-center">
       <header className="grid grid-cols-5 gap-2 lg:col-span-2">
-        <Image src={BookImage} alt={'book image'} className="col-span-2 h-16 object-contain" />
+        <Image src={image} alt={'book image'} width={140} height={180} className="col-span-2 h-20 object-contain" />
         <div className="col-span-3 self-center lg:self-start">
           <header className="flex items-center justify-between">
-            <span className="text-xs text-subText">J.R.R. Tolkien</span>
+            <span className="text-xs text-subText">{author.join(', ')}</span>
             <Trash className="h-6 w-6 cursor-pointer text-danger" onClick={onRemoveItem} />
           </header>
-          <h1 className="truncate text-lg font-bold">O Hobbit</h1>
+          <h1 className="truncate text-lg font-bold">{title}</h1>
         </div>
       </header>
       <div className="hidden w-fit lg:block">
