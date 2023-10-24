@@ -214,3 +214,31 @@ export const apiHandlePurchase = async ({ token, address }: { token: string; add
 
   return response.data
 }
+
+export const apiHandlePurchaseWithoutCart = async ({
+  token,
+  address,
+  quantity,
+  isbn: book,
+}: {
+  token: string
+  address: string
+  quantity: number
+  isbn: string
+}) => {
+  const response = await api.post(
+    'api/purchase/withoutcart/',
+    {
+      address,
+      quantity,
+      book,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}

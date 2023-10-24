@@ -3,4 +3,5 @@ export type IDetailsImageAndPriceWrapper = {
   title: string
   discountPrice?: number
   price: number
+  isbn: string
 }

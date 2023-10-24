@@ -1,71 +1,154 @@
 'use client'
 
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 import { IDetailsPriceCard } from './types'
 import { BookmarkSimple } from '@phosphor-icons/react'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import { Button } from '@/components/atoms/Button'
 import QuantitySelector from '@/components/atoms/QuantitySelector'
+import { useAuth } from '@/context/AuthContext'
+import { addBookToFavorites, apiHandleCart, apiHandlePurchaseWithoutCart, removeBookToFavorites } from '@/services/api'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
+import { IAddress } from '@/types/address'
+import * as Dialog from '@radix-ui/react-dialog'
+import { CartAddressForm } from '../CartAddressForm'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({
-  price,
-  title,
-  discountPrice,
-}): ReactElement => {
-  const [isLiked, setIsLiked] = React.useState(false)
+const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountPrice, isbn }): ReactElement => {
+  const { user, refetchCart, token } = useAuth()
+  const { push } = useRouter()
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(user?.favorites?.includes(isbn) || false)
+  const [isOnCart, setIsOnCart] = useState<boolean>(!!user?.cart?.books?.find((book) => book.book_isbn === isbn) || false)
   const [quantity, setQuantity] = React.useState(1)
-  const [isOnCart, setIsOnCart] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [queryClient] = useState(() => new QueryClient())
+
+  const [address, setAddress] = useState<IAddress | undefined>(
+    user?.address
+      ? {
+          street: user?.address.split('|')[0],
+          number: user?.address.split('|')[1],
+          complement: user?.address.split('|')[2],
+          cep: user?.address.split('|')[3],
+          neighborhood: user?.address.split('|')[4],
+          city: user?.address.split('|')[5],
+          state: user?.address.split('|')[6],
+        }
+      : undefined,
+  )
+
+  const onHandlePurchase = useCallback(async () => {
+    const formattedAddress = `${address?.street}|${address?.number}|${address?.complement}|${address?.cep}|${address?.neighborhood}|${address?.city}|${address?.state}`
+    console.log({ formattedAddress })
+
+    if (!address) {
+      return toast.error('Endereço é obrigatório')
+    }
+
+    try {
+      await apiHandlePurchaseWithoutCart({ token: token!, address: formattedAddress, isbn, quantity })
+
+      toast.success('Pedido separado com sucesso!')
+      push('/payment')
+      refetchCart()
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao completar a compra')
+    }
+  }, [address, push, quantity, refetchCart, token, isbn])
+
+  const onHandleCart = async () => {
+    if (!user) return
+
+    try {
+      if (isOnCart) {
+        await apiHandleCart({ add: false, book: isbn, token: token! })
+        refetchCart()
+        setIsOnCart(false)
+        toast.success('Livro removido do carrinho')
+      } else {
+        await apiHandleCart({ add: true, book: isbn, token: token!, quantity })
+        refetchCart()
+        setIsOnCart(true)
+        toast.success('Livro adicionado ao carrinho')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onHandleFavorite = async () => {
+    if (!user) return
+
+    try {
+      if (isBookmarked) {
+        await removeBookToFavorites(isbn, token!)
+        refetchCart()
+
+        setIsBookmarked(false)
+        return
+      }
+
+      await addBookToFavorites(isbn, token!)
+      refetchCart()
+      setIsBookmarked(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (address) {
+      console.log(address)
+      onHandlePurchase()
+    }
+  }, [address, onHandlePurchase])
 
   return (
-    <div
-      id="purchase"
-      className={
-        'flex w-full max-w-md flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'
-      }
-    >
-      <header className="flex items-center justify-between border-b-2 border-dark pb-2">
-        <span className="text-xl font-bold">{title}</span>
-        <div className="shrink-0 p-2">
-          <BookmarkSimple
-            size={24}
-            weight={isLiked ? 'fill' : 'regular'}
-            onClick={() => setIsLiked((prev) => !prev)}
-          />
+    <QueryClientProvider client={queryClient}>
+      <div id="purchase" className={'flex w-full max-w-md flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'}>
+        <Dialog.Root open={open}>
+          <Dialog.Portal>
+            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" onClick={() => setOpen(false)} />
+            <CartAddressForm buy={true} address={address} setAddress={setAddress} setOpen={setOpen} />
+          </Dialog.Portal>
+        </Dialog.Root>
+        <header className="flex items-center justify-between border-b-2 border-dark pb-2">
+          <span className="text-xl font-bold">{title}</span>
+          <div className="shrink-0 p-2">
+            <BookmarkSimple size={24} weight={isBookmarked ? 'fill' : 'regular'} onClick={onHandleFavorite} />
+          </div>
+        </header>
+        <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
+          <div className="flex gap-2">
+            {discountPrice && <CurrencyText value={price} className="text-base text-subText line-through" />}
+            <CurrencyText value={discountPrice ? discountPrice : price} className="text-2xl font-bold" />
+          </div>
+          <div>
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+          </div>
         </div>
-      </header>
-      <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
-        <div className="flex gap-2">
-          {discountPrice && (
-            <CurrencyText
-              value={price}
-              className="text-base text-subText line-through"
-            />
-          )}
-          <CurrencyText
-            value={discountPrice ? discountPrice : price}
-            className="text-2xl font-bold"
-          />
-        </div>
-        <div>
-          <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+        {quantity > 1 && (
+          <p className="text-base font-bold">
+            Total: <CurrencyText value={discountPrice ? discountPrice * quantity : price * quantity} className="text-base font-bold" />
+          </p>
+        )}
+        <div className="flex flex-col gap-2">
+          <Button.Root
+            // styleType={isOnCart ? 'danger' : 'filled'}
+            onClick={onHandleCart}
+            data-isoncart={isOnCart}
+            className="data-[isoncart=true]:bg-danger"
+          >
+            <Button.Text>{isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}</Button.Text>
+          </Button.Root>
+          <Button.Root onClick={() => setOpen(true)}>
+            <Button.Text>Comprar agora</Button.Text>
+          </Button.Root>
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        <Button.Root
-          // styleType={isOnCart ? 'danger' : 'filled'}
-          onClick={() => setIsOnCart((prev) => !prev)}
-          data-isoncart={isOnCart}
-          className="data-[isoncart=true]:bg-danger"
-        >
-          <Button.Text>
-            {isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}
-          </Button.Text>
-        </Button.Root>
-        <Button.Root>
-          <Button.Text>Comprar agora</Button.Text>
-        </Button.Root>
-      </div>
-    </div>
+    </QueryClientProvider>
   )
 }
 
