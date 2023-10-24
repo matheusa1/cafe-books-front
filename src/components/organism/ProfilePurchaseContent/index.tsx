@@ -14,10 +14,15 @@ export const ProfilePurchaseContent: FC = () => {
 
   const handleGetUserPurchase = useCallback(async () => {
     setLoading(true)
-    const res = await getUserPurchases(token!)
+    try {
+      const res = await getUserPurchases(token!)
 
-    console.log(res)
-    setPurchases(res)
+      const sortedById = res.sort((a, b) => b.id - a.id)
+
+      setPurchases(sortedById)
+    } catch (error) {
+      console.log(error)
+    }
     setLoading(false)
   }, [token])
 

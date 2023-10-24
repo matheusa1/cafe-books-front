@@ -198,3 +198,19 @@ export const getUserPurchases = async (token: string) => {
 
   return response.data
 }
+
+export const apiHandlePurchase = async ({ token, address }: { token: string; address: string }) => {
+  const response = await api.post(
+    'api/purchase/',
+    {
+      address,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}

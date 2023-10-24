@@ -4,6 +4,7 @@ import { X } from 'lucide-react'
 import Badge from '@/components/atoms/Badge'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import Image from 'next/image'
+import { formataEndereco } from '@/utils/formatAddress'
 
 export const ProfilePurchaseItemModal: FC<IProfilePurchaseItemModal> = (i) => {
   const { address, date, id, setOpen, status, value, content } = i
@@ -31,7 +32,7 @@ export const ProfilePurchaseItemModal: FC<IProfilePurchaseItemModal> = (i) => {
             {value}
           </div>
         </header>
-        <main>
+        <main className="flex flex-col gap-2">
           {content?.map((item, index) => (
             <div key={index} className={'flex w-full items-center gap-2 text-clip'}>
               <Image src={item.book_image} alt={'image'} width={160} height={180} className="w-20" />
@@ -49,10 +50,13 @@ export const ProfilePurchaseItemModal: FC<IProfilePurchaseItemModal> = (i) => {
           ))}
         </main>
         <footer className="flex flex-col gap-2">
-          <div>
-            <h1 className="font-semibold">Endereço de entrega:</h1>
-            <p>{address}</p>
-          </div>
+          {address && (
+            <div>
+              <h1 className="font-semibold">Endereço de entrega:</h1>
+
+              <p>{formataEndereco(address)}</p>
+            </div>
+          )}
           <div>
             <h1 className="font-semibold">Status:</h1>
             <Badge color="success">{status}</Badge>

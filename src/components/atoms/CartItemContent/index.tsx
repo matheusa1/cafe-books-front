@@ -1,12 +1,13 @@
 'use client'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { Trash } from '@phosphor-icons/react'
 import CurrencyText from '../CurrencyText'
 import QuantitySelector from '../QuantitySelector'
 import Image from 'next/image'
 import { useAuth } from '@/context/AuthContext'
 import { apiHandleCart } from '@/services/api'
+import { toast } from 'react-toastify'
 
 export const CartItemContent: FC<{ isbn: string; quantity: number; price: number; image: string; title: string; author: string[] }> = ({
   isbn,
@@ -24,10 +25,19 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
     refetchCart()
   }
 
-  useEffect(() => {
-    apiHandleCart({ add: true, book: isbn, quantity, token: token! })
-    refetchCart()
+  const onAddItem = useCallback(async () => {
+    try {
+      await apiHandleCart({ add: true, book: isbn, quantity, token: token! })
+      refetchCart()
+    } catch (error) {
+      setQuantity(quantity - 1)
+      toast.error('Não foi possível adicionar o item ao carrinho')
+    }
   }, [quantity, isbn, refetchCart, token])
+
+  useEffect(() => {
+    onAddItem()
+  }, [onAddItem])
 
   return (
     <div className="flex flex-col border-y border-b-gray-200 p-2 lg:grid lg:grid-cols-5 lg:place-items-center">

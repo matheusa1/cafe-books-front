@@ -3,12 +3,15 @@ import { CartAddress } from '@/components/organism/CartAddress'
 import { CartContent } from '@/components/organism/CartContent'
 import { CartResume } from '@/components/organism/CartResume'
 import { useAuth } from '@/context/AuthContext'
+import { apiHandlePurchase } from '@/services/api'
 import { IAddress } from '@/types/address'
+import { useRouter } from 'next/navigation'
 import React, { ReactElement, useState } from 'react'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 
 const Cart: React.FC = (): ReactElement => {
-  const { user } = useAuth()
+  const { user, refetchCart, token } = useAuth()
+  const { push } = useRouter()
   const [address, setAddress] = useState<IAddress | undefined>(
     user?.address
       ? {
@@ -23,12 +26,27 @@ const Cart: React.FC = (): ReactElement => {
       : undefined,
   )
 
-  const onHandlePurchase = () => {
-    console.log('onHandlePurchase')
-
+  const onHandlePurchase = async () => {
     const formattedAddress = `${address?.street}|${address?.number}|${address?.complement}|${address?.cep}|${address?.neighborhood}|${address?.city}|${address?.state}`
 
-    console.log(formattedAddress)
+    if (!address) {
+      return toast.error('Endereço é obrigatório')
+    }
+
+    if (user?.cart?.books.length === 0 || !user?.cart?.books) {
+      return toast.error('Carrinho vazio')
+    }
+
+    try {
+      await apiHandlePurchase({ token: token!, address: formattedAddress })
+
+      toast.success('Pedido separado com sucesso!')
+      push('/payment')
+      refetchCart()
+    } catch (error) {
+      console.log(error)
+      toast.error('Houve um erro ao completar a compra')
+    }
   }
 
   return (
