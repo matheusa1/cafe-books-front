@@ -22,11 +22,13 @@ const BottomBar: React.FC = (): ReactElement => {
       <HeaderItem path={'/'} title="Início" icon={Home} />
       <HeaderItem path={'/explore'} title="Explorar" icon={Grid2X2} />
       <HeaderItem
-        path={'/auth/sign-in'}
+        path={user ? '/profile/purchases' : '/auth/sign-in'}
         title={user ? 'Perfil' : 'Entrar'}
         icon={user ? User : LogIn}
       />
-      {user && <HeaderItem path={'/admin'} title="admin" icon={GaugeCircle} />}
+      {user && (
+        <HeaderItem path={'/admin/books'} title="admin" icon={GaugeCircle} />
+      )}
     </div>
   ) : (
     <div />

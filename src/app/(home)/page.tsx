@@ -23,9 +23,9 @@ const Home: React.FC = (): ReactElement => {
       />
       <StartCarousel />
       <Categories />
+      <ForYou />
       <HeadboardItems />
       <Authors />
-      <ForYou />
     </div>
   )
 }
