@@ -3,4 +3,5 @@ export type IDetailsPriceCard = {
   price: number
   discountPrice?: number
   isbn: string
+  stock: number
 }
