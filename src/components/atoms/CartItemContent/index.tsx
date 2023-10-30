@@ -20,20 +20,21 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
   const [quantity, setQuantity] = useState(q)
   const { refetchCart, token } = useAuth()
 
-  const onRemoveItem = () => {
+  const onRemoveItem = useCallback(() => {
     apiHandleCart({ add: false, book: isbn, quantity, token: token! })
     refetchCart()
-  }
+  }, [isbn, quantity, refetchCart, token])
 
   const onAddItem = useCallback(async () => {
     try {
       await apiHandleCart({ add: true, book: isbn, quantity, token: token! })
       refetchCart()
     } catch (error) {
+      if (quantity === 1) return onRemoveItem()
       setQuantity(quantity - 1)
       toast.error('Não foi possível adicionar o item ao carrinho')
     }
-  }, [quantity, isbn, refetchCart, token])
+  }, [quantity, isbn, refetchCart, token, onRemoveItem])
 
   useEffect(() => {
     onAddItem()
