@@ -48,6 +48,7 @@ const BookInfo: React.FC<{ params: { id: string } }> = async ({ params }) => {
               discountPrice={book.promotional_price !== null ? book.promotional_price : undefined}
               title={book.title}
               isbn={book.isbn}
+              stock={book.stock}
             />
             <DetailsDescription description={book.description} />
             <DetailsSpecs author={book.author} editor={book.publisher} language={book.language} pages={book.pages} release={book.year} isbn={book.isbn} />

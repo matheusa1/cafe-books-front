@@ -15,7 +15,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { CartAddressForm } from '../CartAddressForm'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountPrice, isbn }): ReactElement => {
+const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountPrice, isbn, stock }): ReactElement => {
   const { user, refetchCart, token } = useAuth()
   const { push } = useRouter()
   const [isBookmarked, setIsBookmarked] = useState<boolean>(user?.favorites?.includes(isbn) || false)
@@ -120,33 +120,44 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
             <BookmarkSimple size={24} weight={isBookmarked ? 'fill' : 'regular'} onClick={onHandleFavorite} />
           </div>
         </header>
-        <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
-          <div className="flex gap-2">
-            {discountPrice && <CurrencyText value={price} className="text-base text-subText line-through" />}
-            <CurrencyText value={discountPrice ? discountPrice : price} className="text-2xl font-bold" />
+        {stock > 0 ? (
+          <>
+            <div>
+              <p>Estoque: {stock}</p>
+            </div>
+            <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
+              <div className="flex gap-2">
+                {discountPrice && <CurrencyText value={price} className="text-base text-subText line-through" />}
+                <CurrencyText value={discountPrice ? discountPrice : price} className="text-2xl font-bold" />
+              </div>
+              <div>
+                <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+              </div>
+            </div>
+            {quantity > 1 && (
+              <p className="text-base font-bold">
+                Total: <CurrencyText value={discountPrice ? discountPrice * quantity : price * quantity} className="text-base font-bold" />
+              </p>
+            )}
+            <div className="flex flex-col gap-2">
+              <Button.Root
+                // styleType={isOnCart ? 'danger' : 'filled'}
+                onClick={onHandleCart}
+                data-isoncart={isOnCart}
+                className="data-[isoncart=true]:bg-danger"
+              >
+                <Button.Text>{isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}</Button.Text>
+              </Button.Root>
+              <Button.Root onClick={() => setOpen(true)}>
+                <Button.Text>Comprar agora</Button.Text>
+              </Button.Root>
+            </div>
+          </>
+        ) : (
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-base font-bold text-danger">Sem estoque</p>
           </div>
-          <div>
-            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
-          </div>
-        </div>
-        {quantity > 1 && (
-          <p className="text-base font-bold">
-            Total: <CurrencyText value={discountPrice ? discountPrice * quantity : price * quantity} className="text-base font-bold" />
-          </p>
         )}
-        <div className="flex flex-col gap-2">
-          <Button.Root
-            // styleType={isOnCart ? 'danger' : 'filled'}
-            onClick={onHandleCart}
-            data-isoncart={isOnCart}
-            className="data-[isoncart=true]:bg-danger"
-          >
-            <Button.Text>{isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}</Button.Text>
-          </Button.Root>
-          <Button.Root onClick={() => setOpen(true)}>
-            <Button.Text>Comprar agora</Button.Text>
-          </Button.Root>
-        </div>
       </div>
     </QueryClientProvider>
   )
