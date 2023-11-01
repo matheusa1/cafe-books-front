@@ -5,6 +5,7 @@ import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
 import axios from 'axios'
 import { ICart } from '@/types/cart'
 import { IPurchases } from '@/types/purcheses'
+import { ResponseAuthorsType } from '@/types/authorTypes'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -16,7 +17,7 @@ export const getCategories = async () => {
 }
 
 export const getAuthor = async () => {
-  const response = await api.get<ResponseCategoriesType>('/author/')
+  const response = await api.get<ResponseAuthorsType>('/author/')
   return response.data
 }
 
