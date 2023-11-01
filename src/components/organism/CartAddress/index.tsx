@@ -4,11 +4,15 @@ import { FC, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { CartAddressForm } from '@/components/molecules/CartAddressForm'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ICartAddress } from './types'
+import { useCart } from '@/context/CartInfoContext'
 
-export const CartAddress: FC<ICartAddress> = ({ address, setAddress }) => {
+export const CartAddress: FC = () => {
   const [queryClient] = useState(() => new QueryClient())
   const [open, setOpen] = useState(false)
+
+  const { cartInfo } = useCart()
+
+  const address = cartInfo?.address
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -21,10 +25,7 @@ export const CartAddress: FC<ICartAddress> = ({ address, setAddress }) => {
               <span className="text-sm">
                 Número: {address.number}, {address?.complement}
               </span>
-              <span className="text-sm">
-                CEP:{' '}
-                {`${address.cep.substring(0, 5)}-${address.cep.substring(5)}`}
-              </span>
+              <span className="text-sm">CEP: {`${address.cep.substring(0, 5)}-${address.cep.substring(5)}`}</span>
               <span className="text-sm">Bairro: {address.neighborhood}</span>
               <span className="text-sm">
                 {address.city}, {address.state}
@@ -36,23 +37,13 @@ export const CartAddress: FC<ICartAddress> = ({ address, setAddress }) => {
 
           <Dialog.Root open={open}>
             <Dialog.DialogTrigger asChild>
-              <button
-                className="mt-2 self-end text-brownPrimary"
-                onClick={() => setOpen(true)}
-              >
+              <button className="mt-2 self-end text-brownPrimary" onClick={() => setOpen(true)}>
                 Alterar endereço
               </button>
             </Dialog.DialogTrigger>
             <Dialog.Portal>
-              <Dialog.Overlay
-                className="fixed inset-0 bg-black opacity-30"
-                onClick={() => setOpen(false)}
-              />
-              <CartAddressForm
-                address={address}
-                setAddress={setAddress}
-                setOpen={setOpen}
-              />
+              <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" onClick={() => setOpen(false)} />
+              <CartAddressForm setOpen={setOpen} />
             </Dialog.Portal>
           </Dialog.Root>
         </div>
