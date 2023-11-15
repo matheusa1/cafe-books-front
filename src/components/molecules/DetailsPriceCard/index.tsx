@@ -2,7 +2,6 @@
 
 import React, { ReactElement, useCallback, useEffect, useState } from 'react'
 import { IDetailsPriceCard } from './types'
-import { BookmarkSimple } from '@phosphor-icons/react'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import { Button } from '@/components/atoms/Button'
 import QuantitySelector from '@/components/atoms/QuantitySelector'
@@ -14,6 +13,7 @@ import { IAddress } from '@/types/address'
 import * as Dialog from '@radix-ui/react-dialog'
 import { CartAddressForm } from '../CartAddressForm'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Bookmark } from 'lucide-react'
 
 const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountPrice, isbn, stock }): ReactElement => {
   const { user, refetchCart, token } = useAuth()
@@ -117,7 +117,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
         <header className="flex items-center justify-between border-b-2 border-dark pb-2">
           <span className="text-xl font-bold">{title}</span>
           <div className="shrink-0 p-2">
-            <BookmarkSimple size={24} weight={isBookmarked ? 'fill' : 'regular'} onClick={onHandleFavorite} />
+            <Bookmark size={24} className={(isBookmarked && 'fill-dark') || ''} onClick={onHandleFavorite} />
           </div>
         </header>
         {stock > 0 ? (

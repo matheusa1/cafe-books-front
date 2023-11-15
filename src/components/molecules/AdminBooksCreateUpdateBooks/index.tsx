@@ -1,10 +1,5 @@
-import { X } from '@phosphor-icons/react'
 import React, { ReactElement, useEffect, useState } from 'react'
-import {
-  AdminCreateOutput,
-  AdminCreateSchema,
-  IAdminBooksCreateUpdateBooks,
-} from './types'
+import { AdminCreateOutput, AdminCreateSchema, IAdminBooksCreateUpdateBooks } from './types'
 import { Button } from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -17,6 +12,7 @@ import Image from 'next/image'
 import { CreateCategoryModal } from '../CreateCategoryModal'
 import { CreateAuthorModal } from '../CreateAuthorModal'
 import { useAuth } from '@/context/AuthContext'
+import { X } from 'lucide-react'
 
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
@@ -39,10 +35,8 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] =
-    useState<boolean>(false)
-  const [isCreateAuthorModalOpen, setIsCreateAuthorModalOpen] =
-    useState<boolean>(false)
+  const [isCreateCategoryModalOpen, setIsCreateCategoryModalOpen] = useState<boolean>(false)
+  const [isCreateAuthorModalOpen, setIsCreateAuthorModalOpen] = useState<boolean>(false)
 
   const onHandleSubmit = async (formData: AdminCreateOutput) => {
     setIsLoading(true)
@@ -50,10 +44,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       let image
 
       if (typeof formData.image !== 'string') {
-        const res = await uploadImageToCloudnary(
-          formData.image[0].file,
-          presetUpload,
-        )
+        const res = await uploadImageToCloudnary(formData.image[0].file, presetUpload)
 
         image = res?.secure_url
       } else {
@@ -85,10 +76,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
         {
           ...formData,
           image: image,
-          promotional_price:
-            formData?.promotional_price === null
-              ? null
-              : Number(formData.promotional_price),
+          promotional_price: formData?.promotional_price === null ? null : Number(formData.promotional_price),
           price: Number(formData.price),
           stock: Number(formData.stock),
           pages: Number(formData.pages),
@@ -142,18 +130,11 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
       <FormProvider {...FormMethods}>
         <form
           onSubmit={FormMethods.handleSubmit(onHandleSubmit)}
-          className={
-            'flex max-h-full w-full max-w-3xl flex-col gap-5 overflow-auto rounded-lg bg-pureWhite p-5'
-          }
+          className={'flex max-h-full w-full max-w-3xl flex-col gap-5 overflow-auto rounded-lg bg-pureWhite p-5'}
         >
           <header className="flex items-center justify-between">
-            <span className="text-xl font-bold">
-              {data ? 'Editar Livro' : 'Criar Livro'}
-            </span>
-            <div
-              onClick={() => setModalOpen(false)}
-              className="rounded-lg p-2 hover:bg-gray-200"
-            >
+            <span className="text-xl font-bold">{data ? 'Editar Livro' : 'Criar Livro'}</span>
+            <div onClick={() => setModalOpen(false)} className="rounded-lg p-2 hover:bg-gray-200">
               <X size={20} />
             </div>
           </header>
@@ -170,9 +151,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 error={!!FormMethods.formState.errors.isbn?.message}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.isbn?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.isbn?.message}</Form.Input.Feedback>
             </Form.Input.Root>
             <Form.Input.Root>
               <Form.Input.Label htmlFor="title" required>
@@ -185,9 +164,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 error={!!FormMethods.formState.errors.title?.message}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.title?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.title?.message}</Form.Input.Feedback>
             </Form.Input.Root>
             <div className="md:col-span-2">
               <Form.TextArea.Root>
@@ -201,9 +178,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                   error={!!FormMethods.formState.errors.description?.message}
                   className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
                 />
-                <Form.TextArea.Feedback type="error">
-                  {FormMethods.formState.errors.description?.message}
-                </Form.TextArea.Feedback>
+                <Form.TextArea.Feedback type="error">{FormMethods.formState.errors.description?.message}</Form.TextArea.Feedback>
               </Form.TextArea.Root>
             </div>
 
@@ -217,27 +192,13 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 multiple={false}
               >
                 {typeof FormMethods.getValues('image') === 'string' ? (
-                  <Image
-                    src={data?.image}
-                    alt="book image"
-                    className="w-20"
-                    width={40}
-                    height={40}
-                  />
+                  <Image src={data?.image} alt="book image" className="w-20" width={40} height={40} />
                 ) : (
-                  <FileCard
-                    {...FormMethods.getValues('image')?.[0]}
-                    onDelete={() => FormMethods.setValue('image', null)}
-                    info
-                    preview
-                  />
+                  <FileCard {...FormMethods.getValues('image')?.[0]} onDelete={() => FormMethods.setValue('image', null)} info preview />
                 )}
               </Dropzone>
-              {typeof FormMethods?.formState?.errors?.image?.message ===
-                'string' && (
-                <Form.Input.Feedback>
-                  {FormMethods?.formState?.errors?.image?.message}
-                </Form.Input.Feedback>
+              {typeof FormMethods?.formState?.errors?.image?.message === 'string' && (
+                <Form.Input.Feedback>{FormMethods?.formState?.errors?.image?.message}</Form.Input.Feedback>
               )}
             </div>
             <Form.Select.Root>
@@ -250,20 +211,13 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 placeholder="Categorias"
                 error={!!FormMethods.formState.errors.category?.message}
                 options={categoriesList}
-                modal={
-                  <CreateCategoryModal
-                    setModalOpen={setIsCreateCategoryModalOpen}
-                    refetch={refetchCategories}
-                  />
-                }
+                modal={<CreateCategoryModal setModalOpen={setIsCreateCategoryModalOpen} refetch={refetchCategories} />}
                 isModalOpen={isCreateCategoryModalOpen}
                 setIsModalOpen={setIsCreateCategoryModalOpen}
                 isMulti
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Select.Feedback type="error">
-                {FormMethods.formState.errors.category?.message}
-              </Form.Select.Feedback>
+              <Form.Select.Feedback type="error">{FormMethods.formState.errors.category?.message}</Form.Select.Feedback>
             </Form.Select.Root>
 
             <Form.Select.Root>
@@ -276,20 +230,13 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 placeholder="Categorias"
                 error={!!FormMethods.formState.errors.author?.message}
                 options={authorsList}
-                modal={
-                  <CreateAuthorModal
-                    setModalOpen={setIsCreateAuthorModalOpen}
-                    refetch={refetchAuthors}
-                  />
-                }
+                modal={<CreateAuthorModal setModalOpen={setIsCreateAuthorModalOpen} refetch={refetchAuthors} />}
                 isModalOpen={isCreateAuthorModalOpen}
                 setIsModalOpen={setIsCreateAuthorModalOpen}
                 isMulti
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Select.Feedback type="error">
-                {FormMethods.formState.errors.author?.message}
-              </Form.Select.Feedback>
+              <Form.Select.Feedback type="error">{FormMethods.formState.errors.author?.message}</Form.Select.Feedback>
             </Form.Select.Root>
 
             {/* <Form.Input.Root>
@@ -319,9 +266,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 error={!!FormMethods.formState.errors.publisher?.message}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.publisher?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.publisher?.message}</Form.Input.Feedback>
             </Form.Input.Root>
 
             <Form.Input.Root>
@@ -335,9 +280,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 error={!!FormMethods.formState.errors.language?.message}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.language?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.language?.message}</Form.Input.Feedback>
             </Form.Input.Root>
 
             <Form.Input.Root>
@@ -351,9 +294,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 error={!!FormMethods.formState.errors.country?.message}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.country?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.country?.message}</Form.Input.Feedback>
             </Form.Input.Root>
 
             <Form.Input.Root>
@@ -370,9 +311,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 max={new Date().getFullYear()}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.year?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.year?.message}</Form.Input.Feedback>
             </Form.Input.Root>
 
             <Form.Input.Root>
@@ -388,9 +327,7 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 min={0}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.pages?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.pages?.message}</Form.Input.Feedback>
             </Form.Input.Root>
 
             <Form.Input.Root>
@@ -407,30 +344,22 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 step="0.01"
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.price?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.price?.message}</Form.Input.Feedback>
             </Form.Input.Root>
             {data && (
               <Form.Input.Root>
-                <Form.Input.Label htmlFor="promotional_price">
-                  Preço com desconto
-                </Form.Input.Label>
+                <Form.Input.Label htmlFor="promotional_price">Preço com desconto</Form.Input.Label>
                 <Form.Input.Input
                   id="promotional_price"
                   name="promotional_price"
                   placeholder="31.2"
-                  error={
-                    !!FormMethods.formState.errors.promotional_price?.message
-                  }
+                  error={!!FormMethods.formState.errors.promotional_price?.message}
                   type="number"
                   min={0}
                   step="0.01"
                   className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
                 />
-                <Form.Input.Feedback type="error">
-                  {FormMethods.formState.errors.promotional_price?.message}
-                </Form.Input.Feedback>
+                <Form.Input.Feedback type="error">{FormMethods.formState.errors.promotional_price?.message}</Form.Input.Feedback>
               </Form.Input.Root>
             )}
             <Form.Input.Root>
@@ -446,21 +375,14 @@ const AdminBooksCreateUpdateBooks: React.FC<IAdminBooksCreateUpdateBooks> = ({
                 min={0}
                 className="border-2 border-dark bg-pureWhite/30 text-dark hover:border-brownPrimary focus:border-brownPrimary disabled:bg-slate-100"
               />
-              <Form.Input.Feedback type="error">
-                {FormMethods.formState.errors.stock?.message}
-              </Form.Input.Feedback>
+              <Form.Input.Feedback type="error">{FormMethods.formState.errors.stock?.message}</Form.Input.Feedback>
             </Form.Input.Root>
           </div>
           <footer className="flex flex-col gap-2 md:flex-row md:gap-10 md:self-end">
             <Button.Root type="submit" loading={isLoading}>
               {data ? 'Atualizar' : 'Criar'}
             </Button.Root>
-            <Button.Root
-              variant={'outline'}
-              type="button"
-              loading={isLoading}
-              onClick={() => setModalOpen(false)}
-            >
+            <Button.Root variant={'outline'} type="button" loading={isLoading} onClick={() => setModalOpen(false)}>
               Cancelar
             </Button.Root>
           </footer>

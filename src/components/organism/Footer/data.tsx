@@ -1,4 +1,4 @@
-import { Book, BookOpen } from '@phosphor-icons/react'
+import { Book, BookOpen } from 'lucide-react'
 
 export const FooterData = [
   {

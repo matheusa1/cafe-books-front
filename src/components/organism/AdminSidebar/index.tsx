@@ -5,9 +5,9 @@ import React, { ReactElement } from 'react'
 import { Paths } from '@/utils/adminRoutes'
 import AdminSidebarItem from '@/components/molecules/AdminSidebarItem'
 import { usePathname } from 'next/navigation'
-import { X } from '@phosphor-icons/react'
 import Image from 'next/image'
 import Logo from '@/assets/svgs/Logo.svg'
+import { X } from 'lucide-react'
 
 const Sidebar: React.FC = (): ReactElement => {
   const { isSidebarOpen, toggleSidebar } = useSidebar()
@@ -20,24 +20,11 @@ const Sidebar: React.FC = (): ReactElement => {
       }  overflow-hidden transition-all duration-500`}
     >
       <Image src={Logo} alt="Logo image" className="w-12 self-center" />
-      <p className={'ml-3 whitespace-nowrap text-xs font-bold text-subText'}>
-        {isSidebarOpen ? 'MENU PRINCIPAL' : 'MENU'}
-      </p>
+      <p className={'ml-3 whitespace-nowrap text-xs font-bold text-subText'}>{isSidebarOpen ? 'MENU PRINCIPAL' : 'MENU'}</p>
       {Paths.map((path, index) => (
-        <AdminSidebarItem
-          key={index}
-          icon={path.icon}
-          path={path.path}
-          text={path.name}
-          active={path.path === pathName}
-        />
+        <AdminSidebarItem key={index} icon={path.icon} path={path.path} text={path.name} active={path.path === pathName} />
       ))}
-      <div
-        className={`flex h-14 w-14 cursor-pointer items-center justify-center lg:hidden ${
-          isSidebarOpen && 'self-center'
-        }`}
-        onClick={toggleSidebar}
-      >
+      <div className={`flex h-14 w-14 cursor-pointer items-center justify-center lg:hidden ${isSidebarOpen && 'self-center'}`} onClick={toggleSidebar}>
         <X className="text-pureWhite" size={24} />
       </div>
     </div>

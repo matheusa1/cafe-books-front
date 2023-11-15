@@ -1,13 +1,14 @@
 'use client'
 
 import { FC, useCallback, useEffect, useState } from 'react'
-import { Trash } from '@phosphor-icons/react'
+
 import CurrencyText from '../CurrencyText'
 import QuantitySelector from '../QuantitySelector'
 import Image from 'next/image'
 import { useAuth } from '@/context/AuthContext'
 import { apiHandleCart } from '@/services/api'
 import { toast } from 'react-toastify'
+import { Trash2 } from 'lucide-react'
 
 export const CartItemContent: FC<{ isbn: string; quantity: number; price: number; image: string; title: string; author: string[] }> = ({
   isbn,
@@ -46,7 +47,7 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
         <div className="col-span-3 self-center lg:self-start">
           <header className="flex items-center justify-between">
             <span className="text-xs text-subText">{author.join(', ')}</span>
-            <Trash className="h-6 w-6 cursor-pointer text-danger" onClick={onRemoveItem} />
+            <Trash2 className="h-6 w-6 cursor-pointer text-danger" onClick={onRemoveItem} />
           </header>
           <h1 className="truncate text-lg font-bold">{title}</h1>
         </div>
