@@ -15,8 +15,17 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
   const getUserInfo = useCallback(async (token: string) => {
     const decoded: IJWTDecode = await jwt(token)
 
-    const userInfo = await getUser(decoded.user_id)
+    let userInfo
+
+    try {
+      userInfo = await getUser(decoded.user_id)
+      console.log(userInfo)
+    } catch (error) {
+      return Cookie.remove('token')
+    }
+
     let cartInfo
+
     try {
       cartInfo = await getUserCart(token)
     } catch (error) {

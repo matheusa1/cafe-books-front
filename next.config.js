@@ -1,12 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      'm.media-amazon.com',
-      'i0.wp.com',
-      'res.cloudinary.com',
-      'www.google.com',
-    ],
+    remotePatterns: [{ hostname: 'm.media-amazon.com' }, { hostname: 'i0.wp.com' }, { hostname: 'res.cloudinary.com' }, { hostname: 'www.google.com' }],
   },
 }
 
