@@ -13,9 +13,15 @@ import axios from 'axios'
 import { IStates } from '@/types/states'
 import { ICartAddressForm } from './types'
 import { X } from 'lucide-react'
+import { useCart } from '@/context/CartInfoContext'
 
-export const CartAddressForm: FC<ICartAddressForm> = ({ address, setAddress, setOpen, buy }) => {
+export const CartAddressForm: FC<ICartAddressForm> = ({ setOpen, buy }) => {
   const [cities, setCities] = useState<{ label: string; value: string }[]>([])
+
+  const { setAddress, cartInfo } = useCart()
+
+  const address = cartInfo?.address
+
   const formMethods = useForm<CartAddressSchemaInput>({
     resolver: zodResolver(CartAddressSchema),
     defaultValues: {
