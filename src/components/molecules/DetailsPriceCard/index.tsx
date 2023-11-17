@@ -10,10 +10,10 @@ import { useAuth } from '@/context/AuthContext'
 import { addBookToFavorites, apiHandleCart, apiHandlePurchaseWithoutCart, removeBookToFavorites } from '@/services/api'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/navigation'
-import { IAddress } from '@/types/address'
 import * as Dialog from '@radix-ui/react-dialog'
 import { CartAddressForm } from '../CartAddressForm'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useCart } from '@/context/CartInfoContext'
 
 const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountPrice, isbn, stock }): ReactElement => {
   const { user, refetchCart, token } = useAuth()
@@ -24,19 +24,9 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
   const [open, setOpen] = React.useState(false)
   const [queryClient] = useState(() => new QueryClient())
 
-  const [address, setAddress] = useState<IAddress | undefined>(
-    user?.address
-      ? {
-          street: user?.address.split('|')[0],
-          number: user?.address.split('|')[1],
-          complement: user?.address.split('|')[2],
-          cep: user?.address.split('|')[3],
-          neighborhood: user?.address.split('|')[4],
-          city: user?.address.split('|')[5],
-          state: user?.address.split('|')[6],
-        }
-      : undefined,
-  )
+  const { cartInfo } = useCart()
+
+  const address = cartInfo?.address
 
   const onHandlePurchase = useCallback(async () => {
     const formattedAddress = `${address?.street}|${address?.number}|${address?.complement}|${address?.cep}|${address?.neighborhood}|${address?.city}|${address?.state}`
@@ -111,7 +101,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
         <Dialog.Root open={open}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" onClick={() => setOpen(false)} />
-            <CartAddressForm buy={true} address={address} setAddress={setAddress} setOpen={setOpen} />
+            <CartAddressForm buy={true} setOpen={setOpen} />
           </Dialog.Portal>
         </Dialog.Root>
         <header className="flex items-center justify-between border-b-2 border-dark pb-2">
