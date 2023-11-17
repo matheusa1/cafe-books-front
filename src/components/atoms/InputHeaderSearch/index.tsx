@@ -1,7 +1,7 @@
-import { MagnifyingGlass } from '@phosphor-icons/react'
 import React, { ReactElement } from 'react'
 import { tv, VariantProps } from 'tailwind-variants'
 import { IInputHeaderSearch } from './types'
+import { Search } from 'lucide-react'
 
 const inputWrapper = tv({
   base: 'flex h-fit w-full max-w-xs overflow-hidden rounded-lg transition-all duration-500',
@@ -29,11 +29,7 @@ const inputContainer = tv({
   },
 })
 
-const InputHeaderSearch: React.FC<
-  IInputHeaderSearch &
-    VariantProps<typeof inputWrapper> &
-    VariantProps<typeof inputContainer>
-> = ({
+const InputHeaderSearch: React.FC<IInputHeaderSearch & VariantProps<typeof inputWrapper> & VariantProps<typeof inputContainer>> = ({
   open = true,
   onHandleSearch,
   placeholder,
@@ -45,12 +41,7 @@ const InputHeaderSearch: React.FC<
 
   return (
     <div className={inputWrapper({ open })}>
-      <input
-        className={inputContainer({ open })}
-        value={value}
-        onChange={onChange}
-        ref={inputRef}
-      />
+      <input className={inputContainer({ open })} value={value} onChange={onChange} ref={inputRef} />
       <div
         onClick={() => {
           if (!open) {
@@ -64,7 +55,7 @@ const InputHeaderSearch: React.FC<
         placeholder={placeholder}
         className="brownButton flex h-10 w-12 items-center justify-center"
       >
-        <MagnifyingGlass size={24} color="white" />
+        <Search size={24} color="white" />
       </div>
     </div>
   )

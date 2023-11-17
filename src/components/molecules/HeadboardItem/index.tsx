@@ -1,7 +1,6 @@
 'use client'
 
 import Badge from '@/components/atoms/Badge'
-import { BookmarkSimple } from '@phosphor-icons/react'
 import React, { ReactElement, useState } from 'react'
 import { IHeadboardItem } from './types'
 import Image from 'next/image'
@@ -11,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { addBookToFavorites, apiHandleCart, removeBookToFavorites } from '@/services/api'
 import { useAuth } from '@/context/AuthContext'
 import { toast } from 'react-toastify'
+import { Bookmark } from 'lucide-react'
 
 const HeadboardItem: React.FC<IHeadboardItem> = ({ cardInfo }): ReactElement => {
   const { user, token, refetchCart } = useAuth()
@@ -68,11 +68,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({ cardInfo }): ReactElement => 
       )} */}
       <header className="flex items-center justify-between">
         <div>{promotional_price && <Badge>{`${(((price - promotional_price) / price) * 100).toFixed(0)}% off`}</Badge>}</div>
-        <BookmarkSimple
-          className={`h-8 w-8 ${isBookmarked && 'text-yellow-500'}`}
-          onClick={() => onHandleFavorite(isbn)}
-          weight={isBookmarked ? 'fill' : 'regular'}
-        />
+        <Bookmark className={`h-8 w-8 ${isBookmarked && 'fill-yellow-500 text-yellow-500'}`} onClick={() => onHandleFavorite(isbn)} />
       </header>
       <main className="flex h-full w-full cursor-pointer justify-center" onClick={() => router.push(`/book-info/${isbn}`)}>
         <Image

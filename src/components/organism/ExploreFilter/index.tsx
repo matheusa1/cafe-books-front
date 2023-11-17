@@ -4,18 +4,16 @@ import { Select } from '@/components/atoms/Select'
 import ExploreFilterItem from '@/components/molecules/ExploreFilterItem'
 import { getAuthor, getCategories } from '@/services/api'
 import { toTitleCase } from '@/utils/toTitleCase'
-import { Funnel } from '@phosphor-icons/react'
+
 import { useQuery } from '@tanstack/react-query'
 import React, { ReactElement, useEffect, useState } from 'react'
 import { ExploreFilterProps, IExploreFilter, selectProps } from './types'
 import { Input } from '@/components/atoms/Input'
 import { Button } from '@/components/atoms/Button'
 import { useSearchParams } from 'next/navigation'
+import { Filter } from 'lucide-react'
 
-const ExploreFilter: React.FC<IExploreFilter> = ({
-  filter,
-  setFilter,
-}): ReactElement => {
+const ExploreFilter: React.FC<IExploreFilter> = ({ filter, setFilter }): ReactElement => {
   const [localFilter, setLocalFilter] = useState<ExploreFilterProps>(filter)
 
   const { data: categories } = useQuery(['categories', Infinity], async () => {
@@ -70,7 +68,7 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
   return (
     <div className={'flex w-full flex-col gap-5'}>
       <header className="flex items-center gap-2 border-b-2 border-b-subText text-lg text-dark">
-        <Funnel />
+        <Filter />
         <span className="ml-2">Filtro</span>
       </header>
       <main className="flex flex-col gap-5">
@@ -114,11 +112,7 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
                 type="number"
                 min={0}
                 placeholder="20.5"
-                value={
-                  localFilter.price.min === undefined
-                    ? ''
-                    : localFilter.price.min
-                }
+                value={localFilter.price.min === undefined ? '' : localFilter.price.min}
                 onChange={(e) =>
                   setLocalFilter({
                     ...localFilter,
@@ -138,11 +132,7 @@ const ExploreFilter: React.FC<IExploreFilter> = ({
                 className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
                 type="number"
                 placeholder="20.5"
-                value={
-                  localFilter.price.max === undefined
-                    ? ''
-                    : localFilter.price.max
-                }
+                value={localFilter.price.max === undefined ? '' : localFilter.price.max}
                 min={0}
                 onChange={(e) =>
                   setLocalFilter({

@@ -2,7 +2,7 @@
 
 import { FC, useCallback, useEffect, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { X } from '@phosphor-icons/react'
+
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CartAddressSchema, CartAddressSchemaInfer, CartAddressSchemaInput } from './schema'
@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { IStates } from '@/types/states'
 import { ICartAddressForm } from './types'
+import { X } from 'lucide-react'
 import { useCart } from '@/context/CartInfoContext'
 
 export const CartAddressForm: FC<ICartAddressForm> = ({ setOpen, buy }) => {
