@@ -1,11 +1,10 @@
-import { ReactNode } from 'react'
+import { ElementType } from 'react'
 
 export type IFooterItem = {
   title: string
   items: {
-    title: string
-    data: string
+    name: string
   }[]
-  icon: ReactNode
-  onHandleClick: (data: string, title: string) => void
+  icon: ElementType
+  onHandleClick: (title: string) => void
 }
