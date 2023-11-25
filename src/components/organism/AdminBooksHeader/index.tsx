@@ -6,7 +6,6 @@ import { Input } from '@/components/atoms/Input'
 import { Button } from '@/components/atoms/Button'
 import AdminBooksCreateUpdateBooks from '@/components/molecules/AdminBooksCreateUpdateBooks'
 import * as Dialog from '@radix-ui/react-dialog'
-import { Filter } from 'lucide-react'
 
 const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
   search,
@@ -28,26 +27,17 @@ const AdminBooksHeader: React.FC<IAdminBooksHeader> = ({
           className="border-2 border-dark hover:border-brownPrimary focus:border-brownPrimary"
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Button.Root className="aspect-square" size="md">
-          <Button.Icon icon={Filter} />
-        </Button.Root>
       </div>
       <Dialog.Root open={isModalOpen}>
         <Dialog.Trigger asChild>
           <div className="w-full md:max-w-[250px]">
-            <Button.Root
-              onClick={() => setIsModalOpen((prev) => !prev)}
-              className="w-full"
-            >
+            <Button.Root onClick={() => setIsModalOpen((prev) => !prev)} className="w-full">
               Criar novo livro
             </Button.Root>
           </div>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay
-            className="fixed inset-0 z-10 bg-black/50"
-            onClick={() => setIsModalOpen(false)}
-          />
+          <Dialog.Overlay className="fixed inset-0 z-10 bg-black/50" onClick={() => setIsModalOpen(false)} />
           <Dialog.Content className="fixed left-1/2 top-1/2 z-20 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2">
             <AdminBooksCreateUpdateBooks
               refetch={refetch}
