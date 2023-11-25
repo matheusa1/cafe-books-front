@@ -13,7 +13,7 @@ import { Button } from '@/components/atoms/Button'
 import { useSearchParams } from 'next/navigation'
 import { Filter } from 'lucide-react'
 
-const ExploreFilter: React.FC<IExploreFilter> = ({ filter, setFilter }): ReactElement => {
+const ExploreFilter: React.FC<IExploreFilter> = ({ filter, setFilter, noheader, closeDialog }): ReactElement => {
   const [localFilter, setLocalFilter] = useState<ExploreFilterProps>(filter)
 
   const { data: categories } = useQuery(['categories', Infinity], async () => {
@@ -67,10 +67,12 @@ const ExploreFilter: React.FC<IExploreFilter> = ({ filter, setFilter }): ReactEl
 
   return (
     <div className={'flex w-full flex-col gap-5'}>
-      <header className="flex items-center gap-2 border-b-2 border-b-subText text-lg text-dark">
-        <Filter />
-        <span className="ml-2">Filtro</span>
-      </header>
+      {!noheader && (
+        <header className="flex items-center gap-2 border-b-2 border-b-subText text-lg text-dark">
+          <Filter />
+          <span className="ml-2">Filtro</span>
+        </header>
+      )}
       <main className="flex flex-col gap-5">
         <ExploreFilterItem title={'Categorias'}>
           <Select.Select
@@ -165,7 +167,12 @@ const ExploreFilter: React.FC<IExploreFilter> = ({ filter, setFilter }): ReactEl
           >
             <Button.Text>Limpar filtro</Button.Text>
           </Button.Root>
-          <Button.Root onClick={() => setFilter(localFilter)}>
+          <Button.Root
+            onClick={() => {
+              setFilter(localFilter)
+              closeDialog?.(false)
+            }}
+          >
             <Button.Text>Filtrar</Button.Text>
           </Button.Root>
         </div>

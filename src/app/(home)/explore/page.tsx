@@ -115,7 +115,7 @@ const Explore: React.FC = (): ReactElement => {
         theme="colored"
       />
       <div className="flex w-full max-w-7xl flex-col items-center gap-5">
-        <ExploreHeader search={search} setSearch={setSearch} />
+        <ExploreHeader search={search} setSearch={setSearch} filter={filter} setFilter={setFilter} />
         <div className="flex w-full gap-5">
           <aside className="hidden w-64 p-2 lg:flex">
             <ExploreFilter filter={filter} setFilter={setFilter} />

@@ -21,4 +21,6 @@ export type selectProps = {
 export type IExploreFilter = {
   filter: ExploreFilterProps
   setFilter: (filter: ExploreFilterProps) => void
+  noheader?: boolean
+  closeDialog?: (state: boolean) => void
 }
