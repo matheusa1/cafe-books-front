@@ -1,18 +1,22 @@
 'use client'
 import { Input } from '@/components/atoms/Input'
-import { Select } from '@/components/atoms/Select'
-import { TextArea } from '@/components/atoms/TextArea'
-import { Dropzone, FileCard } from '@files-ui/react'
+import { Dropzone } from '@files-ui/react'
 import React, { ReactElement, useCallback, useEffect, useState } from 'react'
-import { THot } from './types'
 import { getBooks } from '@/services/api'
 import { Button } from '@/components/atoms/Button'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { schema } from './schema'
+import { Tschema } from './types'
+import { Form } from '@/components/atoms/Form'
 
 const Hot: React.FC = (): ReactElement => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [errors] = useState([{ message: '' }, { message: '' }, { message: '' }, { message: '' }])
-  const [hots, setHots] = useState<THot>([])
   const [books, setBooks] = useState<{ label: string; value: string }[]>()
+
+  const formMethods = useForm<Tschema>({
+    resolver: zodResolver(schema),
+  })
 
   const getData = useCallback(async () => {
     try {
@@ -46,84 +50,34 @@ const Hot: React.FC = (): ReactElement => {
             4
           </div>
         </div>
-        <Select.Root>
-          <Select.Label>Selecione o livro</Select.Label>
-          <Select.Select
-            placeholder="Selecione"
-            isClearable
-            value={hots?.[activeIndex]?.book || null}
-            onChange={(e) =>
-              setHots((prev: THot) => {
-                const newState = [...prev]
-                newState[activeIndex] = { ...newState[activeIndex], book: e }
-                return newState
-              })
-            }
-            options={books}
-          />
-          <Select.Feedback>{errors[0].message}</Select.Feedback>
-        </Select.Root>
-        <Input.Root>
-          <Input.Label>Texto principal</Input.Label>
-          <Input.Input
-            value={hots?.[activeIndex]?.mainText || ''}
-            onChange={(e) =>
-              setHots((prev: THot) => {
-                const newState = [...prev]
-                newState[activeIndex] = { ...newState[activeIndex], mainText: e.target.value }
-                return newState
-              })
-            }
-            className="border border-dark focus:border-brownPrimary"
-          />
-          <Input.Feedback>{errors[1].message}</Input.Feedback>
-        </Input.Root>
-        <TextArea.Root>
-          <TextArea.Label>Texto secundário</TextArea.Label>
-          <TextArea.TextArea
-            value={hots?.[activeIndex]?.subText || ''}
-            onChange={(e) =>
-              setHots((prev: THot) => {
-                const newState = [...prev]
-                newState[activeIndex] = { ...newState[activeIndex], subText: e.target.value }
-                return newState
-              })
-            }
-            className="border border-dark focus:border-brownPrimary"
-          />
-          <TextArea.Feedback>{errors[2].message}</TextArea.Feedback>
-        </TextArea.Root>
+        <Form.Select.Root>
+          <Form.Select.Label>Selecione o livro</Form.Select.Label>
+          <Form.Select.Select name="book" placeholder="Selecione" isClearable options={books} />
+          <Form.Select.Feedback>a</Form.Select.Feedback>
+        </Form.Select.Root>
+        <Form.Input.Root>
+          <Form.Input.Label>Texto principal</Form.Input.Label>
+          <Form.Input.Input name="mainText" className="border border-dark focus:border-brownPrimary" />
+          <Form.Input.Feedback>a</Form.Input.Feedback>
+        </Form.Input.Root>
+        <Form.TextArea.Root>
+          <Form.TextArea.Label>Texto secundário</Form.TextArea.Label>
+          <Form.TextArea.TextArea name="subText" className="border border-dark focus:border-brownPrimary" />
+          <Form.TextArea.Feedback>a</Form.TextArea.Feedback>
+        </Form.TextArea.Root>
         <div className="col-span-1 flex flex-col gap-2 md:col-span-2">
           <Input.Label>Imagem</Input.Label>
           <Dropzone
-            onChange={(file) =>
-              setHots((prev: THot) => {
-                const newState = [...prev]
-                newState[activeIndex] = { ...newState[activeIndex], image: file }
-                return newState
-              })
-            }
+            onChange={(e) => {
+              console.log(e)
+            }}
             label="Arraste e solte a imagem aqui"
             header={false}
             footer={false}
             multiple={false}
-          >
-            {/* <Image src={data?.image} alt="book image" className="w-20" width={40} height={40} /> */}
-            <FileCard
-              {...hots?.[activeIndex]?.image?.[0]}
-              onDelete={() =>
-                setHots((prev: THot) => {
-                  const newState = [...prev]
-                  newState[activeIndex] = { ...newState[activeIndex], image: undefined }
-                  return newState
-                })
-              }
-              info
-              preview
-            />
-          </Dropzone>
+          ></Dropzone>
 
-          <Input.Feedback>{errors[3].message}</Input.Feedback>
+          <Input.Feedback>a</Input.Feedback>
         </div>
         <footer className="flex justify-end gap-4">
           <Button.Root>

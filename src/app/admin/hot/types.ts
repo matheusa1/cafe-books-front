@@ -1,8 +1,4 @@
-import { ExtFile } from '@files-ui/react'
+import { schema } from './schema'
+import { z } from 'zod'
 
-export type THot = {
-  book?: { label: string; value: string } | unknown
-  mainText?: string
-  subText?: string
-  image?: ExtFile[]
-}[]
+export type Tschema = z.infer<typeof schema>
