@@ -5,14 +5,9 @@ export const schema = z.object({
     label: z.string(),
     value: z.string(),
   }),
-  mainText: z.string(),
-  subText: z.string(),
-  image: z.array(
-    z.object({
-      name: z.string(),
-      size: z.number(),
-      type: z.string(),
-      url: z.string(),
-    }),
-  ),
+  call: z.string({ required_error: 'Requerido' }).nonempty('Requerido'),
+  subtext: z.string({ required_error: 'Requerido' }).nonempty('Requerido'),
+  image_url: z.any().refine((val) => val && val.length > 0, {
+    message: 'Requerido',
+  }),
 })

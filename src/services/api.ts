@@ -1,3 +1,4 @@
+import { TBestBook } from './../types/bestBooks'
 import { ISignUpScheme } from '@/app/auth/sign-up/types'
 import { ResponseCategoriesType } from './../types/categoriesType'
 import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
@@ -241,5 +242,20 @@ export const apiHandlePurchaseWithoutCart = async ({
     },
   )
 
+  return response.data
+}
+
+export const apiHotBooks = async ({ token, bestBook }: { token: string; bestBook: TBestBook }) => {
+  const response = await api.post(
+    'api/book/bestbooks/',
+    {
+      ...bestBook,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
   return response.data
 }
