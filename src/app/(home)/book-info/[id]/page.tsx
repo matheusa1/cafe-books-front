@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify'
 const getBookInfo = async (isbn: string) => {
   try {
     const response = await getBook(isbn)
-    console.log(response)
+
     return response
   } catch (error) {
     return undefined
@@ -42,14 +42,7 @@ const BookInfo: React.FC<{ params: { id: string } }> = async ({ params }) => {
         </div>
         {book ? (
           <>
-            <DetailsImageAndPriceWrapper
-              image={book.image}
-              price={book.price}
-              discountPrice={book.promotional_price !== null ? book.promotional_price : undefined}
-              title={book.title}
-              isbn={book.isbn}
-              stock={book.stock}
-            />
+            <DetailsImageAndPriceWrapper book={book} />
             <DetailsDescription description={book.description} />
             <DetailsSpecs author={book.author} editor={book.publisher} language={book.language} pages={book.pages} release={book.year} isbn={book.isbn} />
           </>

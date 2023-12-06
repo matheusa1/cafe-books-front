@@ -23,7 +23,15 @@ export const CartInfoContextProvider: React.FC<ICartInfoContextProvider> = ({ ch
           state: user?.address.split('|')[6],
         }
       : undefined,
-    cart: user?.cart || undefined,
+    cart: user?.cart || {
+      user: 1,
+      status: 'offline',
+      id: 1,
+      date: new Date().toString(),
+      address: null,
+      total: 0,
+      books: [],
+    },
   })
 
   const setAddress = useCallback(
@@ -36,16 +44,48 @@ export const CartInfoContextProvider: React.FC<ICartInfoContextProvider> = ({ ch
     [cartInfo],
   )
 
-  const onHandleAddBookToCart = useCallback((book: ICartBook) => {
-    const payload = {
-      books: book,
-    }
+  const onHandleAddBookToCart = useCallback(
+    (book: ICartBook) => {
+      setCartInfo({
+        ...cartInfo,
+        cart: {
+          user: 1,
+          status: 'offline',
+          id: 1,
+          date: new Date().toString(),
+          address: null,
+          books: cartInfo?.cart?.books ? [...cartInfo.cart.books, book] : [book],
+          total: cartInfo?.cart?.total ? cartInfo.cart.total + book.price : book.price,
+        },
+      })
+    },
+    [cartInfo],
+  )
 
-    console.log(payload)
-  }, [])
+  const onHandleRemoveBookToCart = useCallback(
+    (isbn: string) => {
+      const book = cartInfo?.cart?.books?.find((book) => book.book_isbn === isbn)
+
+      if (!book) return console.log('book not found')
+
+      setCartInfo({
+        ...cartInfo,
+        cart: {
+          ...cartInfo.cart,
+          user: 1,
+          status: 'offline',
+          id: 1,
+          date: new Date().toString(),
+          address: null,
+          books: cartInfo?.cart?.books.filter((book) => book.book_isbn !== isbn) || [],
+          total: cartInfo?.cart?.total ? cartInfo.cart.total - book?.price : book?.price,
+        },
+      })
+    },
+    [cartInfo],
+  )
 
   useEffect(() => {
-    console.log('reload')
     setCartInfo({
       address: user?.address
         ? {
@@ -62,7 +102,7 @@ export const CartInfoContextProvider: React.FC<ICartInfoContextProvider> = ({ ch
     })
   }, [user?.cart, user?.address])
 
-  return <CartInfoContext.Provider value={{ setAddress, cartInfo, onHandleAddBookToCart }}>{children}</CartInfoContext.Provider>
+  return <CartInfoContext.Provider value={{ setAddress, cartInfo, onHandleAddBookToCart, onHandleRemoveBookToCart }}>{children}</CartInfoContext.Provider>
 }
 
 export const useCart = () => {
