@@ -10,6 +10,7 @@ export type contextType = {
   setAddress: (address: IAddress) => void
   onHandleAddBookToCart: (book: ICartBook) => void
   onHandleRemoveBookToCart: (isbn: string) => void
+  onHandleUpdateBookToCart: (quantity: number, isbn: string) => void
 }
 
 export type ICartInfo = {

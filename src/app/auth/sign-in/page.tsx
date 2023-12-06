@@ -9,10 +9,12 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { ISignInScheme, SignInScheme } from './types'
 import { Form } from '@/components/atoms/Form'
 import { useAuth } from '@/context/AuthContext'
+import { useCart } from '@/context/CartInfoContext'
 
 const SignIn: React.FC = (): ReactElement => {
   const router = useRouter()
   const { signIn } = useAuth()
+  const { cartInfo } = useCart()
   const [loading, setLoading] = useState<boolean>(false)
 
   const formMethods = useForm<ISignInScheme>({
@@ -21,6 +23,8 @@ const SignIn: React.FC = (): ReactElement => {
 
   const onHandleSubmit = async (data: ISignInScheme) => {
     setLoading(true)
+    const cart = cartInfo?.cart
+
     const res = await signIn(data.email, data.password)
     setLoading(false)
 
@@ -36,27 +40,20 @@ const SignIn: React.FC = (): ReactElement => {
     }
 
     if (res) {
-      router.push('/')
+      if (cart) {
+        router.push('/cart')
+      } else router.push('/')
     }
   }
 
   return (
     <div className={'flex flex-col items-center gap-6 text-white lg:text-dark'}>
       <h1 className="mb-6 text-2xl font-bold uppercase">Login</h1>
-      <p className="text-center text-sm">
-        Para fazer login, insira seu email e senha cadastrados.
-      </p>
+      <p className="text-center text-sm">Para fazer login, insira seu email e senha cadastrados.</p>
       <FormProvider {...formMethods}>
-        <form
-          className="flex w-full flex-col gap-2"
-          onSubmit={formMethods.handleSubmit(onHandleSubmit)}
-        >
+        <form className="flex w-full flex-col gap-2" onSubmit={formMethods.handleSubmit(onHandleSubmit)}>
           <Form.Input.Root>
-            <Form.Input.Label
-              htmlFor="email"
-              required
-              className="text-pureWhite lg:text-dark"
-            >
+            <Form.Input.Label htmlFor="email" required className="text-pureWhite lg:text-dark">
               E-mail
             </Form.Input.Label>
             <Form.Input.Input
@@ -66,17 +63,11 @@ const SignIn: React.FC = (): ReactElement => {
               error={!!formMethods.formState.errors.email?.message}
               className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
             />
-            <Form.Input.Feedback type="error">
-              {formMethods.formState.errors.email?.message}
-            </Form.Input.Feedback>
+            <Form.Input.Feedback type="error">{formMethods.formState.errors.email?.message}</Form.Input.Feedback>
           </Form.Input.Root>
 
           <Form.Input.Root>
-            <Form.Input.Label
-              htmlFor="password"
-              required
-              className="text-pureWhite lg:text-dark"
-            >
+            <Form.Input.Label htmlFor="password" required className="text-pureWhite lg:text-dark">
               Senha
             </Form.Input.Label>
             <Form.Input.Input
@@ -87,9 +78,7 @@ const SignIn: React.FC = (): ReactElement => {
               className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
               variant="password"
             />
-            <Form.Input.Feedback type="error">
-              {formMethods.formState.errors.password?.message}
-            </Form.Input.Feedback>
+            <Form.Input.Feedback type="error">{formMethods.formState.errors.password?.message}</Form.Input.Feedback>
           </Form.Input.Root>
           <div className="flex justify-between text-xs">
             <Link href="/auth/sign-up">Cadastre-se</Link>
