@@ -1,9 +1,10 @@
 'use client'
 
-import { createContext, useCallback, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { ICartInfo, ICartInfoContextProvider, contextType } from './types'
 import { useAuth } from '../AuthContext'
 import { IAddress } from '@/types/address'
+import { ICartBook } from '@/types/cart'
 
 const CartInfoContext = createContext({} as contextType)
 
@@ -22,6 +23,7 @@ export const CartInfoContextProvider: React.FC<ICartInfoContextProvider> = ({ ch
           state: user?.address.split('|')[6],
         }
       : undefined,
+    cart: user?.cart || undefined,
   })
 
   const setAddress = useCallback(
@@ -34,7 +36,33 @@ export const CartInfoContextProvider: React.FC<ICartInfoContextProvider> = ({ ch
     [cartInfo],
   )
 
-  return <CartInfoContext.Provider value={{ setAddress, cartInfo }}>{children}</CartInfoContext.Provider>
+  const onHandleAddBookToCart = useCallback((book: ICartBook) => {
+    const payload = {
+      books: book,
+    }
+
+    console.log(payload)
+  }, [])
+
+  useEffect(() => {
+    console.log('reload')
+    setCartInfo({
+      address: user?.address
+        ? {
+            street: user?.address.split('|')[0],
+            number: user?.address.split('|')[1],
+            complement: user?.address.split('|')[2],
+            cep: user?.address.split('|')[3],
+            neighborhood: user?.address.split('|')[4],
+            city: user?.address.split('|')[5],
+            state: user?.address.split('|')[6],
+          }
+        : undefined,
+      cart: user?.cart || undefined,
+    })
+  }, [user?.cart, user?.address])
+
+  return <CartInfoContext.Provider value={{ setAddress, cartInfo, onHandleAddBookToCart }}>{children}</CartInfoContext.Provider>
 }
 
 export const useCart = () => {

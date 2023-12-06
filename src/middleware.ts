@@ -31,5 +31,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/bookmark', '/cart', '/payment', '/profile', '/admin/:path*', '/auth/:path*'],
+  matcher: ['/bookmark', '/payment', '/profile', '/admin/:path*', '/auth/:path*'],
 }
