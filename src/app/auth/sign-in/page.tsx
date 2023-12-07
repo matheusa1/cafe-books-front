@@ -24,6 +24,7 @@ const SignIn: React.FC = (): ReactElement => {
   const onHandleSubmit = async (data: ISignInScheme) => {
     setLoading(true)
     const cart = cartInfo?.cart
+    console.log({ cart })
 
     const res = await signIn(data.email, data.password)
     setLoading(false)
