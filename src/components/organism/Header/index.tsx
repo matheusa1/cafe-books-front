@@ -11,14 +11,7 @@ import { tv } from 'tailwind-variants'
 import Logo from '@/assets/svgs/LogoTextCol.svg'
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
-import {
-  Bookmark,
-  GaugeCircle,
-  Grid2X2,
-  LogIn,
-  ShoppingBasket,
-  User,
-} from 'lucide-react'
+import { Bookmark, GaugeCircle, Grid2X2, LogIn, ShoppingBasket, User } from 'lucide-react'
 
 const headerWrapper = tv({
   base: 'fixed left-0 top-0 z-30 w-screen transition-all',
@@ -59,8 +52,6 @@ const Header: React.FC = (): ReactElement => {
       setIsInputOpen(true)
       return
     }
-
-    console.log(inputValue)
   }
 
   return (
@@ -81,24 +72,10 @@ const Header: React.FC = (): ReactElement => {
         </Link>
         <div className="flex justify-end gap-5 md:w-full">
           <div className="hidden gap-5 md:flex">
-            {user && user.type === 'admin' && (
-              <HeaderItem
-                title={'Admin'}
-                path="/admin/books"
-                icon={GaugeCircle}
-              />
-            )}
-            <HeaderItem
-              title={'Favoritos'}
-              path={'/bookmark'}
-              icon={Bookmark}
-            />
+            {user && user.type === 'admin' && <HeaderItem title={'Admin'} path="/admin/books" icon={GaugeCircle} />}
+            <HeaderItem title={'Favoritos'} path={'/bookmark'} icon={Bookmark} />
             <HeaderItem title={'Explorar'} path="/explore" icon={Grid2X2} />
-            <HeaderItem
-              title={user ? 'Perfil' : 'Entrar'}
-              path={user ? '/profile/purchases' : '/auth/sign-in'}
-              icon={user ? User : LogIn}
-            />
+            <HeaderItem title={user ? 'Perfil' : 'Entrar'} path={user ? '/profile/purchases' : '/auth/sign-in'} icon={user ? User : LogIn} />
           </div>
           <HeaderItem title="Carrinho" path={'/cart'} icon={ShoppingBasket} />
         </div>

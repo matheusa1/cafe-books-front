@@ -269,3 +269,15 @@ export const apiGetHotBooks = async () => {
   })
   return response.data
 }
+
+export const apiRemoveHotBooks = async ({ token, book }: { token: string; book: string }) => {
+  const response = await api.delete('api/book/bestbooks/', {
+    data: {
+      book,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response.data
+}

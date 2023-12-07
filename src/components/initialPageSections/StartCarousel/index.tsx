@@ -9,17 +9,17 @@ const getCarouselData = async () => {
     console.log(res)
     return res
   } catch (error) {
-    return undefined
+    return []
   }
 }
 
 const StartCarousel: React.FC = async (): Promise<ReactElement> => {
   const hots = await getCarouselData()
-
-  console.log({ hots })
+  const hotslen = hots.length
+  console.log(hots)
   return (
     <div className={'h-screen'}>
-      <CarouselStartComponent data={hots ? hots : startCarouselData} />
+      <CarouselStartComponent data={hotslen ? hots : startCarouselData} />
     </div>
   )
 }

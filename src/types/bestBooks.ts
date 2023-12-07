@@ -29,3 +29,15 @@ export type TBestBooksResponse = {
   image_url: string
   book: string
 }[]
+
+export type TBestBooksResponseTrated = {
+  id: number
+  book_details: {
+    label: string
+    value: string
+  }
+  call: string
+  subtext: string
+  image_url: string
+  book: string
+}[]

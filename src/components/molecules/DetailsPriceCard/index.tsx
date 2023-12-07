@@ -30,7 +30,6 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
 
   const onHandlePurchase = useCallback(async () => {
     const formattedAddress = `${address?.street}|${address?.number}|${address?.complement}|${address?.cep}|${address?.neighborhood}|${address?.city}|${address?.state}`
-    console.log({ formattedAddress })
 
     if (!address) {
       return toast.error('Endereço é obrigatório')
@@ -43,7 +42,6 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
       push('/payment')
       refetchCart()
     } catch (error) {
-      console.log(error)
       toast.error('Houve um erro ao completar a compra')
     }
   }, [address, push, quantity, refetchCart, token, isbn])
@@ -64,7 +62,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
         toast.success('Livro adicionado ao carrinho')
       }
     } catch (error) {
-      console.log(error)
+      return
     }
   }
 
@@ -84,27 +82,26 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
       refetchCart()
       setIsBookmarked(true)
     } catch (error) {
-      console.log(error)
+      return
     }
   }
 
   useEffect(() => {
     if (address) {
-      console.log(address)
       onHandlePurchase()
     }
   }, [address, onHandlePurchase])
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div id="purchase" className={'bg-pureWhite flex w-full max-w-md flex-col gap-4 rounded-lg p-5 lg:p-10'}>
+      <div id="purchase" className={'flex w-full max-w-md flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'}>
         <Dialog.Root open={open}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" onClick={() => setOpen(false)} />
             <CartAddressForm buy={true} setOpen={setOpen} />
           </Dialog.Portal>
         </Dialog.Root>
-        <header className="border-dark flex items-center justify-between border-b-2 pb-2">
+        <header className="flex items-center justify-between border-b-2 border-dark pb-2">
           <span className="text-xl font-bold">{title}</span>
           <div className="shrink-0 p-2">
             <Bookmark size={24} className={(isBookmarked && 'fill-dark') || ''} onClick={onHandleFavorite} />
@@ -117,7 +114,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
             </div>
             <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
               <div className="flex gap-2">
-                {discountPrice && <CurrencyText value={price} className="text-subText text-base line-through" />}
+                {discountPrice && <CurrencyText value={price} className="text-base text-subText line-through" />}
                 <CurrencyText value={discountPrice ? discountPrice : price} className="text-2xl font-bold" />
               </div>
               <div>
@@ -145,7 +142,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
           </>
         ) : (
           <div className="flex flex-col items-center gap-2">
-            <p className="text-danger text-base font-bold">Sem estoque</p>
+            <p className="text-base font-bold text-danger">Sem estoque</p>
           </div>
         )}
       </div>

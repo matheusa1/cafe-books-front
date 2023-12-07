@@ -2,7 +2,7 @@
 import { Input } from '@/components/atoms/Input'
 import { Dropzone, FileCard } from '@files-ui/react'
 import React, { ReactElement, useCallback, useEffect, useState } from 'react'
-import { apiHotBooks, getBooks, uploadImageToCloudnary } from '@/services/api'
+import { apiGetHotBooks, apiHotBooks, apiRemoveHotBooks, getBooks, uploadImageToCloudnary } from '@/services/api'
 import { Button } from '@/components/atoms/Button'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,12 +10,18 @@ import { schema } from './schema'
 import { Tschema } from './types'
 import { Form } from '@/components/atoms/Form'
 import { useAuth } from '@/context/AuthContext'
+import { TBestBooksResponseTrated } from '@/types/bestBooks'
+import Image from 'next/image'
+import { ToastContainer, toast } from 'react-toastify'
+import { twMerge } from 'tailwind-merge'
 
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
 const Hot: React.FC = (): ReactElement => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [books, setBooks] = useState<{ label: string; value: string }[]>()
+  const [hots, setHots] = useState<TBestBooksResponseTrated>([])
+  const [isLoading, setIsLoading] = useState(false)
   const { token } = useAuth()
 
   const formMethods = useForm<Tschema>({
@@ -24,66 +30,135 @@ const Hot: React.FC = (): ReactElement => {
 
   const formImage = formMethods.watch('image_url')
 
-  console.log(formMethods.formState.errors)
-
   const onHandleSubmit = async (data: Tschema) => {
-    try {
-      const cloudUrl = await uploadImageToCloudnary(data.image_url[0].file, presetUpload)
+    setIsLoading(true)
 
-      const res = await apiHotBooks({
+    let cloudUrl = data.image_url
+
+    try {
+      if (typeof data.image_url !== 'string') {
+        const res = await uploadImageToCloudnary(data.image_url[0].file, presetUpload)
+        cloudUrl = res?.secure_url
+      }
+
+      if (hots.map((hot) => hot.book_details.value).includes(data.book.value)) {
+        await apiRemoveHotBooks({ token: token!, book: data.book.value })
+      }
+
+      await apiHotBooks({
         bestBook: {
           ...data,
-          image_url: cloudUrl?.secure_url,
+          image_url: cloudUrl,
           book: data.book.value,
         },
         token: token!,
       })
 
-      console.log(res)
+      toast.success('Destaques atualizados com sucesso')
+      setIsLoading(false)
     } catch (error) {
-      console.log(error)
+      toast.error('Erro ao atualizar destaques')
+      setIsLoading(false)
     }
   }
 
   const getData = useCallback(async () => {
     try {
       const books = await getBooks()
+      const hots = await apiGetHotBooks()
+      const tratedHots = hots.map((hot) => ({ ...hot, book_details: { label: hot.book_details.title, value: hot.book_details.isbn } }))
       const tratedBooks = books.map((book) => ({ label: book.title, value: book.isbn }))
+
+      if (tratedHots.length !== 0) {
+        setHots(tratedHots)
+        formMethods.setValue('call', tratedHots[0].call)
+        formMethods.setValue('subtext', tratedHots[0].subtext)
+        formMethods.setValue('book', tratedHots[0].book_details)
+        formMethods.setValue('image_url', tratedHots[0].image_url)
+      }
+
       setBooks(tratedBooks)
     } catch (error) {
       return []
     }
-  }, [])
+  }, [formMethods])
 
   useEffect(() => {
     getData()
   }, [getData])
 
   useEffect(() => {
-    formMethods.setValue('call', '')
-    formMethods.setValue('subtext', '')
-    //eslint-disable-next-line
-    // @ts-ignore
-    formMethods.setValue('book', null)
-    formMethods.setValue('image_url', null)
-  }, [activeIndex, formMethods])
+    if (hots.length >= activeIndex + 1) {
+      formMethods.setValue('call', hots[activeIndex].call)
+      formMethods.setValue('subtext', hots[activeIndex].subtext)
+      formMethods.setValue('book', hots[activeIndex].book_details)
+      formMethods.setValue('image_url', hots[activeIndex].image_url)
+    } else {
+      formMethods.setValue('call', '')
+      formMethods.setValue('subtext', '')
+      //eslint-disable-next-line
+      // @ts-ignore
+      formMethods.setValue('book', null)
+      formMethods.setValue('image_url', null)
+    }
+  }, [activeIndex, formMethods, hots])
 
   return (
     <FormProvider {...formMethods}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="flex justify-center ">
         <div className={'flex w-full max-w-xl flex-col gap-3'}>
           <h1>Editar destaques</h1>
           <div className="flex w-full justify-between">
-            <div onClick={() => setActiveIndex(0)} className="flex aspect-square w-16 items-center justify-center rounded border border-dark text-2xl">
+            <div
+              onClick={() => setActiveIndex(0)}
+              className={twMerge(
+                'flex cursor-pointer aspect-square w-16 items-center justify-center rounded border-2 border-dark text-2xl hover:bg-slate-100 transition-all',
+                hots[0] && 'border-green-500 text-green-500 hover:bg-green-100',
+                activeIndex === 0 && 'bg-green-500 text-white hover:bg-green-500 border-green-500',
+              )}
+            >
               1
             </div>
-            <div onClick={() => setActiveIndex(1)} className="flex aspect-square w-16 items-center justify-center rounded border border-dark text-2xl">
+            <div
+              onClick={() => setActiveIndex(1)}
+              className={twMerge(
+                'flex cursor-pointer aspect-square w-16 items-center justify-center rounded border-2 border-dark text-2xl hover:bg-slate-100 transition-all',
+                hots[1] && 'border-green-500 text-green-500 hover:bg-green-100',
+                activeIndex === 1 && 'bg-green-500 text-white hover:bg-green-500 border-green-500',
+              )}
+            >
               2
             </div>
-            <div onClick={() => setActiveIndex(2)} className="flex aspect-square w-16 items-center justify-center rounded border border-dark text-2xl">
+            <div
+              onClick={() => setActiveIndex(2)}
+              className={twMerge(
+                'flex cursor-pointer aspect-square w-16 items-center justify-center rounded border-2 border-dark text-2xl hover:bg-slate-100 transition-all',
+                hots[2] && 'border-green-500 text-green-500 hover:bg-green-100',
+                activeIndex === 2 && 'bg-green-500 text-white hover:bg-green-500 border-green-500',
+              )}
+            >
               3
             </div>
-            <div onClick={() => setActiveIndex(3)} className="flex aspect-square w-16 items-center justify-center rounded border border-dark text-2xl">
+            <div
+              onClick={() => setActiveIndex(3)}
+              className={twMerge(
+                'flex cursor-pointer aspect-square w-16 items-center justify-center rounded border-2 border-dark text-2xl hover:bg-slate-100 transition-all',
+                hots[3] && 'border-green-500 text-green-500 hover:bg-green-100',
+                activeIndex === 3 && 'bg-green-500 text-white hover:bg-green-500 border-green-500',
+              )}
+            >
               4
             </div>
           </div>
@@ -114,14 +189,18 @@ const Hot: React.FC = (): ReactElement => {
                 footer={false}
                 multiple={false}
               >
-                <FileCard {...formImage?.[0]} onDelete={() => formMethods.setValue('image_url', null)} info preview />
+                {typeof formImage === 'string' ? (
+                  <Image src={formImage} alt="book image" className="w-20" width={40} height={40} />
+                ) : (
+                  <FileCard {...formImage?.[0]} onDelete={() => formMethods.setValue('image_url', null)} info preview />
+                )}
               </Dropzone>
               <Form.Input.Feedback>
                 {(typeof formMethods?.formState?.errors?.image_url?.message === 'string' && formMethods?.formState?.errors?.image_url?.message) || ''}
               </Form.Input.Feedback>
             </div>
             <footer className="flex justify-end gap-4">
-              <Button.Root>
+              <Button.Root loading={isLoading}>
                 <Button.Text>Salvar</Button.Text>
               </Button.Root>
             </footer>
