@@ -287,3 +287,8 @@ export const apiGetMostDiscount = async () => {
   const res = await api.get<TMostDiscountResponse>('api/book/biggestpromotions/')
   return res.data
 }
+
+export const apiGetMostSelleds = async () => {
+  const res = await api.get<ResponseBooksType>('api/book/bestsellers/')
+  return res.data
+}

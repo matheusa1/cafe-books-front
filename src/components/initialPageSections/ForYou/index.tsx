@@ -14,6 +14,8 @@ const getMostDiscount = async () => {
   }
 }
 
+export const revalidate = 60 * 60 * 24
+
 const ForYou: React.FC = async (): Promise<ReactElement> => {
   const mostDiscount = await getMostDiscount()
 
