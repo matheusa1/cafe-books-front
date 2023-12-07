@@ -13,7 +13,7 @@ const Bookmark: React.FC = (): ReactElement => {
 
   const { data } = useQuery(['bookmark'], async () => {
     const res = await getUserFavorites(token!)
-    console.log(res)
+
     return res
   })
 

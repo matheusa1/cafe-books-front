@@ -21,7 +21,7 @@ export const ProfilePurchaseContent: FC = () => {
 
       setPurchases(sortedById)
     } catch (error) {
-      console.log(error)
+      return
     }
     setLoading(false)
   }, [token])

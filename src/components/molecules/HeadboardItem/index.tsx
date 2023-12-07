@@ -62,7 +62,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({ cardInfo }): ReactElement => 
         toast.success('Livro adicionado ao carrinho')
       }
     } catch (error) {
-      console.log(error)
+      return
     }
   }
 
@@ -79,7 +79,7 @@ const HeadboardItem: React.FC<IHeadboardItem> = ({ cardInfo }): ReactElement => 
       await addBookToFavorites(ISBN, token!)
       setIsBookmarked(true)
     } catch (error) {
-      console.log(error)
+      return error
     }
   }
 

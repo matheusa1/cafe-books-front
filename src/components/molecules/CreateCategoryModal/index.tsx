@@ -13,10 +13,7 @@ import { createCategory, uploadImageToCloudnary } from '@/services/api'
 import { useAuth } from '@/context/AuthContext'
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
-export const CreateCategoryModal: FC<ICreateCategoryModal> = ({
-  setModalOpen,
-  refetch,
-}) => {
+export const CreateCategoryModal: FC<ICreateCategoryModal> = ({ setModalOpen, refetch }) => {
   const FormMethods = useForm<createCategorySchemaType>({
     resolver: zodResolver(createCategorySchema),
   })
@@ -39,24 +36,17 @@ export const CreateCategoryModal: FC<ICreateCategoryModal> = ({
       refetch()
       setModalOpen(false)
     } catch (error) {
-      console.log('error', error)
+      return
     }
     setIsLoading(false)
   }
 
   return (
     <FormProvider {...FormMethods}>
-      <form
-        className={
-          'flex flex-col justify-start gap-5 rounded-md bg-pureWhite p-5'
-        }
-      >
+      <form className={'flex flex-col justify-start gap-5 rounded-md bg-pureWhite p-5'}>
         <header className="flex items-center justify-between">
           <span className="text-xl font-bold">Criar categoria</span>
-          <div
-            onClick={() => setModalOpen(false)}
-            className="rounded-lg p-2 hover:bg-gray-200"
-          >
+          <div onClick={() => setModalOpen(false)} className="rounded-lg p-2 hover:bg-gray-200">
             <X size={20} />
           </div>
         </header>
@@ -68,9 +58,7 @@ export const CreateCategoryModal: FC<ICreateCategoryModal> = ({
             name="name"
             error={!!FormMethods.formState.errors.name?.message}
           />
-          <Form.Input.Feedback>
-            {FormMethods.formState.errors.name?.message}
-          </Form.Input.Feedback>
+          <Form.Input.Feedback>{FormMethods.formState.errors.name?.message}</Form.Input.Feedback>
         </Form.Input.Root>
         <Form.Input.Root>
           <Form.Input.Label required>Imagem</Form.Input.Label>
@@ -81,37 +69,18 @@ export const CreateCategoryModal: FC<ICreateCategoryModal> = ({
             footer={false}
             multiple={false}
           >
-            <FileCard
-              {...FormMethods.getValues('image')?.[0]}
-              onDelete={() => FormMethods.setValue('image', null)}
-              info
-              preview
-            />
+            <FileCard {...FormMethods.getValues('image')?.[0]} onDelete={() => FormMethods.setValue('image', null)} info preview />
           </Dropzone>
-          {typeof FormMethods?.formState?.errors?.image?.message ===
-            'string' && (
-            <Form.Input.Feedback>
-              {FormMethods?.formState?.errors?.image?.message}
-            </Form.Input.Feedback>
+          {typeof FormMethods?.formState?.errors?.image?.message === 'string' && (
+            <Form.Input.Feedback>{FormMethods?.formState?.errors?.image?.message}</Form.Input.Feedback>
           )}
         </Form.Input.Root>
 
         <footer className="flex w-full flex-col gap-2 md:flex-row md:gap-10 md:self-end">
-          <Button.Root
-            type="button"
-            loading={isLoading}
-            className="w-full"
-            onClick={FormMethods.handleSubmit(handleCreateCategory)}
-          >
+          <Button.Root type="button" loading={isLoading} className="w-full" onClick={FormMethods.handleSubmit(handleCreateCategory)}>
             Criar
           </Button.Root>
-          <Button.Root
-            variant={'outline'}
-            type="button"
-            loading={isLoading}
-            onClick={() => setModalOpen(false)}
-            className="w-full"
-          >
+          <Button.Root variant={'outline'} type="button" loading={isLoading} onClick={() => setModalOpen(false)} className="w-full">
             Cancelar
           </Button.Root>
         </footer>

@@ -39,7 +39,6 @@ const Cart: React.FC = (): ReactElement => {
       push('/payment')
       refetchCart()
     } catch (error) {
-      console.log(error)
       toast.error('Houve um erro ao completar a compra')
     }
   }

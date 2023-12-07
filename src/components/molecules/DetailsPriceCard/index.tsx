@@ -32,7 +32,6 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement =
 
   const onHandlePurchase = useCallback(async () => {
     const formattedAddress = `${address?.street}|${address?.number}|${address?.complement}|${address?.cep}|${address?.neighborhood}|${address?.city}|${address?.state}`
-    console.log({ formattedAddress })
 
     if (!address) {
       return toast.error('Endereço é obrigatório')
@@ -45,7 +44,6 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement =
       push('/payment')
       refetchCart()
     } catch (error) {
-      console.log(error)
       toast.error('Houve um erro ao completar a compra')
     }
   }, [address, push, quantity, refetchCart, token, isbn])
@@ -82,7 +80,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement =
         toast.success('Livro adicionado ao carrinho')
       }
     } catch (error) {
-      console.log(error)
+      return
     }
   }
 
@@ -102,13 +100,12 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement =
       refetchCart()
       setIsBookmarked(true)
     } catch (error) {
-      console.log(error)
+      return
     }
   }
 
   useEffect(() => {
     if (address) {
-      console.log(address)
       onHandlePurchase()
     }
   }, [address, onHandlePurchase])
