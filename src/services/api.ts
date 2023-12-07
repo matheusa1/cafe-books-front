@@ -1,3 +1,4 @@
+import { TBestBook, TBestBooksResponse } from './../types/bestBooks'
 import { ISignUpScheme } from '@/app/auth/sign-up/types'
 import { ResponseCategoriesType } from './../types/categoriesType'
 import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
@@ -241,5 +242,42 @@ export const apiHandlePurchaseWithoutCart = async ({
     },
   )
 
+  return response.data
+}
+
+export const apiHotBooks = async ({ token, bestBook }: { token: string; bestBook: TBestBook }) => {
+  const response = await api.post(
+    'api/book/bestbooks/',
+    {
+      ...bestBook,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+  return response.data
+}
+
+export const apiGetHotBooks = async () => {
+  const response = await api.get<TBestBooksResponse>('api/book/bestbooks/', {
+    headers: {
+      Authorization:
+        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxOTg4NTY4LCJpYXQiOjE3MDE5MDIxNjgsImp0aSI6ImVjNGNiMTE2MWEyMTRjNDliYWY3ZTg0OTM5NmQyOWFhIiwidXNlcl9pZCI6NCwidHlwZSI6ImFkbWluIiwidXNlcm5hbWUiOm51bGwsImFkZHJlc3MiOm51bGwsInBob25lIjpudWxsLCJzZXgiOm51bGx9.SV3q_rbD7AopMny5wKtAcGaoTzhRsa4nCo1jth9bnmA',
+    },
+  })
+  return response.data
+}
+
+export const apiRemoveHotBooks = async ({ token, book }: { token: string; book: string }) => {
+  const response = await api.delete('api/book/bestbooks/', {
+    data: {
+      book,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
   return response.data
 }

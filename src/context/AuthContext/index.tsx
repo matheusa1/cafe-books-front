@@ -19,7 +19,6 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 
     try {
       userInfo = await getUser(decoded.user_id)
-      console.log(userInfo)
     } catch (error) {
       return Cookie.remove('token')
     }
@@ -57,7 +56,6 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 
         return true
       } catch (error) {
-        console.log(error)
         return false
       }
     },
