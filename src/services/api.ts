@@ -7,6 +7,7 @@ import axios from 'axios'
 import { ICart } from '@/types/cart'
 import { IPurchases } from '@/types/purcheses'
 import { ResponseAuthorsType } from '@/types/authorTypes'
+import { TMostDiscountResponse } from '@/types/bestDiscounts'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -280,4 +281,9 @@ export const apiRemoveHotBooks = async ({ token, book }: { token: string; book: 
     },
   })
   return response.data
+}
+
+export const apiGetMostDiscount = async () => {
+  const res = await api.get<TMostDiscountResponse>('api/book/biggestpromotions/')
+  return res.data
 }
