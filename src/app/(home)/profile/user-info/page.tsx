@@ -10,24 +10,39 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { CartAddressForm } from '@/components/molecules/CartAddressForm'
 import { useCart } from '@/context/CartInfoContext'
 import { useAuth } from '@/context/AuthContext'
+import { apiUpdateUserInfo } from '@/services/api'
+import { ToastContainer, toast } from 'react-toastify'
 
 const UserInfo: FC = () => {
   const [open, setOpen] = useState(false)
   const { cartInfo } = useCart()
 
-  const { user } = useAuth()
+  const { user, token, refetchCart } = useAuth()
 
   const formMethods = useForm<TChangeUserDataSchema>({
     resolver: zodResolver(ChangeUserDataSchema),
   })
 
-  const onHandleSubmit = (data: TChangeUserDataSchema) => {
+  const onHandleSubmit = async (data: TChangeUserDataSchema) => {
     console.log({ data })
     console.log(cartInfo?.address)
-    // let endereco
+    let endereco
 
     if (cartInfo?.address) {
-      // endereco = `${cartInfo?.address?.street}|${cartInfo?.address?.number}|${cartInfo?.address?.complement}|${cartInfo?.address?.cep}|${cartInfo?.address?.neighborhood}|${cartInfo?.address?.city}|${cartInfo?.address?.state}`
+      endereco = `${cartInfo?.address?.street}|${cartInfo?.address?.number}|${cartInfo?.address?.complement}|${cartInfo?.address?.cep}|${cartInfo?.address?.neighborhood}|${cartInfo?.address?.city}|${cartInfo?.address?.state}`
+    }
+
+    try {
+      await apiUpdateUserInfo({
+        token: token!,
+        name: data.name || undefined,
+        phone: data.phone || undefined,
+        address: endereco,
+      })
+      await refetchCart()
+      toast.success('Dados atualizados com sucesso!')
+    } catch (error) {
+      return toast.error('Erro ao atualizar dados!')
     }
   }
 
@@ -38,10 +53,22 @@ const UserInfo: FC = () => {
         phone: user.phone,
       })
     }
-  })
+  }, [user, formMethods])
 
   return (
     <FormProvider {...formMethods}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className={'flex w-full justify-center'}>
         <Dialog.Root open={open}>
           <Dialog.Portal>
