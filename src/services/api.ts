@@ -300,3 +300,17 @@ export const apiMultiplePopulateCart = async ({ token, books }: { token: string;
   )
   return res.data
 }
+
+export const apiUpdateUserInfo = async ({ token, name, phone, address }: { token: string; name?: string; phone?: string; address?: string }) => {
+  const res = await api.put(
+    'api/user/',
+    { name, phone, address },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return res.data
+}

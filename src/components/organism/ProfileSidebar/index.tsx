@@ -18,7 +18,7 @@ export const ProfileSidebar: FC = () => {
   return (
     <div
       className={twMerge(
-        'fixed inset-0 md:max-w-md lg:translate-x-0 lg:py-0 lg:border-r-2 lg:border-brownPrimary lg:static lg:w-fit lg:bg-transparent py-40 px-10 flex flex-col gap-20 transition-all -translate-x-full bg-white',
+        'fixed inset-0 z-10 md:max-w-md lg:translate-x-0 lg:py-0 lg:border-r-2 lg:border-brownPrimary lg:static lg:w-fit lg:bg-transparent py-40 px-10 flex flex-col gap-20 transition-all -translate-x-full bg-white',
         isSidebarOpen && 'translate-x-0',
       )}
     >
