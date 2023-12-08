@@ -1,4 +1,4 @@
-export type ICarouselItem = {
+export type TCarouselStartComponent = {
   data: {
     id: number
     book_details: {
@@ -22,5 +22,5 @@ export type ICarouselItem = {
     subtext: string
     image_url: string
     book: string
-  }
+  }[]
 }

@@ -1,17 +1,17 @@
 'use client'
 
-import { useAuth } from '@/context/AuthContext'
 import Image from 'next/image'
 import { FC } from 'react'
 import EmptyImage from '@/assets/images/empty-box.png'
 import { CartItemContent } from '@/components/atoms/CartItemContent'
+import { useCart } from '@/context/CartInfoContext'
 
 export const CartItemsTable: FC = () => {
-  const { user } = useAuth()
+  const { cartInfo } = useCart()
 
   return (
     <div className={'w-full'}>
-      {user?.cart?.books.length === 0 || !user?.cart?.books.length ? (
+      {cartInfo?.cart?.books.length === 0 || !cartInfo?.cart?.books.length ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-4">
           <Image src={EmptyImage} alt="Table Vazia" className="w-20" />
           <span>Carrinho vazio</span>
@@ -35,11 +35,11 @@ export const CartItemsTable: FC = () => {
 
           <div className="relative">
             <div
-              data-itenslen={user?.cart?.books.length || 0}
+              data-itenslen={cartInfo?.cart?.books.length || 0}
               className="absolute bottom-0 left-0 h-10 w-full bg-gradient-to-t from-pureWhite data-[itenslen='1']:hidden data-[itenslen='2']:hidden"
             />
             <div className="h-fit max-h-96 overflow-auto lg:max-h-[50vh]">
-              {user?.cart?.books.map((book) => (
+              {cartInfo?.cart?.books.map((book) => (
                 <CartItemContent
                   author={book.book_author}
                   image={book.book_image}

@@ -27,7 +27,6 @@ const SignUp: React.FC = (): ReactElement => {
       router.push('/auth/sign-in')
       // eslint-disable-next-line
     } catch (error: any) {
-      console.log(error.response.data)
       if (error.response.data.message === 'Este e-mail já está cadastrado!') {
         // setEmailError(error.response.data.message)
         formMethods.setError('email', {
@@ -41,20 +40,11 @@ const SignUp: React.FC = (): ReactElement => {
   return (
     <div className={'flex flex-col items-center gap-6 text-white lg:text-dark'}>
       <h1 className="mb-6 text-2xl font-bold uppercase">CADASTRO</h1>
-      <p className="text-center text-sm">
-        Para se cadastrar, insira seu nome e o email e senha desejados.
-      </p>
+      <p className="text-center text-sm">Para se cadastrar, insira seu nome e o email e senha desejados.</p>
       <FormProvider {...formMethods}>
-        <form
-          className="flex w-full flex-col gap-2"
-          onSubmit={formMethods.handleSubmit(onHandleSubmit)}
-        >
+        <form className="flex w-full flex-col gap-2" onSubmit={formMethods.handleSubmit(onHandleSubmit)}>
           <Form.Input.Root>
-            <Form.Input.Label
-              htmlFor="name"
-              required
-              className="text-pureWhite lg:text-dark"
-            >
+            <Form.Input.Label htmlFor="name" required className="text-pureWhite lg:text-dark">
               Nome
             </Form.Input.Label>
             <Form.Input.Input
@@ -64,16 +54,10 @@ const SignUp: React.FC = (): ReactElement => {
               error={!!formMethods.formState.errors.name?.message}
               className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
             />
-            <Form.Input.Feedback type="error">
-              {formMethods.formState.errors.name?.message}
-            </Form.Input.Feedback>
+            <Form.Input.Feedback type="error">{formMethods.formState.errors.name?.message}</Form.Input.Feedback>
           </Form.Input.Root>
           <Form.Input.Root>
-            <Form.Input.Label
-              htmlFor="email"
-              required
-              className="text-pureWhite lg:text-dark"
-            >
+            <Form.Input.Label htmlFor="email" required className="text-pureWhite lg:text-dark">
               E-mail
             </Form.Input.Label>
             <Form.Input.Input
@@ -83,16 +67,10 @@ const SignUp: React.FC = (): ReactElement => {
               error={!!formMethods.formState.errors.email?.message}
               className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
             />
-            <Form.Input.Feedback type="error">
-              {formMethods.formState.errors.email?.message}
-            </Form.Input.Feedback>
+            <Form.Input.Feedback type="error">{formMethods.formState.errors.email?.message}</Form.Input.Feedback>
           </Form.Input.Root>
           <Form.Input.Root>
-            <Form.Input.Label
-              htmlFor="password"
-              required
-              className="text-pureWhite lg:text-dark"
-            >
+            <Form.Input.Label htmlFor="password" required className="text-pureWhite lg:text-dark">
               Senha
             </Form.Input.Label>
             <Form.Input.Input
@@ -104,16 +82,10 @@ const SignUp: React.FC = (): ReactElement => {
               className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
               variant="password"
             />
-            <Form.Input.Feedback type="error">
-              {formMethods.formState.errors.password?.message}
-            </Form.Input.Feedback>
+            <Form.Input.Feedback type="error">{formMethods.formState.errors.password?.message}</Form.Input.Feedback>
           </Form.Input.Root>
           <Form.Input.Root>
-            <Form.Input.Label
-              htmlFor="confirmPassword"
-              required
-              className="text-pureWhite lg:text-dark"
-            >
+            <Form.Input.Label htmlFor="confirmPassword" required className="text-pureWhite lg:text-dark">
               Confirmar Senha
             </Form.Input.Label>
             <Form.Input.Input
@@ -125,9 +97,7 @@ const SignUp: React.FC = (): ReactElement => {
               className="border-2 border-brownPrimary bg-pureWhite/30 text-pureWhite lg:text-dark"
               variant="password"
             />
-            <Form.Input.Feedback type="error">
-              {formMethods.formState.errors.confirmPassword?.message}
-            </Form.Input.Feedback>
+            <Form.Input.Feedback type="error">{formMethods.formState.errors.confirmPassword?.message}</Form.Input.Feedback>
           </Form.Input.Root>
           <div className="mt-10 flex flex-col justify-between gap-4">
             <Button.Root type="submit" loading={loading}>

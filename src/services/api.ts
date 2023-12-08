@@ -1,3 +1,4 @@
+import { TBestBook, TBestBooksResponse } from './../types/bestBooks'
 import { ISignUpScheme } from '@/app/auth/sign-up/types'
 import { ResponseCategoriesType } from './../types/categoriesType'
 import { ResponseBookType, ResponseBooksType } from '@/types/booktype'
@@ -6,6 +7,7 @@ import axios from 'axios'
 import { ICart } from '@/types/cart'
 import { IPurchases } from '@/types/purcheses'
 import { ResponseAuthorsType } from '@/types/authorTypes'
+import { TMostDiscountResponse } from '@/types/bestDiscounts'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -242,4 +244,59 @@ export const apiHandlePurchaseWithoutCart = async ({
   )
 
   return response.data
+}
+
+export const apiHotBooks = async ({ token, bestBook }: { token: string; bestBook: TBestBook }) => {
+  const response = await api.post(
+    'api/book/bestbooks/',
+    {
+      ...bestBook,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+  return response.data
+}
+
+export const apiGetHotBooks = async () => {
+  const response = await api.get<TBestBooksResponse>('api/book/bestbooks/')
+  return response.data
+}
+
+export const apiRemoveHotBooks = async ({ token, book }: { token: string; book: string }) => {
+  const response = await api.delete('api/book/bestbooks/', {
+    data: {
+      book,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return response.data
+}
+
+export const apiGetMostDiscount = async () => {
+  const res = await api.get<TMostDiscountResponse>('api/book/biggestpromotions/')
+  return res.data
+}
+
+export const apiGetMostSelleds = async () => {
+  const res = await api.get<ResponseBooksType>('api/book/bestsellers/')
+  return res.data
+}
+
+export const apiMultiplePopulateCart = async ({ token, books }: { token: string; books: { isbn: string; quantity: number }[] }) => {
+  const res = await api.post(
+    'api/cart/multiple/',
+    { books },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+  return res.data
 }

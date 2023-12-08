@@ -13,10 +13,7 @@ import { createAuthor, uploadImageToCloudnary } from '@/services/api'
 import { useAuth } from '@/context/AuthContext'
 const presetUpload = process.env.NEXT_PUBLIC_PRESET_UPLOAD
 
-export const CreateAuthorModal: FC<ICreateAuthorModal> = ({
-  setModalOpen,
-  refetch,
-}) => {
+export const CreateAuthorModal: FC<ICreateAuthorModal> = ({ setModalOpen, refetch }) => {
   const FormMethods = useForm<createAuthorSchemaType>({
     resolver: zodResolver(createAuthorSchema),
   })
@@ -39,24 +36,16 @@ export const CreateAuthorModal: FC<ICreateAuthorModal> = ({
       setIsLoading(false)
       setModalOpen(false)
     } catch (error) {
-      console.log('error', error)
+      return
     }
-    console.log(data)
   }
 
   return (
     <FormProvider {...FormMethods}>
-      <form
-        className={
-          'flex flex-col justify-start gap-5 rounded-md bg-pureWhite p-5'
-        }
-      >
+      <form className={'flex flex-col justify-start gap-5 rounded-md bg-pureWhite p-5'}>
         <header className="flex items-center justify-between">
           <span className="text-xl font-bold">Criar autor(a)</span>
-          <div
-            onClick={() => setModalOpen(false)}
-            className="rounded-lg p-2 hover:bg-gray-200"
-          >
+          <div onClick={() => setModalOpen(false)} className="rounded-lg p-2 hover:bg-gray-200">
             <X size={20} />
           </div>
         </header>
@@ -68,9 +57,7 @@ export const CreateAuthorModal: FC<ICreateAuthorModal> = ({
             name="name"
             error={!!FormMethods.formState.errors.name?.message}
           />
-          <Form.Input.Feedback>
-            {FormMethods.formState.errors.name?.message}
-          </Form.Input.Feedback>
+          <Form.Input.Feedback>{FormMethods.formState.errors.name?.message}</Form.Input.Feedback>
         </Form.Input.Root>
         <Form.Input.Root>
           <Form.Input.Label required>Imagem</Form.Input.Label>
@@ -81,37 +68,18 @@ export const CreateAuthorModal: FC<ICreateAuthorModal> = ({
             footer={false}
             multiple={false}
           >
-            <FileCard
-              {...FormMethods.getValues('image')?.[0]}
-              onDelete={() => FormMethods.setValue('image', null)}
-              info
-              preview
-            />
+            <FileCard {...FormMethods.getValues('image')?.[0]} onDelete={() => FormMethods.setValue('image', null)} info preview />
           </Dropzone>
-          {typeof FormMethods?.formState?.errors?.image?.message ===
-            'string' && (
-            <Form.Input.Feedback>
-              {FormMethods?.formState?.errors?.image?.message}
-            </Form.Input.Feedback>
+          {typeof FormMethods?.formState?.errors?.image?.message === 'string' && (
+            <Form.Input.Feedback>{FormMethods?.formState?.errors?.image?.message}</Form.Input.Feedback>
           )}
         </Form.Input.Root>
 
         <footer className="flex w-full flex-col gap-2 md:flex-row md:gap-10 md:self-end">
-          <Button.Root
-            type="button"
-            loading={isLoading}
-            className="w-full"
-            onClick={FormMethods.handleSubmit(handleCreateAuthor)}
-          >
+          <Button.Root type="button" loading={isLoading} className="w-full" onClick={FormMethods.handleSubmit(handleCreateAuthor)}>
             Criar
           </Button.Root>
-          <Button.Root
-            variant={'outline'}
-            type="button"
-            loading={isLoading}
-            onClick={() => setModalOpen(false)}
-            className="w-full"
-          >
+          <Button.Root variant={'outline'} type="button" loading={isLoading} onClick={() => setModalOpen(false)} className="w-full">
             Cancelar
           </Button.Root>
         </footer>

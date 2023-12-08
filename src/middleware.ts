@@ -9,8 +9,6 @@ export default function middleware(request: NextRequest) {
   const profileUrl = new URL('/profile', request.url)
   const homeUrl = new URL('/', request.url)
 
-  console.log('executing middleware')
-
   if (!token) {
     if (request.nextUrl.pathname === '/auth/sign-in' || request.nextUrl.pathname === '/auth/sign-up') {
       return NextResponse.next()
@@ -31,5 +29,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/bookmark', '/cart', '/payment', '/profile', '/admin/:path*', '/auth/:path*'],
+  matcher: ['/bookmark', '/payment', '/profile', '/admin/:path*', '/auth/:path*'],
 }
