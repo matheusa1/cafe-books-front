@@ -31,6 +31,8 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
   }, [isbn, quantity, refetchCart, token, onHandleRemoveBookToCart, user])
 
   const onChangeQuantity = async (number: number) => {
+    console.log('ater')
+
     if (!user) {
       if (number === 0) return onRemoveItem()
       onHandleUpdateBookToCart(number, isbn)
@@ -73,7 +75,7 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
         <header className="flex items-center justify-between">
           <span>Quantidade</span>
           <div className="">
-            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity} onChange={onChangeQuantity} />
           </div>
         </header>
         <div className="flex items-center justify-between">

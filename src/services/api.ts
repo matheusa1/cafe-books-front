@@ -276,3 +276,16 @@ export const apiRemoveHotBooks = async ({ token, book }: { token: string; book: 
   })
   return response.data
 }
+
+export const apiMultiplePopulateCart = async ({ token, books }: { token: string; books: { isbn: string; quantity: number }[] }) => {
+  const res = await api.post(
+    'api/cart/multiple/',
+    { books },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+  return res.data
+}

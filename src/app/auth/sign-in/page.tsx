@@ -10,10 +10,13 @@ import { ISignInScheme, SignInScheme } from './types'
 import { Form } from '@/components/atoms/Form'
 import { useAuth } from '@/context/AuthContext'
 import { useCart } from '@/context/CartInfoContext'
+import { apiMultiplePopulateCart } from '@/services/api'
+
+import Cookie from 'js-cookie'
 
 const SignIn: React.FC = (): ReactElement => {
   const router = useRouter()
-  const { signIn } = useAuth()
+  const { signIn, refetchCart } = useAuth()
   const { cartInfo } = useCart()
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -42,6 +45,15 @@ const SignIn: React.FC = (): ReactElement => {
 
     if (res) {
       if (cart) {
+        const books = cart.books.map((book) => ({ isbn: book.book_isbn, quantity: book.quantity }))
+
+        try {
+          await apiMultiplePopulateCart({ books, token: Cookie.get('token')! })
+        } catch (error) {
+          console.log(error)
+        }
+
+        await refetchCart()
         router.push('/cart')
       } else router.push('/')
     }

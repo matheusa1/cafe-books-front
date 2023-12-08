@@ -52,7 +52,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
           expires: 1,
         })
 
-        getUserInfo(res.access)
+        await getUserInfo(res.access)
 
         return true
       } catch (error) {
