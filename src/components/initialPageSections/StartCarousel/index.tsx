@@ -13,8 +13,6 @@ const getCarouselData = async () => {
   }
 }
 
-export const revalidate = 60 * 60 * 24
-
 const StartCarousel: React.FC = async (): Promise<ReactElement> => {
   const hots = await getCarouselData()
   const hotslen = hots.length
