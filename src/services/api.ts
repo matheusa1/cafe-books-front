@@ -287,3 +287,16 @@ export const apiGetMostSelleds = async () => {
   const res = await api.get<ResponseBooksType>('api/book/bestsellers/')
   return res.data
 }
+
+export const apiMultiplePopulateCart = async ({ token, books }: { token: string; books: { isbn: string; quantity: number }[] }) => {
+  const res = await api.post(
+    'api/cart/multiple/',
+    { books },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+  return res.data
+}
