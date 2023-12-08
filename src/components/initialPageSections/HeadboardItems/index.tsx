@@ -29,7 +29,7 @@ const HeadboardItems: React.FC = async () => {
             if (index <= 10) return <HeadboardItem key={index} cardInfo={item} />
           })}
         </div>
-        <div className="self-end">
+        <div className="mb-4 self-end">
           <ViewMoreButton />
         </div>
       </div>

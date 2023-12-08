@@ -52,15 +52,17 @@ const Cart: React.FC = (): ReactElement => {
         pauseOnHover
         theme="colored"
       />
-      <div className="grid w-full flex-1 grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="order-1 col-span-1 h-fit  lg:order-none lg:col-span-2">
-          <CartAddress />
+      <div className="flex w-full flex-col gap-4 lg:flex-row">
+        <div className="flex w-full flex-col gap-4">
+          <div className="">
+            <CartAddress />
+          </div>
+          <div className="place-items-start">
+            <CartContent />
+          </div>
         </div>
-        <div className="order-2 row-span-1  lg:order-none lg:row-span-2">
+        <div className="min-w-fit">
           <CartResume onHandlePurchase={onHandlePurchase} />
-        </div>
-        <div className="col-span-1 place-items-start lg:col-span-2">
-          <CartContent />
         </div>
       </div>
     </div>
