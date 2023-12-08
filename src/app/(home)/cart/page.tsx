@@ -17,6 +17,11 @@ const Cart: React.FC = (): ReactElement => {
   const address = cartInfo?.address
 
   const onHandlePurchase = async () => {
+    if (!user) {
+      toast.error('Entre em uma conta para fazer a compra. Mas cuidado!! Isso pode mesclar o carrinho atual')
+      return
+    }
+
     const formattedAddress = `${address?.street}|${address?.number}|${address?.complement}|${address?.cep}|${address?.neighborhood}|${address?.city}|${address?.state}`
 
     if (!address) {

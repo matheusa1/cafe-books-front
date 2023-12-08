@@ -11,19 +11,43 @@ import { addBookToFavorites, apiHandleCart, removeBookToFavorites } from '@/serv
 import { useAuth } from '@/context/AuthContext'
 import { toast } from 'react-toastify'
 import { Bookmark } from 'lucide-react'
+import { useCart } from '@/context/CartInfoContext'
 
 const HeadboardItem: React.FC<IHeadboardItem> = ({ cardInfo }): ReactElement => {
   const { user, token, refetchCart } = useAuth()
+  const { onHandleAddBookToCart, cartInfo, onHandleRemoveBookToCart } = useCart()
 
   const router = useRouter()
   const { price, promotional_price, image, title, isbn, stock } = cardInfo
 
   const [isBookmarked, setIsBookmarked] = useState<boolean>(user?.favorites?.includes(cardInfo.isbn) || false)
-  const [isOnCart, setIsOnCart] = useState<boolean>(!!user?.cart?.books?.find((book) => book.book_isbn === isbn) || false)
+  const [isOnCart, setIsOnCart] = useState<boolean>(
+    !!user?.cart?.books?.find((book) => book.book_isbn === isbn) || !!cartInfo?.cart?.books?.find((book) => book.book_isbn === isbn) || false,
+  )
+
+  console.log(cardInfo)
 
   const onHandleCart = async () => {
     if (stock === 0) return toast.error('Livro fora de estoque')
-    if (!user) return
+    if (!user) {
+      if (isOnCart) {
+        onHandleRemoveBookToCart(isbn)
+        return setIsOnCart(false)
+      }
+
+      const authors = cardInfo.author.map((author) => (typeof author === 'string' ? author : author?.value))
+
+      onHandleAddBookToCart({
+        book_author: authors,
+        book_image: cardInfo.image,
+        book_title: cardInfo.title,
+        book_isbn: cardInfo.isbn,
+        price: cardInfo.price,
+        quantity: 1,
+      })
+      setIsOnCart(true)
+      return
+    }
 
     try {
       if (isOnCart) {

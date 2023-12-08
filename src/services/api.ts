@@ -262,12 +262,7 @@ export const apiHotBooks = async ({ token, bestBook }: { token: string; bestBook
 }
 
 export const apiGetHotBooks = async () => {
-  const response = await api.get<TBestBooksResponse>('api/book/bestbooks/', {
-    headers: {
-      Authorization:
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxOTg4NTY4LCJpYXQiOjE3MDE5MDIxNjgsImp0aSI6ImVjNGNiMTE2MWEyMTRjNDliYWY3ZTg0OTM5NmQyOWFhIiwidXNlcl9pZCI6NCwidHlwZSI6ImFkbWluIiwidXNlcm5hbWUiOm51bGwsImFkZHJlc3MiOm51bGwsInBob25lIjpudWxsLCJzZXgiOm51bGx9.SV3q_rbD7AopMny5wKtAcGaoTzhRsa4nCo1jth9bnmA',
-    },
-  })
+  const response = await api.get<TBestBooksResponse>('api/book/bestbooks/')
   return response.data
 }
 
@@ -290,5 +285,18 @@ export const apiGetMostDiscount = async () => {
 
 export const apiGetMostSelleds = async () => {
   const res = await api.get<ResponseBooksType>('api/book/bestsellers/')
+  return res.data
+}
+
+export const apiMultiplePopulateCart = async ({ token, books }: { token: string; books: { isbn: string; quantity: number }[] }) => {
+  const res = await api.post(
+    'api/cart/multiple/',
+    { books },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
   return res.data
 }

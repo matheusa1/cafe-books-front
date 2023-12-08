@@ -15,16 +15,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Bookmark } from 'lucide-react'
 import { useCart } from '@/context/CartInfoContext'
 
-const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountPrice, isbn, stock }): ReactElement => {
+const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement => {
+  const { author, image, isbn, price, promotional_price, title, stock } = book
   const { user, refetchCart, token } = useAuth()
+  const { onHandleAddBookToCart, onHandleRemoveBookToCart, cartInfo } = useCart()
   const { push } = useRouter()
   const [isBookmarked, setIsBookmarked] = useState<boolean>(user?.favorites?.includes(isbn) || false)
-  const [isOnCart, setIsOnCart] = useState<boolean>(!!user?.cart?.books?.find((book) => book.book_isbn === isbn) || false)
+  const [isOnCart, setIsOnCart] = useState<boolean>(
+    !!user?.cart?.books?.find((book) => book.book_isbn === isbn) || !!cartInfo?.cart?.books?.find((book) => book.book_isbn === isbn) || false,
+  )
   const [quantity, setQuantity] = React.useState(1)
   const [open, setOpen] = React.useState(false)
   const [queryClient] = useState(() => new QueryClient())
-
-  const { cartInfo } = useCart()
 
   const address = cartInfo?.address
 
@@ -47,7 +49,23 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
   }, [address, push, quantity, refetchCart, token, isbn])
 
   const onHandleCart = async () => {
-    if (!user) return
+    if (!user) {
+      if (isOnCart) {
+        onHandleRemoveBookToCart(isbn)
+        return setIsOnCart(false)
+      }
+
+      onHandleAddBookToCart({
+        book_author: author,
+        book_image: image,
+        book_title: title,
+        book_isbn: isbn,
+        price: price,
+        quantity: 1,
+      })
+      setIsOnCart(true)
+      return
+    }
 
     try {
       if (isOnCart) {
@@ -114,8 +132,8 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
             </div>
             <div className="flex flex-col items-center gap-2 lg:flex-row lg:justify-between">
               <div className="flex gap-2">
-                {discountPrice && <CurrencyText value={price} className="text-base text-subText line-through" />}
-                <CurrencyText value={discountPrice ? discountPrice : price} className="text-2xl font-bold" />
+                {promotional_price && <CurrencyText value={price} className="text-base text-subText line-through" />}
+                <CurrencyText value={promotional_price ? promotional_price : price} className="text-2xl font-bold" />
               </div>
               <div>
                 <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
@@ -123,7 +141,7 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ price, title, discountP
             </div>
             {quantity > 1 && (
               <p className="text-base font-bold">
-                Total: <CurrencyText value={discountPrice ? discountPrice * quantity : price * quantity} className="text-base font-bold" />
+                Total: <CurrencyText value={promotional_price ? promotional_price * quantity : price * quantity} className="text-base font-bold" />
               </p>
             )}
             <div className="flex flex-col gap-2">
