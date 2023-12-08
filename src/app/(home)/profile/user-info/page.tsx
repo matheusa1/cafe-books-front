@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { ChangeUserDataSchema, TChangeUserDataSchema } from './schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,10 +9,13 @@ import { Button } from '@/components/atoms/Button'
 import * as Dialog from '@radix-ui/react-dialog'
 import { CartAddressForm } from '@/components/molecules/CartAddressForm'
 import { useCart } from '@/context/CartInfoContext'
+import { useAuth } from '@/context/AuthContext'
 
 const UserInfo: FC = () => {
   const [open, setOpen] = useState(false)
   const { cartInfo } = useCart()
+
+  const { user } = useAuth()
 
   const formMethods = useForm<TChangeUserDataSchema>({
     resolver: zodResolver(ChangeUserDataSchema),
@@ -21,7 +24,21 @@ const UserInfo: FC = () => {
   const onHandleSubmit = (data: TChangeUserDataSchema) => {
     console.log({ data })
     console.log(cartInfo?.address)
+    // let endereco
+
+    if (cartInfo?.address) {
+      // endereco = `${cartInfo?.address?.street}|${cartInfo?.address?.number}|${cartInfo?.address?.complement}|${cartInfo?.address?.cep}|${cartInfo?.address?.neighborhood}|${cartInfo?.address?.city}|${cartInfo?.address?.state}`
+    }
   }
+
+  useEffect(() => {
+    if (user) {
+      formMethods.reset({
+        name: user.name,
+        phone: user.phone,
+      })
+    }
+  })
 
   return (
     <FormProvider {...formMethods}>
