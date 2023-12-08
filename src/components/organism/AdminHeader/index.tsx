@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from '@/context/AuthContext'
 import { useSidebar } from '@/context/AuthSidebarContext'
 import { List, LogOut, X } from 'lucide-react'
 
@@ -9,8 +10,9 @@ import React, { ReactElement } from 'react'
 const Header: React.FC = (): ReactElement => {
   const { toggleSidebar, isSidebarOpen } = useSidebar()
   const router = useRouter()
+  const { user } = useAuth()
 
-  const userName = 'John Doe'
+  const userName = user?.name
 
   const onHandleSignOut = () => {
     router.push('/')

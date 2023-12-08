@@ -18,21 +18,6 @@ const UserInfo: FC = () => {
     resolver: zodResolver(ChangeUserDataSchema),
   })
 
-  const genderValues = [
-    {
-      value: 'Feminino',
-      label: 'Feminino',
-    },
-    {
-      value: 'Masculino',
-      label: 'Masculino',
-    },
-    {
-      value: 'Outros',
-      label: 'Outros',
-    },
-  ]
-
   const onHandleSubmit = (data: TChangeUserDataSchema) => {
     console.log({ data })
     console.log(cartInfo?.address)
@@ -58,11 +43,6 @@ const UserInfo: FC = () => {
             <Form.Input.Input name={'phone'} id="phone" className="border border-dark focus:border-brownPrimary" />
             <Form.Input.Feedback>{formMethods.formState.errors.phone?.message}</Form.Input.Feedback>
           </Form.Input.Root>
-          <Form.Select.Root>
-            <Form.Select.Label htmlFor="gender">Sexo</Form.Select.Label>
-            <Form.Select.Select name={'gender'} id="gender" options={genderValues} className="border border-dark focus:border-brownPrimary" />
-            <Form.Select.Feedback>{formMethods.formState.errors.name?.message}</Form.Select.Feedback>
-          </Form.Select.Root>
           <Button.Root type="button" className="w-full" onClick={() => setOpen(true)}>
             <Button.Text>Mudar Endereço</Button.Text>
           </Button.Root>
