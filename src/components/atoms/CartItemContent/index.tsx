@@ -56,7 +56,7 @@ export const CartItemContent: FC<{ isbn: string; quantity: number; price: number
         <div className="col-span-3 self-center lg:self-start">
           <header className="flex items-center justify-between">
             <span className="text-xs text-subText">{author.join(', ')}</span>
-            <Trash2 className="h-6 w-6 cursor-pointer text-danger" onClick={onRemoveItem} />
+            <Trash2 className="h-6 w-6 shrink-0 cursor-pointer text-danger" onClick={onRemoveItem} />
           </header>
           <h1 className="truncate text-lg font-bold">{title}</h1>
         </div>
