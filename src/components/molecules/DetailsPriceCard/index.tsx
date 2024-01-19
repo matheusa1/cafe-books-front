@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ReactElement, useCallback, useEffect, useState } from 'react'
+import React, { ReactElement, useCallback, useState } from 'react'
 import { IDetailsPriceCard } from './types'
 import CurrencyText from '@/components/atoms/CurrencyText'
 import { Button } from '@/components/atoms/Button'
@@ -104,19 +104,13 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement =
     }
   }
 
-  useEffect(() => {
-    if (address) {
-      onHandlePurchase()
-    }
-  }, [address, onHandlePurchase])
-
   return (
     <QueryClientProvider client={queryClient}>
       <div id="purchase" className={'flex w-full max-w-md flex-col gap-4 rounded-lg bg-pureWhite p-5 lg:p-10'}>
         <Dialog.Root open={open}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" onClick={() => setOpen(false)} />
-            <CartAddressForm buy={true} setOpen={setOpen} />
+            <CartAddressForm buy={true} setOpen={setOpen} buyFunction={onHandlePurchase} />
           </Dialog.Portal>
         </Dialog.Root>
         <header className="flex items-center justify-between border-b-2 border-dark pb-2">
@@ -153,7 +147,15 @@ const DetailsPriceCard: React.FC<IDetailsPriceCard> = ({ book }): ReactElement =
               >
                 <Button.Text>{isOnCart ? 'Remover do carrinho' : 'Adicionar ao carrinho'}</Button.Text>
               </Button.Root>
-              <Button.Root onClick={() => setOpen(true)}>
+              <Button.Root
+                onClick={() => {
+                  if (!user) {
+                    push('/auth/sign-in')
+                    return
+                  }
+                  setOpen(true)
+                }}
+              >
                 <Button.Text>Comprar agora</Button.Text>
               </Button.Root>
             </div>

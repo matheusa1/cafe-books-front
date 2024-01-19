@@ -15,7 +15,7 @@ import { ICartAddressForm } from './types'
 import { X } from 'lucide-react'
 import { useCart } from '@/context/CartInfoContext'
 
-export const CartAddressForm: FC<ICartAddressForm> = ({ setOpen, buy }) => {
+export const CartAddressForm: FC<ICartAddressForm> = ({ setOpen, buy, buyFunction }) => {
   const [cities, setCities] = useState<{ label: string; value: string }[]>([])
 
   const { setAddress, cartInfo } = useCart()
@@ -52,6 +52,7 @@ export const CartAddressForm: FC<ICartAddressForm> = ({ setOpen, buy }) => {
       state: data.state.value,
     })
     setOpen(false)
+    buyFunction?.()
   }
 
   const { data: estados } = useQuery(['state'], async () => {
